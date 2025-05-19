@@ -4,7 +4,7 @@ import { FaFacebook } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
 import { FaTiktok } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
-
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -51,11 +51,21 @@ const Footer = () => {
               Support
             </h3>
             <ul className="flex flex-col gap-8">
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
-                Privacy Policies
+              <li>
+                <Link
+                  to="/privacy-policies"
+                  className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline"
+                >
+                  Privacy Policies
+                </Link>
               </li>
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
-                Terms & Conditions
+              <li>
+                <Link
+                  to="/terms-contitions"
+                  className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline"
+                >
+                  Terms & Conditions
+                </Link>
               </li>
             </ul>
           </div>
