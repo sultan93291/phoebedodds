@@ -176,7 +176,7 @@ const Products = () => {
             <div className="col-span-12 md:col-span-3 space-y-6">
               {/* Price Range */}
               <div className="w-full max-w-md mx-auto mt-10">
-                <h3 className="text-black not-italic font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
+                <h3 className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
                   Price Range
                 </h3>
 
