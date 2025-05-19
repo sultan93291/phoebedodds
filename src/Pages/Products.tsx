@@ -1,10 +1,12 @@
 import { FaAngleDown } from "react-icons/fa";
 import Container from "../Components/Shared/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Range, getTrackBackground } from "react-range";
+import PageHeading from "@/Components/Reusable/PageHeading";
 
 const Products = () => {
+  const navigate = useNavigate();
   interface Product {
     id: number;
     name: string;
@@ -157,24 +159,17 @@ const Products = () => {
     );
   });
 
+  const handleViewDetails = (id: number) => {
+    navigate(`/product/${id}`);
+  };
+
   return (
     <>
-      <Container className="pb-25">
-        <div className="py-[60px] sm:py-[80px] md:py-[100px] lg:py-[120px] border-b-[1px] broder-[#B1B1B1] mb-12">
-          <h2
-            className="text-black not-italic font-semibold leading-none mb-6
-                 text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] xl:text-[96px]"
-          >
-            All Products
-          </h2>
-          <p
-            className="text-[rgba(0,0,0,0.7)] not-italic font-normal leading-none
-                text-base sm:text-lg md:text-xl lg:text-2xl xl:text-[24px]"
-          >
-            Everything You Need, All in One Place
-          </p>
-        </div>
-
+      <Container className="pb-25 px-5">
+        <PageHeading
+          title="All Products"
+          subtitle="Everything You Need, All in One Place"
+        />
         <main className="">
           <div className="grid grid-cols-12 gap-14">
             {/* Sidebar Filters */}
@@ -317,7 +312,11 @@ const Products = () => {
               {/* Product Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredProducts.map((product) => (
-                  <div key={product.id} className="flex flex-col">
+                  <div
+                    key={product.id}
+                    onClick={() => handleViewDetails(product.id)}
+                    className="flex flex-col"
+                  >
                     <img
                       src={product.image}
                       alt={product.name}
