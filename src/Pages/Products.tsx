@@ -23,7 +23,7 @@ const Products = () => {
     {
       id: 1,
       name: "Modern Dining Set",
-      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      image: "https://i.ibb.co/jk5mb09p/Frame-215.png",
       price: 4.65,
       brand: "FurniLux",
       category: "Furniture",
@@ -149,6 +149,9 @@ const Products = () => {
     null
   );
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
   // Filtered Products List
   const filteredProducts = products.filter((product) => {
     return (
@@ -158,6 +161,11 @@ const Products = () => {
       (!selectedSubCategory || product.subCategory === selectedSubCategory)
     );
   });
+
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const handleViewDetails = (id: number) => {
     navigate(`/product/${id}`);
@@ -311,7 +319,7 @@ const Products = () => {
 
               {/* Product Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.map((product) => (
+                {paginatedProducts.map((product) => (
                   <div
                     key={product.id}
                     onClick={() => handleViewDetails(product.id)}
@@ -339,6 +347,27 @@ const Products = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-3 mt-10">
+            {/* Page Dropdown */}
+            <select
+              className="border border-black rounded-md px-4 py-2 text-sm text-black appearance-none cursor-pointer"
+              value={currentPage}
+              onChange={(e) => setCurrentPage(Number(e.target.value))}
+            >
+              {Array.from({
+                length: Math.ceil(filteredProducts.length / itemsPerPage),
+              }).map((_, index) => (
+                <option key={index} value={index + 1}>
+                  {String(index + 1).padStart(2, "0")}
+                </option>
+              ))}
+            </select>
+
+            {/* Page Indicator */}
+            <div className="w-10 h-10 border border-black rounded-md flex items-center justify-center text-sm font-medium">
+              {currentPage}
             </div>
           </div>
         </main>
