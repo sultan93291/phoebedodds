@@ -272,7 +272,7 @@ const ProductDetails = () => {
             <h3 className="text-xl font-semibold text-black mb-6">
               Related Products
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {relatedProducts.map((prod) => (
                 <div key={prod.id} className="flex flex-col">
                   <img
@@ -281,16 +281,16 @@ const ProductDetails = () => {
                     className="rounded-2xl object-cover aspect-square w-full"
                   />
                   <div className="mt-2 flex justify-between items-center">
-                    <p className="text-black font-medium text-base">
+                    <p className="text-black font-medium text-xl md:text-2xl lg:text-[24px] leading-normal">
                       {prod.name}
                     </p>
-                    <p className="text-black font-semibold text-base">
+                    <p className="text-black font-medium text-2xl md:text-3xl lg:text-[32px] leading-normal">
                       ${prod.price.toFixed(2)}
                     </p>
                   </div>
                   <a
                     href={prod.link}
-                    className="text-blue-600 text-xs underline"
+                    className="text-[#0E55B2] font-light text-base underline decoration-solid underline-offset-2 leading-normal"
                     target="_blank"
                     rel="noreferrer"
                   >

@@ -264,7 +264,7 @@ const Products = () => {
                             setSelectedSubCategory(sub);
                           }}
                         />
-                        <label className="text-black cursor-pointer font-light text-base md:text-lg leading-normal">
+                        <label className="text-black font-light text-base md:text-lg leading-normal">
                           {sub}
                         </label>
                       </div>
@@ -315,7 +315,7 @@ const Products = () => {
                   <div
                     key={product.id}
                     onClick={() => handleViewDetails(product.id)}
-                    className="flex flex-col"
+                    className="flex flex-col cursor-pointer"
                   >
                     <img
                       src={product.image}
