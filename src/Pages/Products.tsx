@@ -138,13 +138,14 @@ const Products = () => {
   );
 
   // Filtered Products List
-  const filteredProducts = products.filter(
-    (product) =>
+  const filteredProducts = products.filter((product) => {
+    return (
       product.price >= values[0] &&
       product.price <= values[1] &&
       (!selectedBrand || product.brand === selectedBrand) &&
-      (!selectedCategory || product.category === selectedCategory)
-  );
+      (!selectedSubCategory || product.subCategory === selectedSubCategory)
+    );
+  });
 
   return (
     <>
