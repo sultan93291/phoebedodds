@@ -2,6 +2,7 @@ import { FaAngleDown } from "react-icons/fa";
 import Container from "../Components/Shared/Container";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Range, getTrackBackground } from "react-range";
 
 const Products = () => {
   interface Product {
@@ -9,6 +10,9 @@ const Products = () => {
     name: string;
     image: string;
     price: number;
+    brand: string;
+    category: string;
+    subCategory: string;
     link: string;
   }
 
@@ -19,6 +23,9 @@ const Products = () => {
       name: "Modern Dining Set",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
       price: 4.65,
+      brand: "FurniLux",
+      category: "Furniture",
+      subCategory: "Dining Tables",
       link: "https://sitename.com",
     },
     {
@@ -26,6 +33,9 @@ const Products = () => {
       name: "Elegant Sofa",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
       price: 4.65,
+      brand: "CozyNest",
+      category: "Furniture",
+      subCategory: "Sofas & Sectionals",
       link: "https://sitename.com",
     },
     {
@@ -33,64 +43,112 @@ const Products = () => {
       name: "Classic Armchair",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
       price: 20.65,
+      brand: "WoodHouse",
+      category: "Furniture",
+      subCategory: "Accent Chairs",
       link: "https://sitename.com",
     },
     {
       id: 4,
-      name: "Wooden Coffee Table",
+      name: "Pendant Lamp",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 26.65,
+      price: 30.65,
+      brand: "Lightify",
+      category: "Lighting",
+      subCategory: "Pendant Lights",
+      link: "https://sitename.com",
+    },
+    {
+      id: 11,
+      name: "Pendant Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 30.65,
+      brand: "Lightify",
+      category: "Lighting",
+      subCategory: "Table Lamps",
       link: "https://sitename.com",
     },
     {
       id: 5,
-      name: "Pendant Lamp",
+      name: "Wall Art Canvas",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 30.65,
+      price: 4.65,
+      brand: "ArtDwell",
+      category: "Decor",
+      subCategory: "Wall Art & Prints",
       link: "https://sitename.com",
     },
     {
       id: 6,
-      name: "Wall Art Canvas",
+      name: "Modern Bookshelf",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
       price: 4.65,
+      brand: "CozyNest",
+      category: "Furniture",
+      subCategory: "Bookcases & Shelving",
       link: "https://sitename.com",
     },
     {
       id: 7,
-      name: "Modern Bookshelf",
-      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 4.65,
-      link: "https://sitename.com",
-    },
-    {
-      id: 8,
-      name: "Rug & Carpet",
-      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 40.65,
-      link: "https://sitename.com",
-    },
-    {
-      id: 9,
       name: "Minimalist Lamp",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
       price: 4.65,
+      brand: "Lightify",
+      category: "Style",
+      subCategory: "Minimalist",
       link: "https://sitename.com",
     },
   ];
 
-  // NEW: Price Filter State
-  const [maxPrice, setMaxPrice] = useState<number>(500);
-  const [minPrice, setMinPrice] = useState<number>(0);
+  const categoryData = [
+    {
+      name: "Furniture",
+      subCategories: [
+        "Sofas & Sectionals",
+        "Accent Chairs",
+        "Dining Tables",
+        "Coffee Tables",
+        "Beds & Headboards",
+        "Desk & Office Chairs",
+        "Bookcases & Shelving",
+      ],
+    },
+    {
+      name: "Lighting",
+      subCategories: ["Pendant Lights", "Table Lamps", "Floor Lamps"],
+    },
+    {
+      name: "Decor",
+      subCategories: ["Rugs & Carpets", "Wall Art & Prints", "Mirrors"],
+    },
+    {
+      name: "Style",
+      subCategories: ["Modern", "Mid Century", "Minimalist", "Industrial"],
+    },
+  ];
 
-  // NEW: Filtered Products List
+  const MIN = 0;
+  const MAX = 500;
+  const [values, setValues] = useState([0, 300]);
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const uniqueBrands = Array.from(new Set(products.map((p) => p.brand)));
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+    null
+  );
+
+  // Filtered Products List
   const filteredProducts = products.filter(
-    (product) => product.price <= maxPrice
+    (product) =>
+      product.price >= values[0] &&
+      product.price <= values[1] &&
+      (!selectedBrand || product.brand === selectedBrand) &&
+      (!selectedCategory || product.category === selectedCategory)
   );
 
   return (
     <>
-      <Container className="">
+      <Container className="pb-25">
         <div className="py-[60px] sm:py-[80px] md:py-[100px] lg:py-[120px] border-b-[1px] broder-[#B1B1B1] mb-12">
           <h2
             className="text-black not-italic font-semibold leading-none mb-6
@@ -111,49 +169,63 @@ const Products = () => {
             {/* Sidebar Filters */}
             <div className="col-span-12 md:col-span-3 space-y-6">
               {/* Price Range */}
-              <div>
+              <div className="w-full max-w-md mx-auto mt-10">
                 <h3 className="text-black not-italic font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
                   Price Range
                 </h3>
 
-                {/* Min Price Slider */}
-                <label className="block text-black text-sm mb-1 font-medium">
-                  Min Price
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max={maxPrice}
-                  step="5"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(Number(e.target.value))}
-                  className="w-full h-2 bg-[#B2B2B2] rounded-lg accent-black mb-4"
+                <Range
+                  values={values}
+                  step={5}
+                  min={MIN}
+                  max={MAX}
+                  onChange={(values) => setValues(values)}
+                  renderTrack={({ props, children }) => (
+                    <div
+                      {...props}
+                      style={{
+                        ...props.style,
+                        height: "6px",
+                        width: "100%",
+                        background: getTrackBackground({
+                          values,
+                          colors: ["#B2B2B2", "#000000", "#B2B2B2"],
+                          min: MIN,
+                          max: MAX,
+                        }),
+                        borderRadius: "8px",
+                        margin: "1.5rem 0",
+                      }}
+                    >
+                      {children}
+                    </div>
+                  )}
+                  renderThumb={({ props, index }) => (
+                    <div
+                      {...props}
+                      className="w-5 h-5 bg-black rounded-full cursor-pointer"
+                    >
+                      <div className="absolute top-[-30px] text-xs bg-white px-2 py-1 rounded shadow">
+                        ${values[index]}
+                      </div>
+                    </div>
+                  )}
                 />
 
-                {/* Max Price Slider */}
-                <label className="block text-black text-sm mb-1 font-medium">
-                  Max Price
-                </label>
-                <input
-                  type="range"
-                  min={minPrice}
-                  max="500"
-                  step="5"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full h-2 bg-[#B2B2B2] rounded-lg accent-black"
-                />
-
-                {/* Selected Range Display */}
-                <div className="flex justify-between text-sm mt-3 text-black font-semibold">
-                  <span>${minPrice}</span>
-                  <span>${maxPrice}</span>
+                {/* Price labels below */}
+                <div className="flex justify-between text-sm text-black font-semibold">
+                  <span className="flex items-center gap-2 px-12 py-3 rounded-[24px] bg-[#F5F5F5]">
+                    ${values[0]}
+                  </span>
+                  <span className="flex items-center gap-2 px-12 py-3 rounded-[24px] border border-black">
+                    ${values[1]}
+                  </span>
                 </div>
               </div>
 
               {/* Sort By */}
               <div className="w-full flex items-center justify-center">
-                <button className="w-full flex justify-center items-center px-12 py-[27px] rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300">
+                <button className="w-full flex justify-center items-center cursor-pointer px-12 py-[27px] rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300">
                   <span>Sort By</span>
                   <FaAngleDown className="text-xl" />
                 </button>
@@ -161,102 +233,69 @@ const Products = () => {
 
               {/* Categories */}
               <div>
-                <h3 className="text-black not-italic font-semibold leading-none text-base sm:text-lg md:text-xl lg:text-2xl xl:text-[32px] mb-8">
+                <h3 className="text-black not-italic font-semibold text-[32px] mb-8">
                   Categories
                 </h3>
 
-                <div className="mb-4">
-                  <h4 className="text-black font-inter font-medium text-[16px] md:text-[20px] lg:text-[24px] leading-normal mb-6">
-                    Furniture
-                  </h4>
-                  {[
-                    "Sofas & Sectionals",
-                    "Accent Chairs",
-                    "Dining Tables",
-                    "Coffee Tables",
-                    "Beds & Headboards",
-                    "Desk & Office Chairs",
-                    "Bookcases & Shelving",
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-2 mb-4">
-                      <input
-                        type="radio"
-                        name="furniture"
-                        className="w-6 h-6"
-                      />
-                      <label className="text-black font-light text-base md:text-lg leading-normal">
-                        {item}
-                      </label>
-                    </div>
-                  ))}
-                </div>
+                {categoryData.map((cat) => (
+                  <div key={cat.name} className="mb-4">
+                    <h4 className="text-black font-medium text-[24px] mb-6">
+                      {cat.name}
+                    </h4>
 
-                <div className="mb-4">
-                  <h4 className="text-black font-inter font-medium text-[16px] md:text-[20px] lg:text-[24px] leading-normal mb-6">
-                    Lighting
-                  </h4>
-                  {["Pendant Lights", "Table Lamps", "Floor Lamps"].map(
-                    (item) => (
-                      <div key={item} className="flex items-center gap-2 mb-4">
+                    {cat.subCategories.map((sub) => (
+                      <div key={sub} className="flex items-center gap-2 mb-4">
                         <input
                           type="radio"
-                          name="lighting"
+                          name="subcategory"
                           className="w-6 h-6"
+                          checked={selectedSubCategory === sub}
+                          onChange={() => {
+                            setSelectedCategory(cat.name);
+                            setSelectedSubCategory(sub);
+                          }}
                         />
                         <label className="text-black font-light text-base md:text-lg leading-normal">
-                          {item}
+                          {sub}
                         </label>
                       </div>
-                    )
-                  )}
-                </div>
+                    ))}
+                  </div>
+                ))}
 
-                <div className="mb-4">
-                  <h4 className="text-black font-inter font-medium text-[16px] md:text-[20px] lg:text-[24px] leading-normal mb-6">
-                    Decor
-                  </h4>
-                  {["Rugs & Carpets", "Wall Art & Prints", "Mirrors"].map(
-                    (item) => (
-                      <div key={item} className="flex items-center gap-2 mb-4">
-                        <input type="radio" name="decor" className="w-6 h-6" />
-                        <label className="text-black font-light text-base md:text-lg leading-normal">
-                          {item}
-                        </label>
-                      </div>
-                    )
-                  )}
-                </div>
-
-                <div>
-                  <h4 className="text-black font-inter font-medium text-[16px] md:text-[20px] lg:text-[24px] leading-normal mb-6">
-                    Style
-                  </h4>
-                  {["Modern", "Mid Century", "Minimalist", "Industrial"].map(
-                    (item) => (
-                      <div key={item} className="flex items-center gap-2 mb-4">
-                        <input type="radio" name="style" className="w-6 h-6" />
-                        <label className="text-black font-light text-base md:text-lg leading-normal">
-                          {item}
-                        </label>
-                      </div>
-                    )
-                  )}
-                </div>
+                {(selectedCategory || selectedSubCategory) && (
+                  <button
+                    onClick={() => {
+                      setSelectedCategory(null);
+                      setSelectedSubCategory(null);
+                    }}
+                    className="mt-4 text-sm underline text-blue-600"
+                  >
+                    Clear Category Filter
+                  </button>
+                )}
               </div>
             </div>
 
             {/* Main Product Grid */}
             <div className="col-span-12 md:col-span-9">
               {/* Brand Filter Buttons */}
-              <div className="flex flex-wrap gap-6 mb-6">
-                {[...Array(6)].map((_, i) => (
+              <div className="flex flex-wrap gap-4 mb-6">
+                {uniqueBrands.map((brand) => (
                   <button
-                    key={i}
-                    className={`rounded-[24px] px-12 py-3 border ${
-                      i === 1 ? "bg-black text-white" : "bg-white border-black"
+                    key={brand}
+                    onClick={() =>
+                      setSelectedBrand((prev) =>
+                        prev === brand ? null : brand
+                      )
+                    }
+                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium transition-all duration-300 ${
+                      selectedBrand === brand
+                        ? "bg-black text-white border-black"
+                        : "bg-white text-black border-black"
                     }`}
                   >
-                    Brand Name
+                    {brand}
                   </button>
                 ))}
               </div>
