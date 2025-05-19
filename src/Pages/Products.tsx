@@ -98,6 +98,16 @@ const Products = () => {
       subCategory: "Minimalist",
       link: "https://sitename.com",
     },
+    {
+      id: 12,
+      name: "Minimalist Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "Lightify",
+      category: "Lightify",
+      subCategory: "Floor Lamps",
+      link: "https://sitename.com",
+    },
   ];
 
   const categoryData = [
@@ -240,23 +250,26 @@ const Products = () => {
 
                 {categoryData.map((cat) => (
                   <div key={cat.name} className="mb-4">
-                    <h4 className="text-black font-medium text-[24px] mb-6">
+                    <h4 className="text-black font-medium cursor-pointer text-[24px] mb-6">
                       {cat.name}
                     </h4>
 
                     {cat.subCategories.map((sub) => (
-                      <div key={sub} className="flex items-center gap-2 mb-4">
+                      <div
+                        key={sub}
+                        className="flex items-center cursor-pointer gap-2 mb-4"
+                      >
                         <input
                           type="radio"
                           name="subcategory"
-                          className="w-6 h-6"
+                          className="w-6 h-6 cursor-pointer accent-black"
                           checked={selectedSubCategory === sub}
                           onChange={() => {
                             setSelectedCategory(cat.name);
                             setSelectedSubCategory(sub);
                           }}
                         />
-                        <label className="text-black font-light text-base md:text-lg leading-normal">
+                        <label className="text-black cursor-pointer font-light text-base md:text-lg leading-normal">
                           {sub}
                         </label>
                       </div>
@@ -270,7 +283,7 @@ const Products = () => {
                       setSelectedCategory(null);
                       setSelectedSubCategory(null);
                     }}
-                    className="mt-4 text-sm underline text-blue-600"
+                    className="mt-4 text-sm underline cursor-pointer text-blue-600"
                   >
                     Clear Category Filter
                   </button>
