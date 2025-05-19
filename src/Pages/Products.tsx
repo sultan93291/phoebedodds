@@ -85,7 +85,7 @@ const Products = () => {
 
   // NEW: Filtered Products List
   const filteredProducts = products.filter(
-    product => product.price <= maxPrice
+    (product) => product.price <= maxPrice
   );
 
   return (
@@ -126,7 +126,7 @@ const Products = () => {
                   max={maxPrice}
                   step="5"
                   value={minPrice}
-                  onChange={e => setMinPrice(Number(e.target.value))}
+                  onChange={(e) => setMinPrice(Number(e.target.value))}
                   className="w-full h-2 bg-[#B2B2B2] rounded-lg accent-black mb-4"
                 />
 
@@ -140,7 +140,7 @@ const Products = () => {
                   max="500"
                   step="5"
                   value={maxPrice}
-                  onChange={e => setMaxPrice(Number(e.target.value))}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
                   className="w-full h-2 bg-[#B2B2B2] rounded-lg accent-black"
                 />
 
@@ -177,7 +177,7 @@ const Products = () => {
                     "Beds & Headboards",
                     "Desk & Office Chairs",
                     "Bookcases & Shelving",
-                  ].map(item => (
+                  ].map((item) => (
                     <div key={item} className="flex items-center gap-2 mb-4">
                       <input
                         type="radio"
@@ -196,7 +196,7 @@ const Products = () => {
                     Lighting
                   </h4>
                   {["Pendant Lights", "Table Lamps", "Floor Lamps"].map(
-                    item => (
+                    (item) => (
                       <div key={item} className="flex items-center gap-2 mb-4">
                         <input
                           type="radio"
@@ -216,7 +216,7 @@ const Products = () => {
                     Decor
                   </h4>
                   {["Rugs & Carpets", "Wall Art & Prints", "Mirrors"].map(
-                    item => (
+                    (item) => (
                       <div key={item} className="flex items-center gap-2 mb-4">
                         <input type="radio" name="decor" className="w-6 h-6" />
                         <label className="text-black font-light text-base md:text-lg leading-normal">
@@ -232,7 +232,7 @@ const Products = () => {
                     Style
                   </h4>
                   {["Modern", "Mid Century", "Minimalist", "Industrial"].map(
-                    item => (
+                    (item) => (
                       <div key={item} className="flex items-center gap-2 mb-4">
                         <input type="radio" name="style" className="w-6 h-6" />
                         <label className="text-black font-light text-base md:text-lg leading-normal">
@@ -263,7 +263,7 @@ const Products = () => {
 
               {/* Product Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.map(product => (
+                {filteredProducts.map((product) => (
                   <div key={product.id} className="flex flex-col">
                     <img
                       src={product.image}
