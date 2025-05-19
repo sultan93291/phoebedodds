@@ -1,5 +1,5 @@
 import Container from "@/Components/Shared/Container";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -248,7 +248,7 @@ const ProductDetails = () => {
                 ))}
               </ul>
             </div>
-            <button className="bg-black text-white py-3 px-6 rounded-full text-center font-medium w-[160px]">
+            <button className="flex w-[354px] h-[73px] px-12 py-[27px] justify-center items-center gap-4 rounded-[24px] bg-black text-white cursor-pointer  hover:scale-105 duration-300">
               Get It Now
             </button>
           </div>
@@ -288,14 +288,14 @@ const ProductDetails = () => {
                       ${prod.price.toFixed(2)}
                     </p>
                   </div>
-                  <a
-                    href={prod.link}
+                  <Link
+                    to={prod.link}
                     className="text-[#0E55B2] font-light text-base underline decoration-solid underline-offset-2 leading-normal"
                     target="_blank"
                     rel="noreferrer"
                   >
                     {prod.link}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>

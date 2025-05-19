@@ -298,7 +298,7 @@ const Products = () => {
                         prev === brand ? null : brand
                       )
                     }
-                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium transition-all duration-300 ${
+                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium hover:scale-105  duration-300 ${
                       selectedBrand === brand
                         ? "bg-black text-white border-black"
                         : "bg-white text-black border-black"
