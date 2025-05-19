@@ -262,7 +262,7 @@ const Products = () => {
                         <input
                           type="radio"
                           name="subcategory"
-                          className="w-6 h-6 cursor-pointer"
+                          className="w-6 h-6 cursor-pointer accent-black"
                           checked={selectedSubCategory === sub}
                           onChange={() => {
                             setSelectedCategory(cat.name);
