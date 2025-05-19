@@ -1,10 +1,12 @@
 import { FaAngleDown } from "react-icons/fa";
 import Container from "../Components/Shared/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Range, getTrackBackground } from "react-range";
+import PageHeading from "@/Components/Reusable/PageHeading";
 
 const Products = () => {
+  const navigate = useNavigate();
   interface Product {
     id: number;
     name: string;
@@ -21,7 +23,7 @@ const Products = () => {
     {
       id: 1,
       name: "Modern Dining Set",
-      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      image: "https://i.ibb.co/jk5mb09p/Frame-215.png",
       price: 4.65,
       brand: "FurniLux",
       category: "Furniture",
@@ -147,6 +149,9 @@ const Products = () => {
     null
   );
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
   // Filtered Products List
   const filteredProducts = products.filter((product) => {
     return (
@@ -157,31 +162,29 @@ const Products = () => {
     );
   });
 
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleViewDetails = (id: number) => {
+    navigate(`/product/${id}`);
+  };
+
   return (
     <>
-      <Container className="pb-25">
-        <div className="py-[60px] sm:py-[80px] md:py-[100px] lg:py-[120px] border-b-[1px] broder-[#B1B1B1] mb-12">
-          <h2
-            className="text-black not-italic font-semibold leading-none mb-6
-                 text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] xl:text-[96px]"
-          >
-            All Products
-          </h2>
-          <p
-            className="text-[rgba(0,0,0,0.7)] not-italic font-normal leading-none
-                text-base sm:text-lg md:text-xl lg:text-2xl xl:text-[24px]"
-          >
-            Everything You Need, All in One Place
-          </p>
-        </div>
-
+      <Container className="pb-25 px-5">
+        <PageHeading
+          title="All Products"
+          subtitle="Everything You Need, All in One Place"
+        />
         <main className="">
           <div className="grid grid-cols-12 gap-14">
             {/* Sidebar Filters */}
             <div className="col-span-12 md:col-span-3 space-y-6">
               {/* Price Range */}
               <div className="w-full max-w-md mx-auto mt-10">
-                <h3 className="text-black not-italic font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
+                <h3 className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
                   Price Range
                 </h3>
 
@@ -269,7 +272,7 @@ const Products = () => {
                             setSelectedSubCategory(sub);
                           }}
                         />
-                        <label className="text-black cursor-pointer font-light text-base md:text-lg leading-normal">
+                        <label className="text-black font-light text-base md:text-lg leading-normal">
                           {sub}
                         </label>
                       </div>
@@ -303,7 +306,7 @@ const Products = () => {
                         prev === brand ? null : brand
                       )
                     }
-                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium transition-all duration-300 ${
+                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium hover:scale-105  duration-300 ${
                       selectedBrand === brand
                         ? "bg-black text-white border-black"
                         : "bg-white text-black border-black"
@@ -316,8 +319,12 @@ const Products = () => {
 
               {/* Product Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredProducts.map((product) => (
-                  <div key={product.id} className="flex flex-col">
+                {paginatedProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    onClick={() => handleViewDetails(product.id)}
+                    className="flex flex-col cursor-pointer"
+                  >
                     <img
                       src={product.image}
                       alt={product.name}
@@ -340,6 +347,27 @@ const Products = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-center gap-3 mt-10">
+            {/* Page Dropdown */}
+            <select
+              className="border border-black rounded-md px-4 py-2 text-sm text-black appearance-none cursor-pointer"
+              value={currentPage}
+              onChange={(e) => setCurrentPage(Number(e.target.value))}
+            >
+              {Array.from({
+                length: Math.ceil(filteredProducts.length / itemsPerPage),
+              }).map((_, index) => (
+                <option key={index} value={index + 1}>
+                  {String(index + 1).padStart(2, "0")}
+                </option>
+              ))}
+            </select>
+
+            {/* Page Indicator */}
+            <div className="w-10 h-10 border border-black rounded-md flex items-center justify-center text-sm font-medium">
+              {currentPage}
             </div>
           </div>
         </main>
