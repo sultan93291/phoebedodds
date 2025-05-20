@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Range, getTrackBackground } from "react-range";
 import PageHeading from "@/Components/Reusable/PageHeading";
+import ReactPaginate from "react-paginate";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -163,12 +164,17 @@ const Products = () => {
   });
 
   const paginatedProducts = filteredProducts.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
   );
 
   const handleViewDetails = (id: number) => {
     navigate(`/product/${id}`);
+  };
+
+  // Handle page change for react-paginate
+  const handlePageClick = (selected) => {
+    setCurrentPage(selected.selected);
   };
 
   return (
@@ -181,9 +187,9 @@ const Products = () => {
         <main className="">
           <div className="grid grid-cols-12 gap-14">
             {/* Sidebar Filters */}
-            <div className="col-span-12 md:col-span-3 space-y-6">
+            <div className="col-span-12 lg:col-span-3 space-y-6">
               {/* Price Range */}
-              <div className="w-full max-w-md mx-auto mt-10">
+              <div className="w-full  mx-auto mt-10">
                 <h3 className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
                   Price Range
                 </h3>
@@ -295,7 +301,7 @@ const Products = () => {
             </div>
 
             {/* Main Product Grid */}
-            <div className="col-span-12 md:col-span-9">
+            <div className="col-span-12 lg:col-span-9">
               {/* Brand Filter Buttons */}
               <div className="flex flex-wrap gap-4 mb-6">
                 {uniqueBrands.map((brand) => (
@@ -331,7 +337,7 @@ const Products = () => {
                       className="rounded-2xl w-full object-cover aspect-square"
                     />
                     <div className="mt-2 text-sm flex justify-between items-center">
-                      <p className="text-black font-medium text-xl md:text-2xl lg:text-[24px] leading-normal">
+                      <p className="text-black font-medium text-xl md:text-2xl lg:text-[24px]  leading-normal">
                         {product.name}
                       </p>
                       <div className="text-black font-medium text-2xl md:text-3xl lg:text-[32px] leading-normal">
@@ -350,25 +356,18 @@ const Products = () => {
             </div>
           </div>
           <div className="flex items-center justify-center gap-3 mt-10">
-            {/* Page Dropdown */}
-            <select
-              className="border border-black rounded-md px-4 py-2 text-sm text-black appearance-none cursor-pointer"
-              value={currentPage}
-              onChange={(e) => setCurrentPage(Number(e.target.value))}
-            >
-              {Array.from({
-                length: Math.ceil(filteredProducts.length / itemsPerPage),
-              }).map((_, index) => (
-                <option key={index} value={index + 1}>
-                  {String(index + 1).padStart(2, "0")}
-                </option>
-              ))}
-            </select>
-
-            {/* Page Indicator */}
-            <div className="w-10 h-10 border border-black rounded-md flex items-center justify-center text-sm font-medium">
-              {currentPage}
-            </div>
+            <ReactPaginate
+              pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              onPageChange={handlePageClick}
+              containerClassName="flex gap-3"
+              pageClassName="border border-black rounded-md px-4 py-2 cursor-pointer"
+              activeClassName="bg-black text-white"
+              previousClassName="border border-black rounded-md px-4 py-2 cursor-pointer"
+              nextClassName="border border-black rounded-md px-4 py-2 cursor-pointer"
+              breakClassName="hidden"
+            />
           </div>
         </main>
       </Container>
