@@ -21,7 +21,7 @@ const Room = () => {
               />
             </figure>
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-              <h3 className="font-inter text-[32px] font-semibold text-white drop-shadow-md mb-4">
+              <h3 className="font-inter lg:text-[32px] text-[24px] font-semibold text-white drop-shadow-md mb-4">
                 Living Room
               </h3>
               <button className="bg-white text-black px-6 py-3 rounded-xl cursor-pointer text-[16px] font-medium hover:bg-gray-200 transition opacity-0 group-hover:opacity-100 duration-300">
@@ -45,7 +45,7 @@ const Room = () => {
                 />
               </figure>
               <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-                <h3 className="font-inter text-[32px] font-semibold text-white drop-shadow-md mb-4">
+                <h3 className="font-inter lg:text-[32px] text-[24px] font-semibold text-white drop-shadow-md mb-4">
                   Dining Room
                 </h3>
                 <button className="bg-white text-black px-6 py-3 rounded-xl cursor-pointer text-[16px] font-medium hover:bg-gray-200 transition opacity-0 group-hover:opacity-100 duration-300">
@@ -67,7 +67,7 @@ const Room = () => {
                 />
               </figure>
               <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
-                <h3 className="font-inter text-[32px] font-semibold text-white drop-shadow-md mb-4">
+                <h3 className="font-inter lg:text-[32px] text-[24px] font-semibold text-white drop-shadow-md mb-4">
                   Bed room
                 </h3>
                 <button className="bg-white text-black px-6 py-3 rounded-xl cursor-pointer text-[16px] font-medium hover:bg-gray-200 transition opacity-0 group-hover:opacity-100 duration-300">

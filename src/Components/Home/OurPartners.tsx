@@ -11,7 +11,7 @@ const OurPartners = () => {
         >
           Our Partners
         </h3>
-        <div className="flex justify-between pt-8 flex-wrap gap-y-6">
+        <div className="flex justify-between pt-8 flex-wrap lg:gap-y-6 gap-y-10">
           {[...Array(4)].map((_, index) => (
             <img
               key={index}
