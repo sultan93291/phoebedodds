@@ -210,9 +210,9 @@ const ProductDetails = () => {
 
   return (
     <Container>
-      <div className="mx-auto px-4 py-12 mt-40">
+      <div className="mx-auto px-4 py-12 pt-20 xl:mt-30">
         {/* Breadcrumb */}
-        <nav data-aos="fade-up" className="text-sm text-gray-500 mb-6   pb-10">
+        <nav data-aos="fade-up" className="text-sm text-gray-500 mb-6 pb-10">
           <span>Home</span> &nbsp; &lt; &nbsp;
           <span>All Products</span> &nbsp; &lt; &nbsp;
           <span className="text-black font-medium">{product.category}</span>
@@ -252,7 +252,7 @@ const ProductDetails = () => {
               </ul>
             </div>
 
-            <button className="w-full 2xl:w-[300px] py-2 2xl:py-[20px] border border-black bg-black text-white rounded-3xl font-inter text-[16px] font-semibold hover:bg-white hover:text-black transition-all duration-300">
+            <button className="w-full xl:w-[300px] py-2 2xl:py-[20px] border border-black bg-black text-white rounded-3xl font-inter text-[16px] font-semibold hover:bg-white hover:text-black transition-all duration-300">
               Get It Now
             </button>
           </div>
