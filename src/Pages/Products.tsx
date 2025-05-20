@@ -164,17 +164,12 @@ const Products = () => {
   });
 
   const paginatedProducts = filteredProducts.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   const handleViewDetails = (id: number) => {
     navigate(`/product/${id}`);
-  };
-
-  // Handle page change for react-paginate
-  const handlePageClick = (selected) => {
-    setCurrentPage(selected.selected);
   };
 
   return (
@@ -187,9 +182,9 @@ const Products = () => {
         <main className="">
           <div className="grid grid-cols-12 gap-14">
             {/* Sidebar Filters */}
-            <div className="col-span-12 lg:col-span-3 space-y-6">
+            <div className="col-span-12 md:col-span-3 space-y-6">
               {/* Price Range */}
-              <div className="w-full  mx-auto mt-10">
+              <div className="w-full mx-auto mt-10">
                 <h3 className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
                   Price Range
                 </h3>
@@ -301,7 +296,7 @@ const Products = () => {
             </div>
 
             {/* Main Product Grid */}
-            <div className="col-span-12 lg:col-span-9">
+            <div className="col-span-12 md:col-span-9">
               {/* Brand Filter Buttons */}
               <div className="flex flex-wrap gap-4 mb-6">
                 {uniqueBrands.map((brand) => (
@@ -312,7 +307,7 @@ const Products = () => {
                         prev === brand ? null : brand
                       )
                     }
-                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium hover:scale-105 hover:bg-black hover:text-white  duration-300 ${
+                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium hover:scale-105  duration-300 ${
                       selectedBrand === brand
                         ? "bg-black text-white border-black"
                         : "bg-white text-black border-black"
@@ -337,7 +332,7 @@ const Products = () => {
                       className="rounded-2xl w-full object-cover aspect-square"
                     />
                     <div className="mt-2 text-sm flex justify-between items-center">
-                      <p className="text-black font-medium text-xl md:text-2xl lg:text-[24px]  leading-normal">
+                      <p className="text-black font-medium text-xl md:text-2xl lg:text-[24px] leading-normal">
                         {product.name}
                       </p>
                       <div className="text-black font-medium text-2xl md:text-3xl lg:text-[32px] leading-normal">
@@ -355,18 +350,18 @@ const Products = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-3 mt-10">
+          <div className="flex justify-center mt-10">
             <ReactPaginate
               pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
+              onPageChange={({ selected }) => setCurrentPage(selected + 1)}
               pageRangeDisplayed={5}
               marginPagesDisplayed={2}
-              onPageChange={handlePageClick}
-              containerClassName="flex gap-3"
-              pageClassName="border border-black rounded-md px-4 py-2 cursor-pointer"
+              containerClassName="flex gap-2"
+              pageClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
+              previousClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
+              nextClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
+              breakClassName="cursor-pointer text-sm"
               activeClassName="bg-black text-white"
-              previousClassName="border border-black rounded-md px-4 py-2 cursor-pointer"
-              nextClassName="border border-black rounded-md px-4 py-2 cursor-pointer"
-              breakClassName="hidden"
             />
           </div>
         </main>
