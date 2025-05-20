@@ -103,7 +103,7 @@ const categorySections: CategorySection[] = [
 
 const AllCategories = () => {
   return (
-    <Container className="py-20 px-4">
+    <Container className="py-20 px-4 2xl:px-0">
       <div className="mb-12">
         <PageHeading
           title="Explore All Categories"
