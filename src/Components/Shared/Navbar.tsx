@@ -17,8 +17,16 @@ const Navbar = () => {
     { label: "Featured", path: "/product" },
   ];
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  useEffect(() => {
+    const handlescroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    };
+    window.addEventListener("scroll", handlescroll);
+    return() => window.removeEventListener("scroll",handlescroll)
+  },[])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,7 +44,6 @@ const Navbar = () => {
     >
       <Container>
         <div className="flex justify-between items-center xl:pt-8 pt-4 pb-4">
-          {/* Logo */}
           <div className="w-1/5">
             <Link to="/">
               <figure>
@@ -45,7 +52,6 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Nav */}
           <ul className="w-1/3 xl:flex hidden gap-x-12 items-center">
             {navItems.map(({ label, path }) => (
               <li
@@ -57,7 +63,6 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* Desktop Search */}
           <div className="w-1/3 xl:flex hidden gap-x-6">
             <input
               type="search"
@@ -69,7 +74,6 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <div className="xl:hidden block">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
