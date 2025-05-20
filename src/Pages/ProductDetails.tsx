@@ -192,8 +192,11 @@ const ProductDetails = () => {
   if (!product) {
     return (
       <Container>
-        <div className="mt-40 px-4 py-12">
-          <p data-aos="fade-up" className="text-center text-xl text-red-500 font-medium">
+        <div className=" mt-10 2xl:mt-40 px-4 py-12">
+          <p
+            data-aos="fade-up"
+            className="text-center text-xl text-red-500 font-medium"
+          >
             Product not found.
           </p>
         </div>
@@ -207,9 +210,9 @@ const ProductDetails = () => {
 
   return (
     <Container>
-      <div className="mx-auto px-4 py-12 mt-40">
+      <div className="mx-auto px-4 py-12 pt-20 xl:mt-30">
         {/* Breadcrumb */}
-        <nav data-aos="fade-up" className="text-sm text-gray-500 mb-6   pb-10">
+        <nav data-aos="fade-up" className="text-sm text-gray-500 mb-6 pb-10">
           <span>Home</span> &nbsp; &lt; &nbsp;
           <span>All Products</span> &nbsp; &lt; &nbsp;
           <span className="text-black font-medium">{product.category}</span>
@@ -229,7 +232,7 @@ const ProductDetails = () => {
           {/* Product Info */}
           <div data-aos="fade-left" className="w-full lg:w-1/2 flex flex-col ">
             <div>
-              <h1 className="text-black text-[28px] sm:text-[36px] md:text-[48px] font-semibold not-italic leading-normal mb-4">
+              <h1 className="text-black text-[24px] sm:text-[36px] md:text-[48px] font-semibold not-italic leading-normal mb-4">
                 {product.name}
               </h1>
               <p className="text-black text-[18px] sm:text-[20px] md:text-[24px] font-medium not-italic leading-normalmb-4">
@@ -248,7 +251,8 @@ const ProductDetails = () => {
                 ))}
               </ul>
             </div>
-            <button className="flex w-[354px] h-[73px] px-12 py-[27px] justify-center items-center gap-4 rounded-[24px] bg-black text-white cursor-pointer  hover:scale-105 duration-300">
+
+            <button className="w-full xl:w-[300px] py-2 2xl:py-[20px] border border-black bg-black text-white rounded-3xl font-inter text-[16px] font-semibold hover:bg-white hover:text-black transition-all duration-300">
               Get It Now
             </button>
           </div>
@@ -257,10 +261,16 @@ const ProductDetails = () => {
         {/* Description */}
         <div className="mb-16 border-t border-gray-200 pt-10">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            <h3 data-aos="fade-up" className="text-lg font-semibold text-black col-span-1 md:col-span-1">
+            <h3
+              data-aos="fade-up"
+              className="text-lg font-semibold text-black col-span-1 md:col-span-1"
+            >
               Description
             </h3>
-            <p data-aos="fade-up" className="text-gray-700 leading-relaxed text-base md:col-span-4">
+            <p
+              data-aos="fade-up"
+              className="text-gray-700 leading-relaxed text-base md:col-span-4"
+            >
               {product.description + " " + product.description}
             </p>
           </div>
