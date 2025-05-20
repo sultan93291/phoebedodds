@@ -272,7 +272,7 @@ const Products = () => {
         <main className="">
           <div className="grid grid-cols-12 gap-14">
             {/* Sidebar Filters */}
-            <div className="col-span-12 md:col-span-3 space-y-6">
+            <div className="col-span-12 lg:col-span-3 space-y-6">
               {/* Price Range */}
               <div className="w-full mt-10">
                 <h3
@@ -406,7 +406,7 @@ const Products = () => {
             </div>
 
             {/* Main Product Grid */}
-            <div className="col-span-12 md:col-span-9">
+            <div className="col-span-12 lg:col-span-9">
               {/* Brand Filter Buttons */}
               <div className="flex flex-wrap gap-4 mb-6">
                 {uniqueBrands.map((brand) => (
@@ -430,7 +430,7 @@ const Products = () => {
               </div>
 
               {/* Product Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                 {paginatedProducts.map((product) => (
                   <div
                     key={product.id}
