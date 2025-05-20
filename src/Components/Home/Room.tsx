@@ -6,9 +6,13 @@ import Bedromm3 from "../../assets/Images/bedroom3.png";
 const Room = () => {
   return (
     <section>
-      <Container className="py-[100px]  border-b border-[#B1B1B1]">
-        <div className="flex justify- gap-x-6">
-          <div className="w-1/2 relative group overflow-hidden rounded-2xl cursor-pointer">
+      <Container className="py-[100px] border-b border-[#B1B1B1]">
+        <div className="flex gap-x-6 flex-wrap md:flex-nowrap">
+          {/* Living Room */}
+          <div
+            className="w-full md:w-1/2 relative group overflow-hidden rounded-2xl cursor-pointer"
+            data-aos="fade-right"
+          >
             <figure>
               <img
                 src={Bedromm1}
@@ -16,7 +20,6 @@ const Room = () => {
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </figure>
-
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
               <h3 className="font-inter text-[32px] font-semibold text-white drop-shadow-md mb-4">
                 Living Room
@@ -27,8 +30,13 @@ const Room = () => {
             </div>
           </div>
 
-          <div className="w-1/2 flex flex-col  gap-6">
-            <div className="w-full relative group overflow-hidden rounded-2xl cursor-pointer">
+          {/* Dining + Bedroom */}
+          <div className="w-full md:w-1/2 flex flex-col gap-6">
+            <div
+              className="w-full relative group overflow-hidden rounded-2xl cursor-pointer"
+              data-aos="fade-left"
+              data-aos-delay="100"
+            >
               <figure>
                 <img
                   src={Bedromm2}
@@ -36,7 +44,6 @@ const Room = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </figure>
-
               <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
                 <h3 className="font-inter text-[32px] font-semibold text-white drop-shadow-md mb-4">
                   Dining Room
@@ -46,7 +53,12 @@ const Room = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full relative group overflow-hidden rounded-2xl cursor-pointer">
+
+            <div
+              className="w-full relative group overflow-hidden rounded-2xl cursor-pointer"
+              data-aos="fade-left"
+              data-aos-delay="200"
+            >
               <figure>
                 <img
                   src={Bedromm3}
@@ -54,7 +66,6 @@ const Room = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </figure>
-
               <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
                 <h3 className="font-inter text-[32px] font-semibold text-white drop-shadow-md mb-4">
                   Bed room
