@@ -4,9 +4,9 @@ import Shopify from "../../assets/Images/shopify.png";
 const OurPartners = () => {
   return (
     <section>
-      <Container className="py-[100px] border-b border-[#B1B1B1]">
+      <Container className="xl:py-[100px] py-[50px] border-b border-[#B1B1B1] 2xl:px-0 px-5">
         <h3
-          className="font-inter text-[32px] font-semibold text-[#000] w-full"
+          className="font-inter xl:text-[32px] lg:text-[28px] text-[25px] font-semibold text-[#000] w-full"
           data-aos="fade-up"
         >
           Our Partners

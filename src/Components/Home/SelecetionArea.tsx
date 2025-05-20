@@ -9,10 +9,10 @@ const SelectionArea = () => {
   ];
 
   return (
-    <section className="mb-8">
+    <section className="xl:mb-8 2xl:px-0 px-5">
       <Container>
         <div
-          className="flex flex-wrap gap-4 justify-between items-center"
+          className="flex flex-wrap gap-4 xl:justify-between justify-center items-center"
           data-aos="fade-up"
         >
           <CustomSelect options={options} placeholder="Furniture" />

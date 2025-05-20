@@ -1,6 +1,4 @@
-
 import type { ReactNode } from "react";
-
 
 interface Containerprops {
   children?: ReactNode;
@@ -15,4 +13,4 @@ const Container: React.FC<Containerprops> = ({ children, className }) => {
   );
 };
 
-export default Container
+export default Container;

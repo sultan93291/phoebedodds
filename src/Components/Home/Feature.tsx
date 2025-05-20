@@ -24,22 +24,22 @@ const Feature = () => {
 
   return (
     <section>
-      <Container className="py-[100px]">
+      <Container className="xl:py-[100px] py-[50px] 2xl:px-0 px-5">
         <h3
-          className="font-inter text-[32px] font-normal text-center text-[#000] w-full"
+          className="font-inter xl:text-[32px] lg:text-[28px] text-[24px] font-normal text-center text-[#000] w-full"
           data-aos="fade-up"
         >
           Featured Products
         </h3>
         <h1
-          className="text-[86px] font-semibold leading-normal font-inter text-[#000] text-center"
+          className="xl:text-[86px] lg:text-[56px] text-[30px] font-semibold leading-normal font-inter text-[#000] text-center"
           data-aos="fade-up"
           data-aos-delay="100"
         >
           Standout Pieces Across All Brands
         </h1>
         <p
-          className="font-inter font-normal text-[#000] text-[24px] pb-12 text-center"
+          className="font-inter font-normal text-[#000] xl:text-[24px] lg:text-[20px] text-[20px] pb-12 text-center"
           data-aos="fade-up"
           data-aos-delay="200"
         >
@@ -52,28 +52,28 @@ const Feature = () => {
           data-aos-delay="300"
         >
           <Tabs className="w-full">
-            <TabList className="flex gap-x-12 justify-center">
+            <TabList className="flex flex-col md:flex-row gap-y-4 md:gap-y-0 md:gap-x-12 justify-center items-center">
               <Tab
-                className="border border-[#000] px-12 py-5 hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] px-12 py-5 text-center hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 New Products
               </Tab>
               <Tab
-                className="border border-[#000] px-12 py-5 hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] sm:my-3 text-center px-12 py-5 hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 Special Prizes
               </Tab>
               <Tab
-                className="border border-[#000] px-12 py-5 rounded-[24px] hover:bg-[#000] hover:text-white duration-300 cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] px-12 py-5 text-center rounded-[24px] hover:bg-[#000] hover:text-white duration-300 cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 Top Sellers
               </Tab>
             </TabList>
 
-            <div className="mt-[120px]">
+            <div className="xl:mt-[120px] mt-[50px]">
               {/* TabPanel 1 */}
               <TabPanel>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-20 cursor-pointer">
@@ -93,7 +93,7 @@ const Feature = () => {
                         <h3 className="font-inter text-[24px] font-medium text-[#000]">
                           {product.name}
                         </h3>
-                        <h4 className="font-inter text-[32px] font-medium text-[#000]">
+                        <h4 className="font-inter xl:text-[32px] text-[25px] font-medium text-[#000]">
                           ${product.price}
                         </h4>
                       </div>
