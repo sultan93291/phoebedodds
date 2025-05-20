@@ -13,7 +13,7 @@ const Footer = () => {
         <figure>
           <img src={Footerlogo} alt="Footerlogo" />
         </figure>
-        <div className="py-[120px] flex justify-between items-center border-b-2 border-[#828282]">
+        <div className="py-[120px] flex justify-between border-b-2 border-[#828282]">
           <div className="">
             <h3 className="font-inter font-semibold text-white text-[32px] pb-18">
               About

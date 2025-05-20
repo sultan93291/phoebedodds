@@ -2,6 +2,7 @@ import Container from "../Shared/Container";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Productimg from "../../assets/Images/product.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+
 interface Product {
   id: number;
   name: string;
@@ -23,43 +24,65 @@ const Feature = () => {
 
   return (
     <section>
-      <Container className="py-[100px] ">
-        <h3 className="font-inter text-[32px] font-normal text-center text-[#000] w-full">
+      <Container className="py-[100px]">
+        <h3
+          className="font-inter text-[32px] font-normal text-center text-[#000] w-full"
+          data-aos="fade-up"
+        >
           Featured Products
         </h3>
-        <h1 className="text-[86px] font-semibold leading-normal font-inter text-[#000] text-center">
+        <h1
+          className="text-[86px] font-semibold leading-normal font-inter text-[#000] text-center"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
           Standout Pieces Across All Brands
         </h1>
-        <p className="font-inter font-normal text-[#000] text-[24px] pb-12 text-center">
+        <p
+          className="font-inter font-normal text-[#000] text-[24px] pb-12 text-center"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
           Compare quality finds without the extra tabs.
         </p>
-        <div className="flex justify-center">
+
+        <div
+          className="flex justify-center"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
           <Tabs className="w-full">
             <TabList className="flex gap-x-12 justify-center">
               <Tab
-                className="border border-[#000] px-12 py-5 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] px-12 py-5 hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 New Products
               </Tab>
               <Tab
-                className="border border-[#000] px-12 py-5 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] px-12 py-5 hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 Special Prizes
               </Tab>
               <Tab
-                className="border border-[#000] px-12 py-5 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] px-12 py-5 rounded-[24px] hover:bg-[#000] hover:text-white duration-300 cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 Top Sellers
               </Tab>
             </TabList>
+
             <div className="mt-[120px]">
+              {/* TabPanel 1 */}
               <TabPanel>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-20 cursor-pointer">
-                  {products.map(product => (
-                    <div key={product.id}>
+                  {products.map((product, index) => (
+                    <div
+                      key={product.id}
+                      data-aos="fade-up"
+                      data-aos-delay={index * 100}
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -95,10 +118,16 @@ const Feature = () => {
                   ))}
                 </div>
               </TabPanel>
+
+              {/* TabPanel 2 */}
               <TabPanel>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-20 cursor-pointer">
-                  {products.map(product => (
-                    <div key={product.id}>
+                  {products.map((product, index) => (
+                    <div
+                      key={product.id}
+                      data-aos="fade-up"
+                      data-aos-delay={index * 100}
+                    >
                       <img
                         src={product.image}
                         alt={product.name}
@@ -137,9 +166,14 @@ const Feature = () => {
             </div>
           </Tabs>
         </div>
-        <div className="flex items-center justify-center mt-20 gap-4">
+
+        <div
+          className="flex items-center justify-center mt-20 gap-4"
+          data-aos="fade-up"
+          data-aos-delay="500"
+        >
           <div className="flex-1 h-[1px] bg-[#828282]" />
-          <button className="px-6 py-3 rounded-[24px] bg-[#000] text-white text-[16px] font-inter cursor-pointer hover:scale-105 duration-300">
+          <button className="px-6 py-3 rounded-[24px] bg-[#000] text-white hover:bg-[#FFF] hover:text-black hover:border hover:border-[#000] text-[16px] font-inter cursor-pointer duration-300">
             See All Products
           </button>
           <div className="flex-1 h-[1px] bg-[#828282]" />
