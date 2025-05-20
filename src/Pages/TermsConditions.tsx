@@ -11,7 +11,7 @@ const TermsContitions = () => {
       />
 
       {/* Paragraph */}
-      <div className="text-black text-[24px] font-normal not-italic leading-[59px]">
+      <div data-aos="fade-up" className="text-black text-[24px] font-normal not-italic leading-[59px]">
         <p>
           At [Your Company Name], we value your privacy and are committed to
           protecting your personal information. When you use our website or
