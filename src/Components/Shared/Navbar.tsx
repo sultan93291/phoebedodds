@@ -40,11 +40,12 @@ const Navbar = () => {
           <div className="w-1/5">
             <Link to="/">
               <figure>
-                <img src={Logo} alt="Logo" className="h-full w-full" />
+                <img src={Logo} alt="Logo" className="md:h-8 w-full h-8" />
               </figure>
             </Link>
           </div>
 
+          {/* Desktop Nav */}
           <ul className="w-1/3 xl:flex hidden gap-x-12 items-center">
             {navItems.map(({ label, path }) => (
               <li
@@ -56,6 +57,7 @@ const Navbar = () => {
             ))}
           </ul>
 
+          {/* Desktop Search */}
           <div className="w-1/3 xl:flex hidden gap-x-6">
             <input
               type="search"
@@ -67,20 +69,32 @@ const Navbar = () => {
             </button>
           </div>
 
+          {/* Mobile Menu Toggle */}
           <div className="xl:hidden block">
-            <button onClick={() => setMenuOpen(!menuOpen)}>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="cursor-pointer"
+            >
               {menuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
             </button>
           </div>
         </div>
 
+        {menuOpen && (
+          <div
+            className="fixed inset-0 bg-black/50 z-40 xl:hidden"
+            onClick={() => setMenuOpen(false)}
+          />
+        )}
+
         <div
           className={`xl:hidden fixed top-0 left-0 h-full w-[250px] bg-gray-400 z-50 transform transition-transform duration-700 ease-in-out ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
+          onClick={e => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
         >
-          <div className="flex justify-between items-center px-5 pt-6">
-            <img src={Logo} alt="Logo" />
+          <div className="flex justify-between items-center px-5 pt-6 cursor-pointer">
+            <img src={Logo} alt="Logo" className="h-10" />
           </div>
 
           <ul className="flex flex-col gap-6 mt-10 px-6">

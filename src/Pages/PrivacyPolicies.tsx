@@ -3,7 +3,7 @@ import Container from "@/Components/Shared/Container";
 
 const PrivacyPolicies = () => {
   return (
-    <Container className="px-4 py-20">
+    <Container className="px-4 2xl:px-0 py-20">
       {/* Heading */}
       <PageHeading
         title="Privacy Policies"
@@ -11,7 +11,7 @@ const PrivacyPolicies = () => {
       />
 
       {/* Paragraph */}
-      <div data-aos="fade-up"  className="text-black text-[24px] font-normal not-italic leading-[59px]">
+      <div data-aos="fade-up"  className="text-black text-[18px] lg:text-[24px] font-normal not-italic leading-8 lg:leading-[59px] ">
         <p>
           At [Your Company Name], we value your privacy and are committed to
           protecting your personal information. When you use our website or

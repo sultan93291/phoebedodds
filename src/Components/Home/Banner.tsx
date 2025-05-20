@@ -28,10 +28,10 @@ const Banner = () => {
                 Compare furniture across top brands with one visual search.
               </p>
               <div className="flex" data-aos="fade-up" data-aos-delay="400">
-                <button className="p-5 rounded-[24px] bg-[#FFF] text-black outline-0 text-[16px] font-inter cursor-pointer py-5 lg:px-12 px-8 hover:scale-105 duration-300">
+                <button className="rounded-[24px] bg-[#FFF] text-black outline-0 lg:text-[16px] text-[14px] font-inter cursor-pointer lg:py-5 py-3 lg:px-12 px-8 hover:scale-105 duration-300">
                   Start Exploring
                 </button>
-                <div className="h-[67px] w-[67px] rounded-full flex justify-center items-center bg-[#FACE54] hover:border-amber-300 cursor-pointer group">
+                <div className="lg:h-[67px] lg:w-[67px] h-12 w-12 rounded-full flex justify-center items-center bg-[#FACE54] hover:border-amber-300 cursor-pointer group">
                   <FiArrowUpRight className="text-[24px] group-hover:translate-y-1 duration-300 ease-in-out" />
                 </div>
               </div>
@@ -54,11 +54,15 @@ const Banner = () => {
               data-aos="fade-left"
             >
               <figure>
-                <img src={Banimg1} alt="Banimg1" className="h-full w-full" />
+                <img
+                  src={Banimg1}
+                  alt="Banimg1"
+                  className="xl:h-full lg:h-[450px] md:h-[350px] mx-auto"
+                />
               </figure>
 
               <div
-                className="rounded-[32px] border border-[#828282] bg-white/20 shadow-[0_2px_16px_rgba(0,0,0,0.08)] backdrop-blur-[25px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 xl:top-auto xl:left-auto xl:translate-x-0 xl:translate-y-0 xl:-bottom-0 xl:-right-20 py-5 px-7 lg:w-[385px] w-[250px]"
+                className="rounded-[32px] border border-[#828282] bg-white/20 shadow-[0_2px_16px_rgba(0,0,0,0.08)] backdrop-blur-[25px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 xl:top-auto xl:left-auto xl:translate-x-0 xl:translate-y-0 xl:bottom-18 xl:-right-20 py-5 px-7 lg:w-[385px] w-[250px]"
                 data-aos="flip-up"
                 data-aos-delay="300"
               >
