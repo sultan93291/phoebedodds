@@ -185,7 +185,10 @@ const Products = () => {
             <div className="col-span-12 md:col-span-3 space-y-6">
               {/* Price Range */}
               <div className="w-full mx-auto mt-10">
-                <h3 className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
+                <h3
+                  data-aos="fade-up"
+                  className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4"
+                >
                   Price Range
                 </h3>
 
@@ -219,8 +222,12 @@ const Products = () => {
                     <div
                       {...props}
                       className="w-5 h-5 bg-black rounded-full cursor-pointer"
+                      data-aos="fade-up"
                     >
-                      <div className="absolute top-[-30px] text-xs bg-white px-2 py-1 rounded shadow">
+                      <div
+                        data-aos="fade-up"
+                        className="absolute top-[-30px] text-xs bg-white px-2 py-1 rounded shadow"
+                      >
                         ${values[index]}
                       </div>
                     </div>
@@ -229,10 +236,16 @@ const Products = () => {
 
                 {/* Price labels below */}
                 <div className="flex justify-between text-sm text-black font-semibold">
-                  <span className="flex items-center gap-2 px-12 py-3 rounded-[24px] bg-[#F5F5F5]">
+                  <span
+                    data-aos="fade-up"
+                    className="flex items-center gap-2 px-12 py-3 rounded-[24px] bg-[#F5F5F5]"
+                  >
                     ${values[0]}
                   </span>
-                  <span className="flex items-center gap-2 px-12 py-3 rounded-[24px] border border-black">
+                  <span
+                    data-aos="fade-up"
+                    className="flex items-center gap-2 px-12 py-3 rounded-[24px] border border-black"
+                  >
                     ${values[1]}
                   </span>
                 </div>
@@ -240,7 +253,7 @@ const Products = () => {
 
               {/* Sort By */}
               <div className="w-full flex items-center justify-center">
-                <button className="w-full flex justify-center items-center cursor-pointer px-12 py-[27px] rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300">
+                <button className="w-full flex justify-center items-center cursor-pointer px-12 py-[27px] rounded-[24px] hover:bg-black hover:text-white duration-500 bg-white text-black text-lg font-semibold border border-black ">
                   <span>Sort By</span>
                   <FaAngleDown className="text-xl" />
                 </button>
@@ -248,13 +261,19 @@ const Products = () => {
 
               {/* Categories */}
               <div>
-                <h3 className="text-black not-italic font-semibold text-[32px] mb-8">
+                <h3
+                  data-aos="fade-up"
+                  className="text-black not-italic font-semibold text-[32px] mb-8"
+                >
                   Categories
                 </h3>
 
                 {categoryData.map((cat) => (
                   <div key={cat.name} className="mb-4">
-                    <h4 className="text-black font-medium cursor-pointer text-[24px] mb-6">
+                    <h4
+                      data-aos="fade-up"
+                      className="text-black font-medium cursor-pointer text-[24px] mb-6"
+                    >
                       {cat.name}
                     </h4>
 
@@ -262,6 +281,7 @@ const Products = () => {
                       <div
                         key={sub}
                         className="flex items-center cursor-pointer gap-2 mb-4"
+                        data-aos="fade-up"
                       >
                         <input
                           type="radio"
@@ -307,11 +327,12 @@ const Products = () => {
                         prev === brand ? null : brand
                       )
                     }
-                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium hover:scale-105  duration-300 ${
-                      selectedBrand === brand
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-black border-black"
-                    }`}
+                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium
+            hover:bg-black hover:text-white transition-colors duration-500 ${
+              selectedBrand === brand
+                ? "bg-black text-white border-black"
+                : "bg-white text-black border-black"
+            }`}
                   >
                     {brand}
                   </button>
@@ -330,17 +351,25 @@ const Products = () => {
                       src={product.image}
                       alt={product.name}
                       className="rounded-2xl w-full object-cover aspect-square"
+                      data-aos="fade-up"
                     />
                     <div className="mt-2 text-sm flex justify-between items-center">
-                      <p className="text-black font-medium text-xl md:text-2xl lg:text-[24px] leading-normal">
+                      <p
+                        data-aos="fade-up"
+                        className="text-black font-medium text-xl md:text-2xl lg:text-[24px] leading-normal"
+                      >
                         {product.name}
                       </p>
-                      <div className="text-black font-medium text-2xl md:text-3xl lg:text-[32px] leading-normal">
+                      <div
+                        data-aos="fade-up"
+                        className="text-black font-medium text-2xl md:text-3xl lg:text-[32px] leading-normal"
+                      >
                         ${product.price.toFixed(2)}
                       </div>
                     </div>
                     <Link
                       to="#"
+                      data-aos="fade-up"
                       className="text-[#0E55B2] font-light text-base underline decoration-solid underline-offset-2 leading-normal"
                     >
                       www.sitename.com
@@ -350,7 +379,7 @@ const Products = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center mt-10">
+          <div data-aos="fade-up" className="flex justify-center mt-10">
             <ReactPaginate
               pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
               onPageChange={({ selected }) => setCurrentPage(selected + 1)}
