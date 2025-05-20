@@ -2,59 +2,64 @@ import Container from "./Container";
 import Footerlogo from "../../assets/Images/footerlogo.png";
 import { FaFacebook } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
-import { FaTiktok } from "react-icons/fa6";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaTiktok, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="py-[120px] bg-[#000]">
+    <footer className="py-[60px] md:py-[100px] bg-[#000] px-5">
       <Container>
-        <figure>
+        <figure className="mb-12 md:mb-16 flex justify-center md:justify-start">
           <img src={Footerlogo} alt="Footerlogo" />
         </figure>
-        <div className="py-[120px] flex justify-between border-b-2 border-[#828282]">
-          <div className="">
-            <h3 className="font-inter font-semibold text-white text-[32px] pb-18">
+
+        <div className="pb-[60px] md:pb-[100px] flex flex-wrap gap-y-12 md:gap-y-16 border-b border-[#828282]">
+          {/* About */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 pr-4">
+            <h3 className="font-inter font-semibold text-white text-[24px] md:text-[28px] mb-6">
               About
             </h3>
-            <ul className="flex flex-col gap-8">
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+            <ul className="flex flex-col gap-4">
+              <li className="text-white text-[16px] hover:underline cursor-pointer">
                 About Us
               </li>
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+              <li className="text-white text-[16px] hover:underline cursor-pointer">
                 Affiliate Partnerships
               </li>
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+              <li className="text-white text-[16px] hover:underline cursor-pointer">
                 All Products
               </li>
             </ul>
           </div>
-          <div className="">
-            <h3 className="font-inter font-semibold text-white text-[32px] pb-18">
+
+          {/* Explore */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 pr-4">
+            <h3 className="font-inter font-semibold text-white text-[24px] md:text-[28px] mb-6">
               Explore
             </h3>
-            <ul className="flex flex-col gap-8">
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+            <ul className="flex flex-col gap-4">
+              <li className="text-white text-[16px] hover:underline cursor-pointer">
                 Browse By Category
               </li>
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+              <li className="text-white text-[16px] hover:underline cursor-pointer">
                 Browse By Rooms
               </li>
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+              <li className="text-white text-[16px] hover:underline cursor-pointer">
                 Featured Products
               </li>
             </ul>
           </div>
-          <div className="">
-            <h3 className="font-inter font-semibold text-white text-[32px] pb-18">
+
+          {/* Support */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 pr-4">
+            <h3 className="font-inter font-semibold text-white text-[24px] md:text-[28px] mb-6">
               Support
             </h3>
-            <ul className="flex flex-col gap-8">
+            <ul className="flex flex-col gap-4">
               <li>
                 <Link
                   to="/privacy-policies"
-                  className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline"
+                  className="text-white text-[16px] hover:underline"
                 >
                   Privacy Policies
                 </Link>
@@ -62,48 +67,49 @@ const Footer = () => {
               <li>
                 <Link
                   to="/terms-contitions"
-                  className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline"
+                  className="text-white text-[16px] hover:underline"
                 >
                   Terms & Conditions
                 </Link>
               </li>
             </ul>
           </div>
-          <div className="">
-            <h3 className="font-inter font-semibold text-white text-[32px] pb-18">
+
+          {/* Contact */}
+          <div className="w-full sm:w-1/2 lg:w-1/4 pr-4">
+            <h3 className="font-inter font-semibold text-white text-[24px] md:text-[28px] mb-6">
               Contact Us
             </h3>
-            <ul className="flex flex-col gap-8">
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+            <ul className="flex flex-col gap-4">
+              <li className="text-white text-[16px]">
                 Email:{" "}
                 <span className="text-blue-500">support@yourbrandname.com</span>
               </li>
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
+              <li className="text-white text-[16px]">
                 Phone: <span className="text-blue-500">(123) 456-7890</span>
               </li>
-              <li className="font-inter font-normal text-[16px] text-white cursor-pointer hover:underline">
-                Business Hours: Monday – Friday, 9am – 5pm (EST)
+              <li className="text-white text-[16px]">
+                Business Hours: Mon – Fri, 9am – 5pm (EST)
               </li>
             </ul>
           </div>
         </div>
-        <div className="pt-12 flex justify-between items-center">
-          <p className="font-inter font-normal text-[16px] text-white">
+
+        <div className="pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-white text-[14px] md:text-[16px] text-center md:text-left">
             © 2025 Phoebe Dodds. All rights reserved.
           </p>
-          <div className="flex gap-x-6">
-            <div className="h-[46px] w-[46px] rounded-full border border-white flex justify-center items-center hover:border-amber-300 cursor-pointer">
-              <FaFacebook className="text-white" />
-            </div>
-            <div className="h-[46px] w-[46px] rounded-full border border-white flex justify-center items-center hover:border-amber-300 cursor-pointer">
-              <IoLogoInstagram className="text-white" />
-            </div>
-            <div className="h-[46px] w-[46px] rounded-full border border-white flex justify-center items-center hover:border-amber-300 cursor-pointer">
-              <FaXTwitter className="text-white" />
-            </div>
-            <div className="h-[46px] w-[46px] rounded-full border border-white flex justify-center items-center hover:border-amber-300 cursor-pointer">
-              <FaTiktok className="text-white" />
-            </div>
+          <div className="flex gap-4">
+            {[FaFacebook, IoLogoInstagram, FaXTwitter, FaTiktok].map(
+              (Icon, i) => (
+                <div
+                  key={i}
+                  className="h-10 w-10 rounded-full border border-white flex items-center justify-center hover:border-amber-300 cursor-pointer"
+                >
+                  <Icon className="text-white text-[18px]" />
+                </div>
+              )
+            )}
           </div>
         </div>
       </Container>
