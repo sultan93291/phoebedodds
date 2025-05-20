@@ -6,11 +6,11 @@ import Bedromm3 from "../../assets/Images/bedroom3.png";
 const Room = () => {
   return (
     <section>
-      <Container className="py-[100px] border-b border-[#B1B1B1]">
+      <Container className="xl:py-[100px] py-[50px] border-b border-[#B1B1B1] 2xl:px-0 px-5">
         <div className="flex gap-x-6 flex-wrap md:flex-nowrap">
           {/* Living Room */}
           <div
-            className="w-full md:w-1/2 relative group overflow-hidden rounded-2xl cursor-pointer"
+            className="w-full md:w-1/2 relative group overflow-hidden rounded-2xl cursor-pointer xl:mb-0 mb-5"
             data-aos="fade-right"
           >
             <figure>
