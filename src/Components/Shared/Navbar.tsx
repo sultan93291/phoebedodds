@@ -44,10 +44,10 @@ const Navbar = () => {
     >
       <Container>
         <div className="flex justify-between items-center xl:pt-8 pt-4 pb-4">
-          <div className="w-1/5">
+          <div className="xl:w-1/5 w-full">
             <Link to="/">
               <figure>
-                <img src={Logo} alt="Logo" className="md:h-8 w-full h-8" />
+                <img src={Logo} alt="Logo" className="md:h-8  h-8" />
               </figure>
             </Link>
           </div>

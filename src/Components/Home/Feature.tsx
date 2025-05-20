@@ -135,7 +135,7 @@ const Feature = () => {
                       />
 
                       <div className="flex justify-between pt-6 pb-2 items-center">
-                        <h3 className="font-inter text-[24px] font-medium text-[#000]">
+                        <h3 className="font-inter lg:text-[24px] font-medium text-[#000]">
                           {product.name}
                         </h3>
                         <h4 className="font-inter text-[32px] font-medium text-[#000]">
