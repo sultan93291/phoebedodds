@@ -111,6 +111,96 @@ const Products = () => {
       subCategory: "Floor Lamps",
       link: "https://sitename.com",
     },
+    {
+      id: 10,
+      name: "Modern Dining Set",
+      image: "https://i.ibb.co/jk5mb09p/Frame-215.png",
+      price: 4.65,
+      brand: "FurniLux",
+      category: "Furniture",
+      subCategory: "Dining Tables",
+      link: "https://sitename.com",
+    },
+    {
+      id: 20,
+      name: "Elegant Sofa",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "CozyNest",
+      category: "Furniture",
+      subCategory: "Sofas & Sectionals",
+      link: "https://sitename.com",
+    },
+    {
+      id: 30,
+      name: "Classic Armchair",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 20.65,
+      brand: "WoodHouse",
+      category: "Furniture",
+      subCategory: "Accent Chairs",
+      link: "https://sitename.com",
+    },
+    {
+      id: 40,
+      name: "Pendant Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 30.65,
+      brand: "Lightify",
+      category: "Lighting",
+      subCategory: "Pendant Lights",
+      link: "https://sitename.com",
+    },
+    {
+      id: 110,
+      name: "Pendant Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 30.65,
+      brand: "Lightify",
+      category: "Lighting",
+      subCategory: "Table Lamps",
+      link: "https://sitename.com",
+    },
+    {
+      id: 50,
+      name: "Wall Art Canvas",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "ArtDwell",
+      category: "Decor",
+      subCategory: "Wall Art & Prints",
+      link: "https://sitename.com",
+    },
+    {
+      id: 60,
+      name: "Modern Bookshelf",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "Modest range",
+      category: "Furniture",
+      subCategory: "Bookcases & Shelving",
+      link: "https://sitename.com",
+    },
+    {
+      id: 70,
+      name: "Minimalist Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "Balconiy",
+      category: "Style",
+      subCategory: "Minimalist",
+      link: "https://sitename.com",
+    },
+    {
+      id: 120,
+      name: "Minimalist Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "Kitchen work",
+      category: "Lightify",
+      subCategory: "Floor Lamps",
+      link: "https://sitename.com",
+    },
   ];
 
   const categoryData = [
@@ -174,7 +264,7 @@ const Products = () => {
 
   return (
     <>
-      <Container className="pb-25 px-5">
+      <Container className="pb-25 px-5 mt-20">
         <PageHeading
           title="All Products"
           subtitle="Everything You Need, All in One Place"
@@ -184,7 +274,7 @@ const Products = () => {
             {/* Sidebar Filters */}
             <div className="col-span-12 md:col-span-3 space-y-6">
               {/* Price Range */}
-              <div className="w-full mx-auto mt-10">
+              <div className="w-full mt-10">
                 <h3
                   data-aos="fade-up"
                   className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4"
@@ -212,7 +302,7 @@ const Products = () => {
                           max: MAX,
                         }),
                         borderRadius: "8px",
-                        margin: "1.5rem 0",
+                        margin: "3.5rem 0",
                       }}
                     >
                       {children}
@@ -238,13 +328,13 @@ const Products = () => {
                 <div className="flex justify-between text-sm text-black font-semibold">
                   <span
                     data-aos="fade-up"
-                    className="flex items-center gap-2 px-12 py-3 rounded-[24px] bg-[#F5F5F5]"
+                    className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] bg-[#F5F5F5]"
                   >
                     ${values[0]}
                   </span>
                   <span
                     data-aos="fade-up"
-                    className="flex items-center gap-2 px-12 py-3 rounded-[24px] border border-black"
+                    className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] border border-black"
                   >
                     ${values[1]}
                   </span>
@@ -253,7 +343,7 @@ const Products = () => {
 
               {/* Sort By */}
               <div className="w-full flex items-center justify-center">
-                <button className="w-full flex justify-center items-center cursor-pointer px-12 py-[27px] rounded-[24px] hover:bg-black hover:text-white duration-500 bg-white text-black text-lg font-semibold border border-black ">
+                <button className="w-full flex justify-center items-center cursor-pointer px-6  py-3 lg:px-12 lg:py-[27px] rounded-[24px] hover:bg-black hover:text-white duration-500 bg-white text-black text-lg font-semibold border border-black ">
                   <span>Sort By</span>
                   <FaAngleDown className="text-xl" />
                 </button>
