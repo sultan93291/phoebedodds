@@ -1,8 +1,21 @@
 import { useEffect, useState } from "react";
 import Container from "./Container";
 import Logo from "../../assets/Images/logo.png";
+import { Link } from "react-router-dom";
+
+interface NavItem {
+  label: string;
+  path: string;
+}
 
 const Navbar = () => {
+  const navItems: NavItem[] = [
+    { label: "Home", path: "/" },
+    { label: "Contact Us", path: "/contact-us" },
+    { label: "Categories", path: "/category" },
+    { label: "Featured", path: "/product" },
+  ];
+
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,17 +36,19 @@ const Navbar = () => {
       <Container>
         <div className="flex justify-between items-center pt-8 pb-4">
           <div className="w-1/5">
+            <Link to="/">
             <figure>
               <img src={Logo} alt="Logo" />
             </figure>
+            </Link>
           </div>
           <ul className="w-1/3 flex gap-x-12 items-center">
-            {["Home", "Contact Us", "Categories", "Featured"].map(item => (
+            {navItems.map(({ label, path }) => (
               <li
-                key={item}
+                key={label}
                 className="font-inter text-[16px] font-semibold text-[#000] cursor-pointer w-fit h-fit transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-[1.05] hover:text-[#1a1a1a]"
               >
-                {item}
+                <Link to={path}>{label}</Link>
               </li>
             ))}
           </ul>

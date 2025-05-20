@@ -1,3 +1,4 @@
+import Newslater from "@/Components/Home/Newslater"
 import About from "../Components/Home/About"
 import Banner from "../Components/Home/Banner"
 import Feature from "../Components/Home/Feature"
@@ -14,7 +15,8 @@ const Home = () => {
       <About />
       <OurPartners />
       <Room />
-      <Feature/>
+      <Feature />
+      <Newslater/>
     </>
   )
 }
