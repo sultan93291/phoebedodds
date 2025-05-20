@@ -17,8 +17,16 @@ const Navbar = () => {
     { label: "Featured", path: "/product" },
   ];
 
+  // const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  useEffect(() => {
+    const handlescroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    };
+    window.addEventListener("scroll", handlescroll);
+    return() => window.removeEventListener("scroll",handlescroll)
+  },[])
 
   useEffect(() => {
     const handleScroll = () => {
