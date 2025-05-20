@@ -876,7 +876,7 @@ const Products = () => {
                   />
 
                   {/* Price labels below */}
-                  <div className="flex justify-between text-sm text-black font-semibold">
+                  <div className="flex justify-between gap-6 text-sm text-black font-semibold">
                     <span
                       data-aos="fade-up"
                       className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] bg-[#F5F5F5]"
@@ -896,9 +896,9 @@ const Products = () => {
                 <div className="w-full flex items-center justify-center relative">
                   <button
                     onClick={() => setIsSortOpen(!isSortOpen)}
-                    className="w-full flex justify-between items-center cursor-pointer px-12 py-[27px] rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300"
+                    className="w-full flex justify-center items-center cursor-pointer px-2 py-2  2xl:px-3 2xl:py-[20px] rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300"
                   >
-                    <span>
+                    <span className="text-xs">
                       {sortOption === "lowToHigh"
                         ? "Price (Low to High)"
                         : sortOption === "highToLow"
@@ -907,7 +907,7 @@ const Products = () => {
                         ? "Name (A-Z)"
                         : "Sort By"}
                     </span>
-                    <FaAngleDown className="text-xl" />
+                    <FaAngleDown className="text-xs lg:text-xl" />
                   </button>
 
                   {isSortOpen && (
@@ -917,7 +917,7 @@ const Products = () => {
                           setSortOption("lowToHigh");
                           setIsSortOpen(false);
                         }}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        className="px-4 py-2 text-xs hover:bg-gray-100 cursor-pointer"
                       >
                         Price (Low to High)
                       </div>
@@ -926,7 +926,7 @@ const Products = () => {
                           setSortOption("highToLow");
                           setIsSortOpen(false);
                         }}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        className="px-4 py-2  text-xs hover:bg-gray-100 cursor-pointer"
                       >
                         Price (High to Low)
                       </div>
@@ -935,7 +935,7 @@ const Products = () => {
                           setSortOption("nameAZ");
                           setIsSortOpen(false);
                         }}
-                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                        className="px-4 py-2  text-xs hover:bg-gray-100 cursor-pointer"
                       >
                         Name (A-Z)
                       </div>
@@ -944,7 +944,7 @@ const Products = () => {
                           setSortOption(null);
                           setIsSortOpen(false);
                         }}
-                        className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer"
+                        className="px-4 py-2  text-xs text-red-500 hover:bg-gray-100 cursor-pointer"
                       >
                         Clear Sort
                       </div>
