@@ -120,6 +120,7 @@ const AllCategories = () => {
               <Link
                 key={item.name}
                 to="#"
+                data-aos="fade-up"
                 className="relative rounded-xl overflow-hidden group shadow hover:shadow-lg transition h-50 md:h-[300px] lg:h-[500px]"
               >
                 <div
@@ -132,7 +133,7 @@ const AllCategories = () => {
                   <p className="text-white font-inter text-[24px] sm:text-[28px] md:text-[32px] font-semibold not-italic leading-normal mb-5">
                     {item.name}
                   </p>
-                  <span className="text-black text-sm sm:text-base font-normal not-italic leading-normal flex items-start gap-12  bg-white py-3 px-5 lg:px-12 lg:py-6 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  <span className="text-black text-sm sm:text-base font-normal not-italic leading-normal flex items-start gap-12  bg-white py-3 px-5 lg:px-12 lg:py-6 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 hover:bg-black border border-white hover:border-white hover:text-white group-hover:translate-y-0 transition-all duration-500">
                     See Collections
                   </span>
                 </div>

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Range, getTrackBackground } from "react-range";
 import PageHeading from "@/Components/Reusable/PageHeading";
+import ReactPaginate from "react-paginate";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -110,6 +111,96 @@ const Products = () => {
       subCategory: "Floor Lamps",
       link: "https://sitename.com",
     },
+    {
+      id: 10,
+      name: "Modern Dining Set",
+      image: "https://i.ibb.co/jk5mb09p/Frame-215.png",
+      price: 4.65,
+      brand: "FurniLux",
+      category: "Furniture",
+      subCategory: "Dining Tables",
+      link: "https://sitename.com",
+    },
+    {
+      id: 20,
+      name: "Elegant Sofa",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "CozyNest",
+      category: "Furniture",
+      subCategory: "Sofas & Sectionals",
+      link: "https://sitename.com",
+    },
+    {
+      id: 30,
+      name: "Classic Armchair",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 20.65,
+      brand: "WoodHouse",
+      category: "Furniture",
+      subCategory: "Accent Chairs",
+      link: "https://sitename.com",
+    },
+    {
+      id: 40,
+      name: "Pendant Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 30.65,
+      brand: "Lightify",
+      category: "Lighting",
+      subCategory: "Pendant Lights",
+      link: "https://sitename.com",
+    },
+    {
+      id: 110,
+      name: "Pendant Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 30.65,
+      brand: "Lightify",
+      category: "Lighting",
+      subCategory: "Table Lamps",
+      link: "https://sitename.com",
+    },
+    {
+      id: 50,
+      name: "Wall Art Canvas",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "ArtDwell",
+      category: "Decor",
+      subCategory: "Wall Art & Prints",
+      link: "https://sitename.com",
+    },
+    {
+      id: 60,
+      name: "Modern Bookshelf",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "Modest range",
+      category: "Furniture",
+      subCategory: "Bookcases & Shelving",
+      link: "https://sitename.com",
+    },
+    {
+      id: 70,
+      name: "Minimalist Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "Balconiy",
+      category: "Style",
+      subCategory: "Minimalist",
+      link: "https://sitename.com",
+    },
+    {
+      id: 120,
+      name: "Minimalist Lamp",
+      image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
+      price: 4.65,
+      brand: "Kitchen work",
+      category: "Lightify",
+      subCategory: "Floor Lamps",
+      link: "https://sitename.com",
+    },
   ];
 
   const categoryData = [
@@ -173,7 +264,7 @@ const Products = () => {
 
   return (
     <>
-      <Container className="pb-25 px-5">
+      <Container className="pb-25 px-5 mt-20">
         <PageHeading
           title="All Products"
           subtitle="Everything You Need, All in One Place"
@@ -181,10 +272,13 @@ const Products = () => {
         <main className="">
           <div className="grid grid-cols-12 gap-14">
             {/* Sidebar Filters */}
-            <div className="col-span-12 md:col-span-3 space-y-6">
+            <div className="col-span-12 lg:col-span-3 space-y-6">
               {/* Price Range */}
-              <div className="w-full max-w-md mx-auto mt-10">
-                <h3 className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
+              <div className="w-full mt-10">
+                <h3
+                  data-aos="fade-up"
+                  className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4"
+                >
                   Price Range
                 </h3>
 
@@ -208,7 +302,7 @@ const Products = () => {
                           max: MAX,
                         }),
                         borderRadius: "8px",
-                        margin: "1.5rem 0",
+                        margin: "3.5rem 0",
                       }}
                     >
                       {children}
@@ -218,8 +312,12 @@ const Products = () => {
                     <div
                       {...props}
                       className="w-5 h-5 bg-black rounded-full cursor-pointer"
+                      data-aos="fade-up"
                     >
-                      <div className="absolute top-[-30px] text-xs bg-white px-2 py-1 rounded shadow">
+                      <div
+                        data-aos="fade-up"
+                        className="absolute top-[-30px] text-xs bg-white px-2 py-1 rounded shadow"
+                      >
                         ${values[index]}
                       </div>
                     </div>
@@ -228,10 +326,16 @@ const Products = () => {
 
                 {/* Price labels below */}
                 <div className="flex justify-between text-sm text-black font-semibold">
-                  <span className="flex items-center gap-2 px-12 py-3 rounded-[24px] bg-[#F5F5F5]">
+                  <span
+                    data-aos="fade-up"
+                    className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] bg-[#F5F5F5]"
+                  >
                     ${values[0]}
                   </span>
-                  <span className="flex items-center gap-2 px-12 py-3 rounded-[24px] border border-black">
+                  <span
+                    data-aos="fade-up"
+                    className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] border border-black"
+                  >
                     ${values[1]}
                   </span>
                 </div>
@@ -239,7 +343,7 @@ const Products = () => {
 
               {/* Sort By */}
               <div className="w-full flex items-center justify-center">
-                <button className="w-full flex justify-center items-center cursor-pointer px-12 py-[27px] rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300">
+                <button className="w-full flex justify-center items-center cursor-pointer px-6  py-3 lg:px-12 lg:py-[27px] rounded-[24px] hover:bg-black hover:text-white duration-500 bg-white text-black text-lg font-semibold border border-black ">
                   <span>Sort By</span>
                   <FaAngleDown className="text-xl" />
                 </button>
@@ -247,13 +351,19 @@ const Products = () => {
 
               {/* Categories */}
               <div>
-                <h3 className="text-black not-italic font-semibold text-[32px] mb-8">
+                <h3
+                  data-aos="fade-up"
+                  className="text-black not-italic font-semibold text-[32px] mb-8"
+                >
                   Categories
                 </h3>
 
                 {categoryData.map((cat) => (
                   <div key={cat.name} className="mb-4">
-                    <h4 className="text-black font-medium cursor-pointer text-[24px] mb-6">
+                    <h4
+                      data-aos="fade-up"
+                      className="text-black font-medium cursor-pointer text-[24px] mb-6"
+                    >
                       {cat.name}
                     </h4>
 
@@ -261,6 +371,7 @@ const Products = () => {
                       <div
                         key={sub}
                         className="flex items-center cursor-pointer gap-2 mb-4"
+                        data-aos="fade-up"
                       >
                         <input
                           type="radio"
@@ -295,7 +406,7 @@ const Products = () => {
             </div>
 
             {/* Main Product Grid */}
-            <div className="col-span-12 md:col-span-9">
+            <div className="col-span-12 lg:col-span-9">
               {/* Brand Filter Buttons */}
               <div className="flex flex-wrap gap-4 mb-6">
                 {uniqueBrands.map((brand) => (
@@ -306,11 +417,12 @@ const Products = () => {
                         prev === brand ? null : brand
                       )
                     }
-                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium hover:scale-105  duration-300 ${
-                      selectedBrand === brand
-                        ? "bg-black text-white border-black"
-                        : "bg-white text-black border-black"
-                    }`}
+                    className={`rounded-[24px] px-6 py-2 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium
+            hover:bg-black hover:text-white transition-colors duration-500 ${
+              selectedBrand === brand
+                ? "bg-black text-white border-black"
+                : "bg-white text-black border-black"
+            }`}
                   >
                     {brand}
                   </button>
@@ -318,7 +430,7 @@ const Products = () => {
               </div>
 
               {/* Product Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
                 {paginatedProducts.map((product) => (
                   <div
                     key={product.id}
@@ -329,17 +441,25 @@ const Products = () => {
                       src={product.image}
                       alt={product.name}
                       className="rounded-2xl w-full object-cover aspect-square"
+                      data-aos="fade-up"
                     />
                     <div className="mt-2 text-sm flex justify-between items-center">
-                      <p className="text-black font-medium text-xl md:text-2xl lg:text-[24px] leading-normal">
+                      <p
+                        data-aos="fade-up"
+                        className="text-black font-medium text-xl md:text-2xl lg:text-[24px] leading-normal"
+                      >
                         {product.name}
                       </p>
-                      <div className="text-black font-medium text-2xl md:text-3xl lg:text-[32px] leading-normal">
+                      <div
+                        data-aos="fade-up"
+                        className="text-black font-medium text-2xl md:text-3xl lg:text-[32px] leading-normal"
+                      >
                         ${product.price.toFixed(2)}
                       </div>
                     </div>
                     <Link
                       to="#"
+                      data-aos="fade-up"
                       className="text-[#0E55B2] font-light text-base underline decoration-solid underline-offset-2 leading-normal"
                     >
                       www.sitename.com
@@ -349,26 +469,19 @@ const Products = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center gap-3 mt-10">
-            {/* Page Dropdown */}
-            <select
-              className="border border-black rounded-md px-4 py-2 text-sm text-black appearance-none cursor-pointer"
-              value={currentPage}
-              onChange={(e) => setCurrentPage(Number(e.target.value))}
-            >
-              {Array.from({
-                length: Math.ceil(filteredProducts.length / itemsPerPage),
-              }).map((_, index) => (
-                <option key={index} value={index + 1}>
-                  {String(index + 1).padStart(2, "0")}
-                </option>
-              ))}
-            </select>
-
-            {/* Page Indicator */}
-            <div className="w-10 h-10 border border-black rounded-md flex items-center justify-center text-sm font-medium">
-              {currentPage}
-            </div>
+          <div data-aos="fade-up" className="flex justify-center mt-10">
+            <ReactPaginate
+              pageCount={Math.ceil(filteredProducts.length / itemsPerPage)}
+              onPageChange={({ selected }) => setCurrentPage(selected + 1)}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={2}
+              containerClassName="flex gap-2"
+              pageClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
+              previousClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
+              nextClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
+              breakClassName="cursor-pointer text-sm"
+              activeClassName="bg-black text-white"
+            />
           </div>
         </main>
       </Container>

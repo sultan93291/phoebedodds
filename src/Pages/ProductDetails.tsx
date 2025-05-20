@@ -193,7 +193,7 @@ const ProductDetails = () => {
     return (
       <Container>
         <div className="mt-40 px-4 py-12">
-          <p className="text-center text-xl text-red-500 font-medium">
+          <p data-aos="fade-up" className="text-center text-xl text-red-500 font-medium">
             Product not found.
           </p>
         </div>
@@ -209,7 +209,7 @@ const ProductDetails = () => {
     <Container>
       <div className="mx-auto px-4 py-12 mt-40">
         {/* Breadcrumb */}
-        <nav className="text-sm text-gray-500 mb-6   pb-10">
+        <nav data-aos="fade-up" className="text-sm text-gray-500 mb-6   pb-10">
           <span>Home</span> &nbsp; &lt; &nbsp;
           <span>All Products</span> &nbsp; &lt; &nbsp;
           <span className="text-black font-medium">{product.category}</span>
@@ -218,7 +218,7 @@ const ProductDetails = () => {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row gap-10 mb-16">
           {/* Image */}
-          <div className="w-full lg:w-1/2">
+          <div data-aos="fade-right" className="w-full lg:w-1/2">
             <img
               src={product.image}
               alt={product.name}
@@ -227,7 +227,7 @@ const ProductDetails = () => {
           </div>
 
           {/* Product Info */}
-          <div className="w-full lg:w-1/2 flex flex-col ">
+          <div data-aos="fade-left" className="w-full lg:w-1/2 flex flex-col ">
             <div>
               <h1 className="text-black text-[28px] sm:text-[36px] md:text-[48px] font-semibold not-italic leading-normal mb-4">
                 {product.name}
@@ -257,10 +257,10 @@ const ProductDetails = () => {
         {/* Description */}
         <div className="mb-16 border-t border-gray-200 pt-10">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            <h3 className="text-lg font-semibold text-black col-span-1 md:col-span-1">
+            <h3 data-aos="fade-up" className="text-lg font-semibold text-black col-span-1 md:col-span-1">
               Description
             </h3>
-            <p className="text-gray-700 leading-relaxed text-base md:col-span-4">
+            <p data-aos="fade-up" className="text-gray-700 leading-relaxed text-base md:col-span-4">
               {product.description + " " + product.description}
             </p>
           </div>
@@ -268,7 +268,7 @@ const ProductDetails = () => {
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div>
+          <div data-aos="fade-left">
             <h3 className="text-xl font-semibold text-black mb-6">
               Related Products
             </h3>
