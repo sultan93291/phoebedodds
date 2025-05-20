@@ -59,7 +59,7 @@ const Navbar = () => {
               placeholder="search"
               className="p-5 rounded-[24px] border border-[#000] outline-0 w-[350px] text-gray-400 text-[16px] font-inter"
             />
-            <button className="p-5 rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer w-[150px] hover:scale-105 duration-300">
+            <button className="p-5 rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer w-[150px] hover:bg-[#fff] hover:text-black hover:Lborder-black hover:border duration-300">
               Search
             </button>
           </div>

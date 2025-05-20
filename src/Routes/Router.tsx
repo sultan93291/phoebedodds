@@ -6,12 +6,13 @@ import ProductDetails from "@/Pages/ProductDetails";
 import PrivacyPolicies from "@/Pages/PrivacyPolicies";
 import TermsContitions from "@/Pages/TermsConditions";
 import AllCategories from "@/Pages/AllCategories";
+import  Error from "@/Pages/Error";
 
 export const router = createBrowserRouter([
   {
     path: "",
     element: <RootLayout />,
-    errorElement: "",
+    errorElement: <Error/>,
     children: [
       { path: "", element: <Home /> },
       { path: "/product", element: <Products /> },
