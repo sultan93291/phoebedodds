@@ -52,21 +52,21 @@ const Feature = () => {
           data-aos-delay="300"
         >
           <Tabs className="w-full">
-            <TabList className="flex flex-col md:flex-row gap-y-4 md:gap-y-0 md:gap-x-12 justify-center items-center">
+            <TabList className="flex flex-wrap gap-2 md:gap-y-0 justify-center items-center">
               <Tab
-                className="border border-[#000] px-12 py-5 text-center hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] xl:px-12 px-7 xl:py-5 py-3 text-center hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 New Products
               </Tab>
               <Tab
-                className="border border-[#000] sm:my-3 text-center px-12 py-5 hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] sm:my-3 text-center xl:px-12 px-7 xl:py-5 py-3 hover:bg-[#000] hover:text-white duration-300 rounded-[24px] cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 Special Prizes
               </Tab>
               <Tab
-                className="border border-[#000] px-12 py-5 text-center rounded-[24px] hover:bg-[#000] hover:text-white duration-300 cursor-pointer text-[16px] font-normal font-inter transition-all"
+                className="border border-[#000] xl:px-12 px-7 xl:py-5 py-3 text-center rounded-[24px] hover:bg-[#000] hover:text-white duration-300 cursor-pointer text-[16px] font-normal font-inter transition-all"
                 selectedClassName="bg-black text-white"
               >
                 Top Sellers
