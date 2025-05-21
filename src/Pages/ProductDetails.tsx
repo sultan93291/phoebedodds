@@ -221,7 +221,7 @@ const ProductDetails = () => {
         {/* Main Content */}
         <div className="flex flex-col lg:flex-row gap-10 mb-16">
           {/* Image */}
-          <div data-aos="fade-right" className="w-full lg:w-1/2">
+          <div data-aos="fade-right" className="w-full md:w-1/2">
             <img
               src={product.image}
               alt={product.name}

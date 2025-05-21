@@ -1,5 +1,3 @@
-// src/components/shared/CustomSelect.tsx
-
 import {
   Select,
   SelectContent,
@@ -26,12 +24,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   placeholder = "Select",
   onChange,
   value,
-  className = "w-[200px]",
+  className = "xl:w-[200px] w-[150px]",
 }) => {
   return (
     <Select onValueChange={onChange} value={value}>
       <SelectTrigger
-        className={`border border-[#828282] rounded-[24px] p-6 text-[20px] font-inter text-black font-medium ${className}`}
+        className={`border border-[#828282] rounded-[24px] p-6 xl:text-[20px] text-[18px] font-inter text-black font-medium ${className}`}
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
