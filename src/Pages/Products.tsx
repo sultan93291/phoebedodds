@@ -873,7 +873,7 @@ const Products = () => {
               </button>
             </div>
           </div>
-          <main className="px-5">
+          <main className="">
             <div className="lg:flex gap-14">
               {/* Sidebar Filters */}
               <div className="col-span-12 lg:col-span-3 space-y-6 hidden lg:block">
