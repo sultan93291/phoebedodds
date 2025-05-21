@@ -785,7 +785,7 @@ const Products = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 9;
 
   // Filtered and Sorted Products inside useEffect
   useEffect(() => {
@@ -873,7 +873,7 @@ const Products = () => {
               </button>
             </div>
           </div>
-          <main className="px-5">
+          <main className="">
             <div className="lg:flex gap-14">
               {/* Sidebar Filters */}
               <div className="col-span-12 lg:col-span-3 space-y-6 hidden lg:block">
