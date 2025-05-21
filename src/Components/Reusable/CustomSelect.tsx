@@ -1,5 +1,3 @@
-// src/components/shared/CustomSelect.tsx
-
 import {
   Select,
   SelectContent,
