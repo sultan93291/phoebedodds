@@ -7,6 +7,7 @@ import PageHeading from "@/Components/Reusable/PageHeading";
 import ReactPaginate from "react-paginate";
 import { IoFilter } from "react-icons/io5";
 
+
 const Products = () => {
   const navigate = useNavigate();
   interface Product {
@@ -406,7 +407,7 @@ const products: Product[] = [
     id: 39,
     name: "Classic Armchair",
     image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-    price: 20.65,
+    price: 400,
     brand: "WoodHouse",
     category: "Furniture",
     subCategory: "Accent Chairs",
@@ -683,6 +684,8 @@ const products: Product[] = [
     link: "https://sitename.com",
   }
 ];
+
+
 
 
   const categoryData = [
