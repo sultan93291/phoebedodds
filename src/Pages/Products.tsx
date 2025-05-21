@@ -566,7 +566,7 @@ const Products = () => {
       id: 55,
       name: "Modern Dining Set",
       image: "https://i.ibb.co/jk5mb09p/Frame-215.png",
-      price: 4.65,
+      price: 280,
       brand: "FurniLux",
       category: "Furniture",
       subCategory: "Dining Tables",
@@ -576,7 +576,7 @@ const Products = () => {
       id: 56,
       name: "Elegant Sofa",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 4.65,
+      price: 300,
       brand: "CozyNest",
       category: "Furniture",
       subCategory: "Sofas & Sectionals",
@@ -586,7 +586,7 @@ const Products = () => {
       id: 57,
       name: "Classic Armchair",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 20.65,
+      price: 320,
       brand: "WoodHouse",
       category: "Furniture",
       subCategory: "Accent Chairs",
@@ -596,7 +596,7 @@ const Products = () => {
       id: 58,
       name: "Pendant Lamp",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 30.65,
+      price: 340,
       brand: "Lightify",
       category: "Lighting",
       subCategory: "Pendant Lights",
@@ -606,7 +606,7 @@ const Products = () => {
       id: 59,
       name: "Pendant Lamp",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 30.65,
+      price: 360,
       brand: "Lightify",
       category: "Lighting",
       subCategory: "Table Lamps",
@@ -616,7 +616,7 @@ const Products = () => {
       id: 60,
       name: "Wall Art Canvas",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 4.65,
+      price: 380,
       brand: "ArtDwell",
       category: "Decor",
       subCategory: "Wall Art & Prints",
@@ -626,7 +626,7 @@ const Products = () => {
       id: 61,
       name: "Modern Bookshelf",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 4.65,
+      price: 400,
       brand: "CozyNest",
       category: "Furniture",
       subCategory: "Bookcases & Shelving",
@@ -636,7 +636,7 @@ const Products = () => {
       id: 62,
       name: "Minimalist Lamp",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 4.65,
+      price: 420,
       brand: "Lightify",
       category: "Style",
       subCategory: "Minimalist",
@@ -646,7 +646,7 @@ const Products = () => {
       id: 63,
       name: "Minimalist Lamp",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 4.65,
+      price: 440,
       brand: "Lightify",
       category: "Lightify",
       subCategory: "Floor Lamps",
@@ -656,7 +656,7 @@ const Products = () => {
       id: 64,
       name: "Modern Dining Set",
       image: "https://i.ibb.co/jk5mb09p/Frame-215.png",
-      price: 4.65,
+      price: 460,
       brand: "FurniLux",
       category: "Furniture",
       subCategory: "Dining Tables",
@@ -666,7 +666,7 @@ const Products = () => {
       id: 65,
       name: "Elegant Sofa",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 4.65,
+      price: 480,
       brand: "CozyNest",
       category: "Furniture",
       subCategory: "Sofas & Sectionals",
@@ -676,7 +676,7 @@ const Products = () => {
       id: 66,
       name: "Classic Armchair",
       image: "https://i.ibb.co/B5Wk1yvS/Rectangle-15.png",
-      price: 20.65,
+      price: 500,
       brand: "WoodHouse",
       category: "Furniture",
       subCategory: "Accent Chairs",
@@ -771,16 +771,18 @@ const Products = () => {
     },
   ];
 
-   const MIN = 0;
+  const MIN = 0;
   const MAX = 500;
   const [values, setValues] = useState([0, 300]);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const uniqueBrands = Array.from(new Set(products.map((p) => p.brand)));
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(null);
+  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+    null
+  );
   const [sortOption, setSortOption] = useState<string | null>(null);
   const [isSortOpen, setIsSortOpen] = useState(false);
-    const modalRef = useRef<HTMLDivElement | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
@@ -831,7 +833,10 @@ const Products = () => {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         handleCloseModal();
       }
     }
@@ -844,7 +849,6 @@ const Products = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showModal]);
-
 
   return (
     <>
@@ -1127,133 +1131,155 @@ const Products = () => {
                 onPageChange={({ selected }) => setCurrentPage(selected + 1)}
                 pageRangeDisplayed={3}
                 marginPagesDisplayed={1}
-                containerClassName="flex gap-2"
-                pageClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
-                previousClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
-                nextClassName="cursor-pointer border px-3 py-2 rounded-md text-sm"
-                breakClassName="cursor-pointer text-sm"
+                containerClassName="flex flex-wrap gap-2 justify-center mt-4"
+                pageClassName="border rounded-md text-sm"
+                pageLinkClassName="cursor-pointer px-3 py-2 block w-full h-full text-xs sm:text-sm"
+                previousClassName="border rounded-md text-sm"
+                previousLinkClassName="cursor-pointer px-3 py-2 block w-full h-full text-xs sm:text-sm"
+                nextClassName="border rounded-md text-sm"
+                nextLinkClassName="cursor-pointer px-3 py-2 block w-full h-full text-xs sm:text-sm"
+                breakClassName="text-sm"
+                breakLinkClassName="cursor-pointer block px-3 py-2 text-xs sm:text-sm"
                 activeClassName="bg-black text-white"
               />
             </div>
           </main>
         </div>
 
-
-              {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/10 bg-opacity-50">
-          <div
-            ref={modalRef}
-            className={`bg-white p-6 max-w-[300px] w-full relative h-[100vh] overflow-y-auto scroll-smooth ${
-              isExiting ? "animate-slide-out-left" : "animate-slide-in-left"
-            }`}
-          >
-            <button
-              onClick={handleCloseModal}
-              className="absolute top-2 right-2 text-black hover:text-red-500 text-xl font-bold"
+        {showModal && (
+          <div className="fixed inset-0 z-50 bg-black/10 bg-opacity-50">
+            <div
+              ref={modalRef}
+              className={`bg-white p-6 max-w-[300px] w-full relative h-[100vh] overflow-y-auto scroll-smooth ${
+                isExiting ? "animate-slide-out-left" : "animate-slide-in-left"
+              }`}
             >
-              &times;
-            </button>
-            <div className="space-y-6">
-              {/* Price Range */}
-              <div className="w-full mt-10">
-                <h3 className="not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
-                  Price Range
-                </h3>
-                <Range
-                  values={values}
-                  step={5}
-                  min={MIN}
-                  max={MAX}
-                  onChange={(values) => setValues(values)}
-                  renderTrack={({ props, children }) => (
-                    <div
-                      {...props}
-                      style={{
-                        ...props.style,
-                        height: "6px",
-                        width: "100%",
-                        background: getTrackBackground({
-                          values,
-                          colors: ["#B2B2B2", "#000000", "#B2B2B2"],
-                          min: MIN,
-                          max: MAX,
-                        }),
-                        borderRadius: "8px",
-                        margin: "3.5rem 0",
-                      }}
-                    >
-                      {children}
-                    </div>
-                  )}
-                  renderThumb={({ props, index }) => (
-                    <div
-                      {...props}
-                      className="w-5 h-5 bg-black rounded-full cursor-pointer"
-                    >
-                      <div className="absolute top-[-30px] text-xs bg-white px-2 py-1 rounded shadow">
-                        ${values[index]}
+              <button
+                onClick={handleCloseModal}
+                className="absolute top-2 right-2 text-black hover:text-red-500 text-xl font-bold"
+              >
+                &times;
+              </button>
+              <div className="space-y-6">
+                {/* Price Range */}
+                <div className="w-full mt-10">
+                  <h3 className="not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4">
+                    Price Range
+                  </h3>
+                  <Range
+                    values={values}
+                    step={5}
+                    min={MIN}
+                    max={MAX}
+                    onChange={(values) => setValues(values)}
+                    renderTrack={({ props, children }) => (
+                      <div
+                        {...props}
+                        style={{
+                          ...props.style,
+                          height: "6px",
+                          width: "100%",
+                          background: getTrackBackground({
+                            values,
+                            colors: ["#B2B2B2", "#000000", "#B2B2B2"],
+                            min: MIN,
+                            max: MAX,
+                          }),
+                          borderRadius: "8px",
+                          margin: "3.5rem 0",
+                        }}
+                      >
+                        {children}
                       </div>
-                    </div>
-                  )}
-                />
-                <div className="flex justify-between gap-6 text-sm text-black font-semibold">
-                  <span className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] bg-[#F5F5F5]">${values[0]}</span>
-                  <span className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] border border-black">${values[1]}</span>
-                </div>
-              </div>
-
-              {/* Sort By */}
-              <div className="w-full flex items-center justify-center relative">
-                <button
-                  onClick={() => setSortOption((prev) => (prev === "lowToHigh" ? null : "lowToHigh"))}
-                  className="w-full flex justify-center items-center cursor-pointer px-2 py-2 rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300"
-                >
-                  <span className="text-xs">
-                    {sortOption === "lowToHigh" ? "Price (Low to High)" : "Sort By"}
-                  </span>
-                  <FaAngleDown className="text-xs lg:text-xl" />
-                </button>
-              </div>
-
-              {/* Categories */}
-              <div>
-                <h3 className="text-black not-italic font-semibold text-[24px] mb-8">Categories</h3>
-                {categoryData.map((cat) => (
-                  <div key={cat.name} className="mb-4">
-                    <h4 className="text-black font-medium cursor-pointer text-[18px] mb-6">{cat.name}</h4>
-                    {cat.subCategories.map((sub) => (
-                      <div key={sub} className="flex items-center cursor-pointer gap-2 mb-4">
-                        <input
-                          type="radio"
-                          name="subcategory"
-                          className="w-4 h-4 cursor-pointer accent-black"
-                          checked={selectedSubCategory === sub}
-                          onChange={() => {
-                            setSelectedCategory(cat.name);
-                            setSelectedSubCategory(sub);
-                          }}
-                        />
-                        <label className="text-black font-light text-[14px] leading-normal">{sub}</label>
+                    )}
+                    renderThumb={({ props, index }) => (
+                      <div
+                        {...props}
+                        className="w-5 h-5 bg-black rounded-full cursor-pointer"
+                      >
+                        <div className="absolute top-[-30px] text-xs bg-white px-2 py-1 rounded shadow">
+                          ${values[index]}
+                        </div>
                       </div>
-                    ))}
+                    )}
+                  />
+                  <div className="flex justify-between gap-6 text-sm text-black font-semibold">
+                    <span className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] bg-[#F5F5F5]">
+                      ${values[0]}
+                    </span>
+                    <span className="flex items-center gap-2 px-6 py-1 lg:px-12 lg:py-3 rounded-[24px] border border-black">
+                      ${values[1]}
+                    </span>
                   </div>
-                ))}
-                {(selectedCategory || selectedSubCategory) && (
+                </div>
+
+                {/* Sort By */}
+                <div className="w-full flex items-center justify-center relative">
                   <button
-                    onClick={() => {
-                      setSelectedCategory(null);
-                      setSelectedSubCategory(null);
-                    }}
-                    className="mt-4 text-sm underline cursor-pointer text-blue-600"
+                    onClick={() =>
+                      setSortOption((prev) =>
+                        prev === "lowToHigh" ? null : "lowToHigh"
+                      )
+                    }
+                    className="w-full flex justify-center items-center cursor-pointer px-2 py-2 rounded-[24px] bg-white text-black text-lg font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300"
                   >
-                    Clear Category Filter
+                    <span className="text-xs">
+                      {sortOption === "lowToHigh"
+                        ? "Price (Low to High)"
+                        : "Sort By"}
+                    </span>
+                    <FaAngleDown className="text-xs lg:text-xl" />
                   </button>
-                )}
+                </div>
+
+                {/* Categories */}
+                <div>
+                  <h3 className="text-black not-italic font-semibold text-[24px] mb-8">
+                    Categories
+                  </h3>
+                  {categoryData.map((cat) => (
+                    <div key={cat.name} className="mb-4">
+                      <h4 className="text-black font-medium cursor-pointer text-[18px] mb-6">
+                        {cat.name}
+                      </h4>
+                      {cat.subCategories.map((sub) => (
+                        <div
+                          key={sub}
+                          className="flex items-center cursor-pointer gap-2 mb-4"
+                        >
+                          <input
+                            type="radio"
+                            name="subcategory"
+                            className="w-4 h-4 cursor-pointer accent-black"
+                            checked={selectedSubCategory === sub}
+                            onChange={() => {
+                              setSelectedCategory(cat.name);
+                              setSelectedSubCategory(sub);
+                            }}
+                          />
+                          <label className="text-black font-light text-[14px] leading-normal">
+                            {sub}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                  {(selectedCategory || selectedSubCategory) && (
+                    <button
+                      onClick={() => {
+                        setSelectedCategory(null);
+                        setSelectedSubCategory(null);
+                      }}
+                      className="mt-4 text-sm underline cursor-pointer text-blue-600"
+                    >
+                      Clear Category Filter
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </Container>
     </>
   );
