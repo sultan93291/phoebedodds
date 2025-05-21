@@ -825,7 +825,7 @@ const products: Product[] = [
                 <div className="w-full mt-10">
                   <h3
                     data-aos="fade-up"
-                    className=" not-italic text-black font-semibold leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4"
+                    className="font-semibold not-italic text-black  leading-none text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] mb-4"
                   >
                     Price Range
                   </h3>
