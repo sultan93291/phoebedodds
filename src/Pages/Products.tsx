@@ -785,7 +785,7 @@ const Products = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 9;
 
   // Filtered and Sorted Products inside useEffect
   useEffect(() => {
