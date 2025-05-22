@@ -1,7 +1,7 @@
-import Container from "../Shared/Container";
-import Banimg from "../../assets/Images/Banimg.png";
-import { FiArrowUpRight } from "react-icons/fi";
 import CountUp from "react-countup";
+import Container from "../Shared/Container";
+import { FiArrowUpRight } from "react-icons/fi";
+import Banimg from "../../assets/Images/Banimg.png";
 import Banimg1 from "../../assets/Images/banimg1.png";
 
 const Banner = () => {
