@@ -1,7 +1,6 @@
 import Container from "../Shared/Container";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+
 import Productimg from "../../assets/Images/product.png";
-import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 interface Product {
   id: number;
