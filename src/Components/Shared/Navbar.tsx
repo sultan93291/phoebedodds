@@ -12,9 +12,9 @@ interface NavItem {
 const Navbar = () => {
   const navItems: NavItem[] = [
     { label: "Home", path: "/" },
-    { label: "Contact Us", path: "/contact-us" },
+    { label: "Contact Us", path: "#contact" },
     { label: "Categories", path: "/category" },
-    { label: "Featured", path: "/product" },
+    { label: "Products", path: "/product" },
   ];
 
   // const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -22,11 +22,11 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   useEffect(() => {
     const handlescroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handlescroll);
-    return() => window.removeEventListener("scroll",handlescroll)
-  },[])
+    return () => window.removeEventListener("scroll", handlescroll);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,7 +58,22 @@ const Navbar = () => {
                 key={label}
                 className="font-inter text-[16px] font-semibold text-[#000] cursor-pointer w-fit h-fit transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-[1.05] hover:text-[#1a1a1a]"
               >
-                <Link to={path}>{label}</Link>
+                {path.startsWith("#") ? (
+                  <button
+                    onClick={() => {
+                      const el = document.querySelector(path);
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                      setMenuOpen(false);
+                    }}
+                    className="w-full text-left cursor-pointer"
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <Link to={path} onClick={() => setMenuOpen(false)}>
+                    {label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -95,7 +110,7 @@ const Navbar = () => {
           className={`xl:hidden fixed top-0 left-0 h-full w-[250px] bg-gray-400 z-50 transform transition-transform duration-700 ease-in-out ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
-          onClick={e => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
+          onClick={(e) => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
         >
           <div className="flex justify-between items-center px-5 pt-6 cursor-pointer">
             <img src={Logo} alt="Logo" className="h-10" />
@@ -103,11 +118,24 @@ const Navbar = () => {
 
           <ul className="flex flex-col gap-6 mt-10 px-6">
             {navItems.map(({ label, path }) => (
-              <Link key={label} to={path} onClick={() => setMenuOpen(false)}>
-                <li className="text-[18px] font-inter text-white hover:text-black cursor-pointer">
-                  {label}
-                </li>
-              </Link>
+              <li className="text-[18px] font-inter text-white hover:text-black cursor-pointer">
+                {path.startsWith("#") ? (
+                  <button
+                    onClick={() => {
+                      const el = document.querySelector(path);
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                      setMenuOpen(false);
+                    }}
+                    className="w-full text-left cursor-pointer"
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <Link to={path} onClick={() => setMenuOpen(false)}>
+                    {label}
+                  </Link>
+                )}
+              </li>
             ))}
           </ul>
 

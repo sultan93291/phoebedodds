@@ -29,7 +29,7 @@ const Feature = () => {
           className="font-inter xl:text-[32px] lg:text-[28px] text-[24px] font-normal text-center text-[#000] w-full"
           data-aos="fade-up"
         >
-          Featured Products
+          Products
         </h3>
         <h1
           className="xl:text-[86px] lg:text-[56px] text-[30px] font-semibold leading-normal font-inter text-[#000] text-center"
@@ -46,7 +46,7 @@ const Feature = () => {
           Compare quality finds without the extra tabs.
         </p>
 
-        <div
+        {/* <div
           className="flex justify-center"
           data-aos="fade-up"
           data-aos-delay="300"
@@ -74,7 +74,6 @@ const Feature = () => {
             </TabList>
 
             <div className="xl:mt-[120px] mt-[50px]">
-              {/* TabPanel 1 */}
               <TabPanel>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-20 cursor-pointer">
                   {products.map((product, index) => (
@@ -119,7 +118,6 @@ const Feature = () => {
                 </div>
               </TabPanel>
 
-              {/* TabPanel 2 */}
               <TabPanel>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-20 cursor-pointer">
                   {products.map((product, index) => (
@@ -165,8 +163,48 @@ const Feature = () => {
               </TabPanel>
             </div>
           </Tabs>
-        </div>
+        </div> */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-20 cursor-pointer">
+          {products.map((product, index) => (
+            <div
+              key={product.id}
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-auto rounded"
+              />
 
+              <div className="flex justify-between pt-6 pb-2 items-center">
+                <h3 className="font-inter text-[24px] font-medium text-[#000]">
+                  {product.name}
+                </h3>
+                <h4 className="font-inter xl:text-[32px] text-[25px] font-medium text-[#000]">
+                  ${product.price}
+                </h4>
+              </div>
+
+              {/* <div className="flex items-center gap-x-1 pb-4">
+                <h5 className="font-inter text-[16px] font-normal text-[#000]">
+                  {product.rating}
+                </h5>
+                <div className="flex text-yellow-400 text-[16px] gap-x-1">
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                  <FaStar />
+                  <FaStarHalfAlt />
+                </div>
+              </div> */}
+
+              <p className="font-inter text-[16px] text-[#0E55B2] underline cursor-pointer">
+                {product.link}
+              </p>
+            </div>
+          ))}
+        </div>
         <div
           className="flex items-center justify-center mt-20 gap-4"
           data-aos="fade-up"

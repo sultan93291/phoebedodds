@@ -61,7 +61,7 @@ const Banner = () => {
                 />
               </figure>
 
-              <div
+              {/* <div
                 className="rounded-[32px] border border-[#828282] bg-white/20 shadow-[0_2px_16px_rgba(0,0,0,0.08)] backdrop-blur-[25px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 xl:top-auto xl:left-auto xl:translate-x-0 xl:translate-y-0 xl:bottom-18 xl:-right-20 py-5 px-7 lg:w-[385px] w-[250px]"
                 data-aos="flip-up"
                 data-aos-delay="300"
@@ -75,7 +75,7 @@ const Banner = () => {
                 <button className="rounded-[20px] bg-[#FFF] text-black outline-0 text-[14px] lg:text-[16px] font-inter cursor-pointer py-3 px-6 lg:py-4 lg:px-10">
                   See Details
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
