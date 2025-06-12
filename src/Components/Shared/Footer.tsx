@@ -4,8 +4,29 @@ import { FaFacebook } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useEffect } from "react";
+import { socialFetching } from "@/features/social/socialSlice";
 
 const Footer = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { items } = useSelector((state: RootState) => state.social);
+
+  console.log(items);
+
+  useEffect(() => {
+    dispatch(socialFetching());
+  }, [dispatch]);
+
+  const iconMap: Record<string, React.ElementType> = {
+    facebook: FaFacebook,
+    instagram: IoLogoInstagram,
+    twitter: FaXTwitter,
+    tiktok: FaTiktok,
+  };
+
   return (
     <footer id="contact" className="py-[60px] md:py-[100px] bg-[#000] px-5">
       <Container>
@@ -100,16 +121,23 @@ const Footer = () => {
             © 2025 Phoebe Dodds. All rights reserved.
           </p>
           <div className="flex gap-4">
-            {[FaFacebook, IoLogoInstagram, FaXTwitter, FaTiktok].map(
-              (Icon, i) => (
-                <div
-                  key={i}
-                  className="h-10 w-10 rounded-full border border-white flex items-center justify-center hover:border-amber-300 cursor-pointer"
-                >
-                  <Icon className="text-white text-[18px]" />
-                </div>
-              )
-            )}
+            <div className="flex gap-4">
+              {items?.data?.map((item, i) => {
+                const Icon = iconMap[item?.social_media?.toLowerCase()];
+                if (!Icon) return null;
+                return (
+                  <a
+                    key={i}
+                    href={item?.profile_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-10 w-10 rounded-full border border-white flex items-center justify-center hover:border-amber-300 cursor-pointer"
+                  >
+                    <Icon className="text-white text-[18px]" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
       </Container>

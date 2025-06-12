@@ -1,5 +1,4 @@
 import Container from "../Shared/Container";
-import Shopify from "../../assets/Images/shopify.png";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { useEffect } from "react";
