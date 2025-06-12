@@ -13,8 +13,6 @@ const Banner = () => {
 
   const { items, status } = useSelector((state: RootState) => state.banner);
 
-  console.log(items?.data);
-
   useEffect(() => {
     dispatch(bannerFetching());
   }, [dispatch]);
