@@ -9,8 +9,6 @@ const OurPartners = () => {
 
   const { items } = useSelector((state: RootState) => state.partner);
 
-  console.log(items);
-
   useEffect(() => {
     dispatch(partnerFetching());
   }, [dispatch]);

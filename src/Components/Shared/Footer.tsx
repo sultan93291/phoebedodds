@@ -8,16 +8,21 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { useEffect } from "react";
 import { socialFetching } from "@/features/social/socialSlice";
+import { siteFetching } from "@/features/site-setting/SiteSettingSlice";
 
 const Footer = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const { items } = useSelector((state: RootState) => state.social);
+  const { items: siteData } = useSelector(
+    (state: RootState) => state.siteSetting
+  );
 
-  console.log(items);
+  console.log(siteData);
 
   useEffect(() => {
     dispatch(socialFetching());
+    dispatch(siteFetching());
   }, [dispatch]);
 
   const iconMap: Record<string, React.ElementType> = {
@@ -31,7 +36,14 @@ const Footer = () => {
     <footer id="contact" className="py-[60px] md:py-[100px] bg-[#000] px-5">
       <Container>
         <figure className="mb-12 md:mb-16 flex justify-start">
-          <img src={Footerlogo} alt="Footerlogo" />
+          {siteData?.data?.logo ? (
+            <img
+              src={`${import.meta.env.VITE_SITE_URL}/${siteData?.data?.logo}`}
+              alt="Footerlogo"
+            />
+          ) : (
+            <img src={Footerlogo} alt="Footerlogo" />
+          )}
         </figure>
 
         <div className="pb-[60px] md:pb-[100px] flex flex-wrap gap-y-12 md:gap-y-16 border-b border-[#828282]">
@@ -104,13 +116,14 @@ const Footer = () => {
             <ul className="flex flex-col gap-4">
               <li className="text-white text-[16px]">
                 Email:{" "}
-                <span className="text-blue-500">support@yourbrandname.com</span>
+                <span className="text-blue-500">{siteData?.data?.email}</span>
               </li>
               <li className="text-white text-[16px]">
-                Phone: <span className="text-blue-500">(123) 456-7890</span>
+                Phone:{" "}
+                <span className="text-blue-500">{siteData?.data?.phone}</span>
               </li>
               <li className="text-white text-[16px]">
-                Business Hours: Mon – Fri, 9am – 5pm (EST)
+                Business Hours: {siteData?.data?.business_hours}
               </li>
             </ul>
           </div>
@@ -118,7 +131,7 @@ const Footer = () => {
 
         <div className="pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white text-[14px] md:text-[16px] text-center md:text-left">
-            © 2025 Phoebe Dodds. All rights reserved.
+            {siteData?.data?.copyright_text}
           </p>
           <div className="flex gap-4">
             <div className="flex gap-4">

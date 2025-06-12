@@ -3,6 +3,9 @@ import Container from "./Container";
 import Logo from "../../assets/Images/logo.png";
 import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { siteFetching } from "@/features/site-setting/SiteSettingSlice";
 
 interface NavItem {
   label: string;
@@ -10,6 +13,15 @@ interface NavItem {
 }
 
 const Navbar = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { items: siteData } = useSelector(
+    (state: RootState) => state.siteSetting
+  );
+
+  useEffect(() => {
+    dispatch(siteFetching());
+  }, [dispatch]);
+
   const navItems: NavItem[] = [
     { label: "Home", path: "/" },
     { label: "Contact Us", path: "#contact" },
@@ -47,7 +59,17 @@ const Navbar = () => {
           <div className="xl:w-1/5 w-full">
             <Link to="/">
               <figure>
-                <img src={Logo} alt="Logo" className="md:h-8  h-8" />
+                {siteData?.data?.logo ? (
+                  <img
+                    src={`${import.meta.env.VITE_SITE_URL}/${
+                      siteData?.data?.logo
+                    }`}
+                    alt="Logo"
+                    className="md:h-8  h-8"
+                  />
+                ) : (
+                  <img src={Logo} alt="Logo" className="md:h-8  h-8" />
+                )}
               </figure>
             </Link>
           </div>

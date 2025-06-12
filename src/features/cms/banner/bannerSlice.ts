@@ -16,7 +16,6 @@ export const bannerFetching = createAsyncThunk(
   "banner/bannerFetching",
   async () => {
     const res = await axios.get(`${import.meta.env.VITE_SITE_URL}/home-banner`);
-    console.log(res);
 
     return res.data;
   }

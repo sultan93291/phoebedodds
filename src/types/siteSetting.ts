@@ -8,6 +8,7 @@ export type SiteSettingType = {
   favicon: string | null;
   phone: string;
   business_hours: string;
+  site_name: string;
 };
 
 export type SiteSettingResponse = CommonType<SiteSettingType>;
