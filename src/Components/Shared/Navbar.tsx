@@ -3,6 +3,9 @@ import Container from "./Container";
 import Logo from "../../assets/Images/logo.png";
 import { Link } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { siteFetching } from "@/features/site-setting/SiteSettingSlice";
 
 interface NavItem {
   label: string;
@@ -10,11 +13,20 @@ interface NavItem {
 }
 
 const Navbar = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { items: siteData } = useSelector(
+    (state: RootState) => state.siteSetting
+  );
+
+  useEffect(() => {
+    dispatch(siteFetching());
+  }, [dispatch]);
+
   const navItems: NavItem[] = [
     { label: "Home", path: "/" },
-    { label: "Contact Us", path: "/contact-us" },
+    { label: "Contact Us", path: "#contact" },
     { label: "Categories", path: "/category" },
-    { label: "Featured", path: "/product" },
+    { label: "Products", path: "/product" },
   ];
 
   // const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -22,11 +34,11 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   useEffect(() => {
     const handlescroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener("scroll", handlescroll);
-    return() => window.removeEventListener("scroll",handlescroll)
-  },[])
+    return () => window.removeEventListener("scroll", handlescroll);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +59,17 @@ const Navbar = () => {
           <div className="xl:w-1/5 w-full">
             <Link to="/">
               <figure>
-                <img src={Logo} alt="Logo" className="md:h-8  h-8" />
+                {siteData?.data?.logo ? (
+                  <img
+                    src={`${import.meta.env.VITE_SITE_URL}/${
+                      siteData?.data?.logo
+                    }`}
+                    alt="Logo"
+                    className="md:h-8  h-8"
+                  />
+                ) : (
+                  <img src={Logo} alt="Logo" className="md:h-8  h-8" />
+                )}
               </figure>
             </Link>
           </div>
@@ -58,7 +80,22 @@ const Navbar = () => {
                 key={label}
                 className="font-inter text-[16px] font-semibold text-[#000] cursor-pointer w-fit h-fit transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-[1.05] hover:text-[#1a1a1a]"
               >
-                <Link to={path}>{label}</Link>
+                {path.startsWith("#") ? (
+                  <button
+                    onClick={() => {
+                      const el = document.querySelector(path);
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                      setMenuOpen(false);
+                    }}
+                    className="w-full text-left cursor-pointer"
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <Link to={path} onClick={() => setMenuOpen(false)}>
+                    {label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -95,7 +132,7 @@ const Navbar = () => {
           className={`xl:hidden fixed top-0 left-0 h-full w-[250px] bg-gray-400 z-50 transform transition-transform duration-700 ease-in-out ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
-          onClick={e => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
+          onClick={(e) => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
         >
           <div className="flex justify-between items-center px-5 pt-6 cursor-pointer">
             <img src={Logo} alt="Logo" className="h-10" />
@@ -103,11 +140,24 @@ const Navbar = () => {
 
           <ul className="flex flex-col gap-6 mt-10 px-6">
             {navItems.map(({ label, path }) => (
-              <Link key={label} to={path} onClick={() => setMenuOpen(false)}>
-                <li className="text-[18px] font-inter text-white hover:text-black cursor-pointer">
-                  {label}
-                </li>
-              </Link>
+              <li className="text-[18px] font-inter text-white hover:text-black cursor-pointer">
+                {path.startsWith("#") ? (
+                  <button
+                    onClick={() => {
+                      const el = document.querySelector(path);
+                      if (el) el.scrollIntoView({ behavior: "smooth" });
+                      setMenuOpen(false);
+                    }}
+                    className="w-full text-left cursor-pointer"
+                  >
+                    {label}
+                  </button>
+                ) : (
+                  <Link to={path} onClick={() => setMenuOpen(false)}>
+                    {label}
+                  </Link>
+                )}
+              </li>
             ))}
           </ul>
 

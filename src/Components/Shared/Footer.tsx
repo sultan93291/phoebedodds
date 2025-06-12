@@ -4,13 +4,50 @@ import { FaFacebook } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
 import { FaTiktok, FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useEffect } from "react";
+import { socialFetching } from "@/features/social/socialSlice";
+import { siteFetching } from "@/features/site-setting/SiteSettingSlice";
+import { dynamicPageFatching } from "@/features/dynamicPage/dynamicPageSlice";
 
 const Footer = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { items } = useSelector((state: RootState) => state.social);
+  const { items: siteData } = useSelector(
+    (state: RootState) => state.siteSetting
+  );
+
+  const { items: dynamicPages } = useSelector(
+    (state: RootState) => state.dynamicPages
+  );
+
+  useEffect(() => {
+    dispatch(socialFetching());
+    dispatch(siteFetching());
+    dispatch(dynamicPageFatching());
+  }, [dispatch]);
+
+  const iconMap: Record<string, React.ElementType> = {
+    facebook: FaFacebook,
+    instagram: IoLogoInstagram,
+    twitter: FaXTwitter,
+    tiktok: FaTiktok,
+  };
+
   return (
-    <footer className="py-[60px] md:py-[100px] bg-[#000] px-5">
+    <footer id="contact" className="py-[60px] md:py-[100px] bg-[#000] px-5">
       <Container>
         <figure className="mb-12 md:mb-16 flex justify-start">
-          <img src={Footerlogo} alt="Footerlogo" />
+          {siteData?.data?.logo ? (
+            <img
+              src={`${import.meta.env.VITE_SITE_URL}/${siteData?.data?.logo}`}
+              alt="Footerlogo"
+            />
+          ) : (
+            <img src={Footerlogo} alt="Footerlogo" />
+          )}
         </figure>
 
         <div className="pb-[60px] md:pb-[100px] flex flex-wrap gap-y-12 md:gap-y-16 border-b border-[#828282]">
@@ -56,22 +93,16 @@ const Footer = () => {
               Support
             </h3>
             <ul className="flex flex-col gap-4">
-              <li>
-                <Link
-                  to="/privacy-policies"
-                  className="text-white text-[16px] hover:underline"
-                >
-                  Privacy Policies
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/terms-contitions"
-                  className="text-white text-[16px] hover:underline"
-                >
-                  Terms & Conditions
-                </Link>
-              </li>
+              {dynamicPages?.data?.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={`/pages/${item?.page_slug}`}
+                    className="text-white text-[16px] hover:underline"
+                  >
+                    {item?.page_title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -83,13 +114,14 @@ const Footer = () => {
             <ul className="flex flex-col gap-4">
               <li className="text-white text-[16px]">
                 Email:{" "}
-                <span className="text-blue-500">support@yourbrandname.com</span>
+                <span className="text-blue-500">{siteData?.data?.email}</span>
               </li>
               <li className="text-white text-[16px]">
-                Phone: <span className="text-blue-500">(123) 456-7890</span>
+                Phone:{" "}
+                <span className="text-blue-500">{siteData?.data?.phone}</span>
               </li>
               <li className="text-white text-[16px]">
-                Business Hours: Mon – Fri, 9am – 5pm (EST)
+                Business Hours: {siteData?.data?.business_hours}
               </li>
             </ul>
           </div>
@@ -97,19 +129,26 @@ const Footer = () => {
 
         <div className="pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white text-[14px] md:text-[16px] text-center md:text-left">
-            © 2025 Phoebe Dodds. All rights reserved.
+            {siteData?.data?.copyright_text}
           </p>
           <div className="flex gap-4">
-            {[FaFacebook, IoLogoInstagram, FaXTwitter, FaTiktok].map(
-              (Icon, i) => (
-                <div
-                  key={i}
-                  className="h-10 w-10 rounded-full border border-white flex items-center justify-center hover:border-amber-300 cursor-pointer"
-                >
-                  <Icon className="text-white text-[18px]" />
-                </div>
-              )
-            )}
+            <div className="flex gap-4">
+              {items?.data?.map((item, i) => {
+                const Icon = iconMap[item?.social_media?.toLowerCase()];
+                if (!Icon) return null;
+                return (
+                  <a
+                    key={i}
+                    href={item?.profile_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-10 w-10 rounded-full border border-white flex items-center justify-center hover:border-amber-300 cursor-pointer"
+                  >
+                    <Icon className="text-white text-[18px]" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
       </Container>

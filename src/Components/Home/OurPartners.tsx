@@ -1,7 +1,19 @@
 import Container from "../Shared/Container";
-import Shopify from "../../assets/Images/shopify.png";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useEffect } from "react";
+import { partnerFetching } from "@/features/cms/partners/partnerSlice";
 
 const OurPartners = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { items } = useSelector((state: RootState) => state.partner);
+
+  useEffect(() => {
+    dispatch(partnerFetching());
+  }, [dispatch]);
+
+  const baseUrl = import.meta.env.VITE_BASE_URL;
   return (
     <section>
       <Container className="xl:py-[100px] py-[50px] border-b border-[#B1B1B1] 2xl:px-0 px-5">
@@ -12,11 +24,11 @@ const OurPartners = () => {
           Our Partners
         </h3>
         <div className="flex justify-between pt-8 flex-wrap lg:gap-y-6 gap-y-10">
-          {[...Array(4)].map((_, index) => (
+          {items?.data?.map((item, index) => (
             <img
               key={index}
-              src={Shopify}
-              alt="Shopify"
+              src={`${baseUrl}/${item?.logo}`}
+              alt={item?.name}
               className="w-[150px] h-auto"
               data-aos="zoom-in"
               data-aos-delay={index * 100}
