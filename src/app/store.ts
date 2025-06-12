@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import bannerReducer from "../features/cms/banner/bannerSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    banner: bannerReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
