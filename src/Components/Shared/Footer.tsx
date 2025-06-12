@@ -9,6 +9,7 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { useEffect } from "react";
 import { socialFetching } from "@/features/social/socialSlice";
 import { siteFetching } from "@/features/site-setting/SiteSettingSlice";
+import { dynamicPageFatching } from "@/features/dynamicPage/dynamicPageSlice";
 
 const Footer = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -18,11 +19,14 @@ const Footer = () => {
     (state: RootState) => state.siteSetting
   );
 
-  console.log(siteData);
+  const { items: dynamicPages } = useSelector(
+    (state: RootState) => state.dynamicPages
+  );
 
   useEffect(() => {
     dispatch(socialFetching());
     dispatch(siteFetching());
+    dispatch(dynamicPageFatching());
   }, [dispatch]);
 
   const iconMap: Record<string, React.ElementType> = {
@@ -89,22 +93,16 @@ const Footer = () => {
               Support
             </h3>
             <ul className="flex flex-col gap-4">
-              <li>
-                <Link
-                  to="/privacy-policies"
-                  className="text-white text-[16px] hover:underline"
-                >
-                  Privacy Policies
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/terms-contitions"
-                  className="text-white text-[16px] hover:underline"
-                >
-                  Terms & Conditions
-                </Link>
-              </li>
+              {dynamicPages?.data?.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={`/pages/${item?.page_slug}`}
+                    className="text-white text-[16px] hover:underline"
+                  >
+                    {item?.page_title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

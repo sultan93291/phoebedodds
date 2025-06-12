@@ -8,4 +8,6 @@ export type DynamicAllPageType = {
   page_content: string;
 };
 
-export type DynamicAllPageResponse = CommonType<DynamicAllPageType>;
+export type DynamicAllPageResponse = CommonType<DynamicAllPageType[]>;
+
+export type DynamicSinglePageResponse = CommonType<DynamicAllPageType>;

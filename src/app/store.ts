@@ -4,6 +4,8 @@ import aboutReducer from "../features/cms/about/aboutSlice";
 import partnerReducer from "@/features/cms/partners/partnerSlice";
 import socialReducer from "@/features/social/socialSlice";
 import siteReducer from "@/features/site-setting/SiteSettingSlice";
+import dynamicPageReducer from "@/features/dynamicPage/dynamicPageSlice";
+import singleDynamicPageReducer from "@/features/dynamicPage/singleDynamicPageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     partner: partnerReducer,
     social: socialReducer,
     siteSetting: siteReducer,
+    dynamicPages: dynamicPageReducer,
+    singleDynamicPage: singleDynamicPageReducer,
   },
 });
 
