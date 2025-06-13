@@ -9,6 +9,7 @@
 
 @theme {
   --font-inter: "Inter", sans-serif;
+  --breakpoint-3xl: 120rem;
 }
 
 @theme inline {

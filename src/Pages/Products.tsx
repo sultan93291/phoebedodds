@@ -1,6 +1,6 @@
 import { FaAngleDown } from "react-icons/fa";
 import Container from "../Components/Shared/Container";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PageHeading from "@/Components/Reusable/PageHeading";
 import { IoFilter } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,7 @@ const MIN = 0;
 const MAX = 10000;
 
 const Products = () => {
+  const productGridRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
   const { items } = useSelector((state: RootState) => state.allCategories);
   const { products, status } = useSelector(
@@ -47,6 +48,7 @@ const Products = () => {
 
     const min = searchParams.get("minPrice");
     const max = searchParams.get("maxPrice");
+    const page = searchParams.get("page") || "1"; // default page 1
 
     const filters: any = {};
     if (category) {
@@ -68,12 +70,15 @@ const Products = () => {
       filters.max_price = Number(max);
       setPriceRange([Number(min), Number(max)]);
     }
+
     if (sort) {
       filters.sort = sort;
       setSortOption(sort);
     } else {
       setSortOption(null);
     }
+
+    filters.page = Number(page); // Add page to filters
 
     dispatch(filterProductsFetching(filters));
   }, [searchParams, dispatch]);
@@ -88,8 +93,8 @@ const Products = () => {
     });
   };
   return (
-    <Container className="pb-15 2xl:pb-25 mt-20">
-      <div className="px-5 2xl:px-0">
+    <Container className="pb-15 2xl:pb-25 mt-20 min-h-screen">
+      <div ref={productGridRef} className="px-5 2xl:px-0 ">
         <div className="w-full flex justify-between items-baseline">
           <PageHeading
             title="All Products"
@@ -106,7 +111,7 @@ const Products = () => {
         </div>
 
         <main className="border-t border-[#B1B1B1] pt-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 ">
             {/* Sidebar Filters */}
             <div className=" lg:col-span-3 space-y-6 hidden lg:block">
               {/* Price Range with react-range */}
@@ -223,6 +228,7 @@ const Products = () => {
                     <div
                       onClick={() =>
                         setSearchParams((prev) => {
+                          setIsSortOpen(false);
                           const params = new URLSearchParams(prev);
                           params.set("sort", "price_low_to_high");
                           return params;
@@ -322,11 +328,11 @@ const Products = () => {
             {/* Main Product Grid */}
             <div className="col-span-full lg:col-span-9">
               {status === "loading" ? (
-                <div className="flex justify-center items-center min-h-[500px]">
+                <div className="flex justify-center items-center min-h-[60vh]">
                   <Loader />
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 min-h-screen ">
                   {products?.data?.products?.data?.map((product, index) => (
                     <ProductCard
                       key={product.id}
@@ -336,7 +342,48 @@ const Products = () => {
                   ))}
                 </div>
               )}
+              <div className="flex flex-wrap justify-center gap-2 mt-10">
+                {products?.data.products.links.map((link, index) => {
+                  const label = link.label
+                    .replace("&laquo;", "«")
+                    .replace("&raquo;", "»")
+                    .replace("Previous", "Prev")
+                    .replace("Next", "Next");
+
+                  return (
+                    <button
+                      key={index}
+                      disabled={!link.url}
+                      onClick={() => {
+                        if (link.url) {
+                          const url = new URL(link.url);
+                          const page = url.searchParams.get("page");
+                          setSearchParams((prev) => {
+                            const params = new URLSearchParams(prev);
+                            if (page) params.set("page", page);
+                            return params;
+                          });
+
+                          if (productGridRef.current) {
+                            productGridRef.current.scrollIntoView({
+                              behavior: "smooth",
+                            });
+                          }
+                        }
+                      }}
+                      className={`px-4 py-2 rounded border text-sm ${
+                        link.active
+                          ? "bg-black text-white"
+                          : "bg-white text-black hover:bg-gray-100"
+                      } disabled:opacity-50`}
+                      dangerouslySetInnerHTML={{ __html: label }}
+                    />
+                  );
+                })}
+              </div>
             </div>
+
+            {/*  */}
           </div>
         </main>
       </div>
