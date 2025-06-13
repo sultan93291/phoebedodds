@@ -6,11 +6,24 @@ import { router } from "./Routes/Router.tsx";
 import { Provider } from "react-redux";
 import { store } from "./app/store.ts";
 import type { SiteSettingResponse } from "./types/siteSetting.ts";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      <ToastContainer
+        position="top-right" // 👈 change position here
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light" // or "dark" if your site is dark-themed
+      />
     </Provider>
   </StrictMode>
 );
