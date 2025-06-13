@@ -40,7 +40,7 @@ const Feature = () => {
           Compare quality finds without the extra tabs.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-x-6 gap-y-20 cursor-pointer">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-x-6 gap-y-20 cursor-pointer">
           {products?.data?.products?.data?.slice(0, 6).map((product, index) => (
             <ProductCard index={index} product={product} key={product.id} />
           ))}
