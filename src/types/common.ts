@@ -6,4 +6,5 @@ export type CommonType<T> = {
   message: string;
   code: number;
   data: T;
+  index: number;
 };

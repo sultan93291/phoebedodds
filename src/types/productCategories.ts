@@ -28,6 +28,15 @@ export type FilteredProductType = {
 };
 
 // filter product
+
+export type FilterParams = {
+  main_category_id?: number;
+  category_id?: number;
+  max_price?: number;
+  min_price?: number;
+  sort?: "price_high_to_low" | "price_low_to_high";
+};
+
 export type ProductType = {
   id: number;
   title: string;
