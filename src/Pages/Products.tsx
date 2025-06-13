@@ -241,6 +241,7 @@ const Products = () => {
                     <div
                       onClick={() =>
                         setSearchParams((prev) => {
+                          setIsSortOpen(false);
                           const params = new URLSearchParams(prev);
                           params.set("sort", "price_high_to_low");
                           return params;
@@ -253,6 +254,7 @@ const Products = () => {
                     <div
                       onClick={() =>
                         setSearchParams((prev) => {
+                          setIsSortOpen(false);
                           const params = new URLSearchParams(prev);
                           params.delete("sort");
                           return params;
