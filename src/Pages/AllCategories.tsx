@@ -1,107 +1,22 @@
+import type { AppDispatch, RootState } from "@/app/store";
 import PageHeading from "@/Components/Reusable/PageHeading";
 import Container from "@/Components/Shared/Container";
-import { Link } from "react-router-dom";
-
-interface CategoryItem {
-  name: string;
-  image: string;
-}
-
-interface CategorySection {
-  title: string;
-  items: CategoryItem[];
-}
-
-const categorySections: CategorySection[] = [
-  {
-    title: "By Rooms",
-    items: [
-      {
-        name: "Living Room",
-        image: "https://i.ibb.co/pjL87y02/Rectangle-17.png",
-      },
-      {
-        name: "Dining Room",
-        image: "https://i.ibb.co/pjL87y02/Rectangle-17.png",
-      },
-      { name: "Bed Room", image: "https://i.ibb.co/pjL87y02/Rectangle-17.png" },
-      { name: "Kitchen", image: "https://i.ibb.co/pjL87y02/Rectangle-17.png" },
-      {
-        name: "Wash Room",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Corporate",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-    ],
-  },
-  {
-    title: "By Furniture",
-    items: [
-      {
-        name: "Sofa & Sectionals",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Accent Chairs",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Dining Table",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Coffee Tables",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Bed & Headboards",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Desk Office Chairs",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-    ],
-  },
-  {
-    title: "By Lighting",
-    items: [
-      {
-        name: "Pendant Lights",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Table Lamps",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Floor Lamps",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-    ],
-  },
-  {
-    title: "By Decor",
-    items: [
-      {
-        name: "Rugs & Carpets",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Wall art & Paintts",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-      {
-        name: "Mirrors",
-        image: "https://i.ibb.co/QjhKw4gp/Rectangle-17-1.png",
-      },
-    ],
-  },
-];
+import Loader from "@/Components/Shared/Loader";
+import { mainCategoriesFetching } from "@/features/categories/mainCategoriesSlice";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const AllCategories = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { items, status } = useSelector(
+    (state: RootState) => state.allCategories
+  );
+
+  useEffect(() => {
+    dispatch(mainCategoriesFetching());
+  }, [dispatch]);
+
   return (
     <Container className="py-20 px-4 2xl:px-0">
       <div className="mb-12">
@@ -110,38 +25,59 @@ const AllCategories = () => {
           subtitle="Browse furniture, lighting, decor, and more—organized by product type."
         />
       </div>
-      {categorySections.map((section) => (
-        <div key={section.title} className="mb-14">
-          <h2 className="text-black font-inter text-[24px] sm:text-[28px] md:text-[32px] font-semibold not-italic leading-normal mb-4">
-            {section.title}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {section.items.map((item) => (
-              <Link
-                key={item.name}
-                to="#"
-                data-aos="fade-up"
-                className="relative rounded-xl overflow-hidden group shadow hover:shadow-lg transition h-50 md:h-[300px] lg:h-[500px]"
-              >
-                <div
-                  className="w-full h-full bg-cover bg-center"
-                  style={{
-                    backgroundImage: `linear-gradient(rgba(0,0,0,0.70), rgba(0,0,0,0.70)), url(${item.image})`,
-                  }}
-                ></div>
-                <div className="absolute inset-0 flex flex-col justify-center items-center text-white">
-                  <p className="text-white font-inter text-[24px] sm:text-[28px] md:text-[32px] font-semibold not-italic leading-normal mb-5">
-                    {item.name}
-                  </p>
-                  <span className="text-black text-sm sm:text-base font-normal not-italic leading-normal flex items-start gap-12  bg-white py-3 px-5 lg:px-12 lg:py-6 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 hover:bg-black border border-white hover:border-white hover:text-white group-hover:translate-y-0 transition-all duration-500">
-                    See Collections
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+
+      {/* Loader */}
+      {status === "loading" && (
+        <div className="flex justify-center items-center min-h-[200px]">
+          <Loader />
         </div>
-      ))}
+      )}
+
+      {/* Content */}
+      {status === "succeeded" &&
+        items?.data?.map((section) => (
+          <div key={section?.id} className="mb-14">
+            <h2 className="text-black font-inter text-[24px] sm:text-[28px] md:text-[32px] font-semibold not-italic leading-normal mb-4">
+              {section?.name}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {section?.categories?.map((item) => (
+                <div
+                  key={item.id}
+                  data-aos="fade-up"
+                  className="relative rounded-xl overflow-hidden group shadow hover:shadow-lg transition h-50 md:h-[300px] lg:h-[500px]"
+                >
+                  <div
+                    className="w-full h-full bg-cover bg-center"
+                    style={{
+                      backgroundImage: `linear-gradient(rgba(0,0,0,0.70), rgba(0,0,0,0.70)), url(${
+                        import.meta.env.VITE_BASE_URL
+                      }/${item.image})`,
+                    }}
+                  ></div>
+                  <div className="absolute inset-0 flex flex-col justify-center items-center text-white cursor-pointer">
+                    <p className="text-white font-inter text-[24px] sm:text-[28px] md:text-[32px] font-semibold not-italic leading-normal text-center mb-5">
+                      {item.name}
+                    </p>
+                    <span className="text-black text-sm sm:text-base font-normal not-italic leading-normal flex items-start gap-12 bg-white py-3 px-5 lg:px-12 lg:py-6 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 hover:bg-black border border-white hover:border-white hover:text-white group-hover:translate-y-0 transition-all duration-500">
+                      See Collections
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {section?.categories?.length === 0 && (
+                <p className="col-span-12 text-center text-gray-400">
+                  No subcategory found
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
+
+      {/* Error or empty state */}
+      {status === "failed" && (
+        <p className="text-center text-red-500">Failed to load categories.</p>
+      )}
     </Container>
   );
 };
