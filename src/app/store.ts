@@ -6,6 +6,7 @@ import socialReducer from "@/features/social/socialSlice";
 import siteReducer from "@/features/site-setting/SiteSettingSlice";
 import dynamicPageReducer from "@/features/dynamicPage/dynamicPageSlice";
 import singleDynamicPageReducer from "@/features/dynamicPage/singleDynamicPageSlice";
+import newsletterReducer from "@/features/newslatter/subscribeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     siteSetting: siteReducer,
     dynamicPages: dynamicPageReducer,
     singleDynamicPage: singleDynamicPageReducer,
+    subscribeNewsletter: newsletterReducer,
   },
 });
 
