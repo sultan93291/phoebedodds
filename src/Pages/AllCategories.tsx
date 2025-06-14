@@ -5,6 +5,7 @@ import Loader from "@/Components/Shared/Loader";
 import { mainCategoriesFetching } from "@/features/categories/mainCategoriesSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const AllCategories = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -55,14 +56,17 @@ const AllCategories = () => {
                       }/${item.image})`,
                     }}
                   ></div>
-                  <div className="absolute inset-0 flex flex-col justify-center items-center text-white cursor-pointer">
+                  <Link
+                    to={`/product?category=${section?.id}&subcategory=${item?.id}`}
+                    className="absolute inset-0 flex flex-col justify-center items-center text-white cursor-pointer"
+                  >
                     <p className="text-white font-inter text-[24px] sm:text-[28px] md:text-[32px] font-semibold not-italic leading-normal text-center mb-5">
                       {item.name}
                     </p>
                     <span className="text-black text-sm sm:text-base font-normal not-italic leading-normal flex items-start gap-12 bg-white py-3 px-5 lg:px-12 lg:py-6 rounded-full opacity-0 translate-y-3 group-hover:opacity-100 hover:bg-black border border-white hover:border-white hover:text-white group-hover:translate-y-0 transition-all duration-500">
                       See Collections
                     </span>
-                  </div>
+                  </Link>
                 </div>
               ))}
               {section?.categories?.length === 0 && (

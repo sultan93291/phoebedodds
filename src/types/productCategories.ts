@@ -56,7 +56,7 @@ export type PaginationLink = {
 
 export type ProductsData = {
   current_page: number;
-  data: ProductType[];
+  data?: ProductType[];
   first_page_url: string;
   from: number;
   last_page: number;
@@ -68,6 +68,7 @@ export type ProductsData = {
   prev_page_url: string | null;
   to: number;
   total: number;
+  status: string;
 };
 
 export type ProductCount = {

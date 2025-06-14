@@ -18,7 +18,7 @@ const initialState: ProductFilterState = {
 };
 
 export const filterProductsFetching = createAsyncThunk<
-  FilteredProductsResponse,
+  any,
   FilterParams,
   { rejectValue: string }
 >("products/filterProductsFetching", async (params, thunkAPI) => {

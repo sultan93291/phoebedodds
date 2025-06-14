@@ -1,12 +1,61 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Container from "../Shared/Container";
 import CustomSelect from "../Reusable/CustomSelect";
+import type { AppDispatch, RootState } from "@/app/store";
+import { useDispatch, useSelector } from "react-redux";
+import { mainCategoriesFetching } from "@/features/categories/mainCategoriesSlice";
 
 const SelectionArea = () => {
-  const options = [
-    { label: "Furniture", value: "furniture" },
-    { label: "Accessories", value: "accessories" },
-    { label: "Grocery", value: "grocery" },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const { items } = useSelector((state: RootState) => state.allCategories);
+
+  useEffect(() => {
+    dispatch(mainCategoriesFetching());
+  }, [dispatch]);
+
+  // Track selected main category and subcategory
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedValue, setSelectedValue] = useState<number | null>(null);
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [subcategoryId, setSubcategoryId] = useState<number | null>(null);
+
+  const handleChange = (index: number, value: number) => {
+    setSelectedIndex(index);
+    setSelectedValue(value);
+
+    const section = items?.data?.[index];
+    if (!section) return;
+
+    const subcategory = section.categories?.find(
+      (item: any) => item.id === value
+    );
+
+    if (section.id && subcategory?.id) {
+      setCategoryId(section.id);
+      setSubcategoryId(subcategory.id);
+    }
+  };
+
+  const handleApply = () => {
+    if (categoryId && subcategoryId) {
+      navigate(`/product?category=${categoryId}&subcategory=${subcategoryId}`);
+    }
+
+    setSelectedIndex(null);
+    setSelectedValue(null);
+    setCategoryId(null);
+    setSubcategoryId(null);
+  };
+
+  const handleClear = () => {
+    setSelectedIndex(null);
+    setSelectedValue(null);
+    setCategoryId(null);
+    setSubcategoryId(null);
+  };
 
   return (
     <section className="xl:mb-8 2xl:px-0 px-5">
@@ -15,24 +64,48 @@ const SelectionArea = () => {
           className="flex flex-wrap gap-4 xl:justify-between justify-center items-center"
           data-aos="fade-up"
         >
-          <div className="flex-grow min-w-[200px]">
-            <CustomSelect options={options} placeholder="Furniture" />
-          </div>
-          <div className="flex-grow min-w-[200px]">
-            <CustomSelect options={options} placeholder="Decor" />
-          </div>
-          <div className="flex-grow min-w-[200px]">
-            <CustomSelect options={options} placeholder="Lighting" />
-          </div>
-          <div className="flex-grow min-w-[200px]">
-            <CustomSelect options={options} placeholder="Style" />
-          </div>
+          {items?.data?.map((label, index) => (
+            <div key={index} className="flex-grow min-w-[200px]">
+              <CustomSelect
+                key={
+                  selectedIndex === index
+                    ? selectedValue ?? "none"
+                    : `select-${index}`
+                }
+                options={label?.categories}
+                placeholder={label.name}
+                onChange={(value) => handleChange(index, value)}
+                value={
+                  selectedIndex === index
+                    ? selectedValue ?? undefined
+                    : undefined
+                }
+                disabled={selectedIndex !== null && selectedIndex !== index}
+              />
+            </div>
+          ))}
+
           <button
-            className="rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer py-[16px] md:py-[25px] px-10 flex-grow min-w-[200px]
-    hover:bg-[#1a1a1a] transition-all duration-300"
+            onClick={handleApply}
+            disabled={!categoryId || !subcategoryId}
+            className={`rounded-[24px] text-white outline-0 text-[16px] font-inter  py-[16px] md:py-[25px] px-10 flex-grow min-w-[200px]
+              ${
+                !categoryId || !subcategoryId
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-[#000] hover:bg-[#1a1a1a] cursor-pointer"
+              } transition-all duration-300`}
           >
             Apply
           </button>
+
+          {selectedValue !== null && selectedValue !== undefined && (
+            <button
+              onClick={handleClear}
+              className="text-sm text-gray-600 underline hover:text-red-600 transition cursor-pointer"
+            >
+              Clear Filter
+            </button>
+          )}
         </div>
       </Container>
     </section>

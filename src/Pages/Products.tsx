@@ -27,6 +27,8 @@ const Products = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  console.log(searchParams);
+
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(
     null
@@ -92,6 +94,9 @@ const Products = () => {
       return params;
     });
   };
+
+  console.log(products);
+
   return (
     <Container className="pb-15 2xl:pb-25 mt-20 min-h-screen">
       <div ref={productGridRef} className="px-5 2xl:px-0 ">
@@ -198,7 +203,7 @@ const Products = () => {
                         params.delete("maxPrice");
                         return params;
                       });
-                      setPriceRange([MIN, MAX]); // Reset local state too
+                      setPriceRange([MIN, MAX]);
                     }}
                     className="mt-4 text-sm underline cursor-pointer text-blue-600"
                   >
@@ -334,18 +339,23 @@ const Products = () => {
                   <Loader />
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 min-h-screen ">
-                  {products?.data?.products?.data?.map((product, index) => (
-                    <ProductCard
-                      key={product.id}
-                      product={product}
-                      index={index}
-                    />
-                  ))}
-                </div>
+                <>
+                  {products?.success && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 min-h-screen ">
+                      {products?.data?.products?.data?.map((product, index) => (
+                        <ProductCard
+                          key={product.id}
+                          product={product}
+                          index={index}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </>
               )}
+
               <div className="flex flex-wrap justify-center gap-2 mt-10">
-                {products?.data.products.links.map((link, index) => {
+                {products?.data?.products?.links?.map((link, index) => {
                   const label = link.label
                     .replace("&laquo;", "«")
                     .replace("&raquo;", "»")
