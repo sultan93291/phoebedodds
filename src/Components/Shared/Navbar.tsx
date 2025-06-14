@@ -100,15 +100,59 @@ const Navbar = () => {
             ))}
           </ul>
 
-          <div className="w-1/3 xl:flex hidden gap-x-6">
+          <div className="w-1/3 xl:flex hidden relative gap-x-6">
             <input
               type="search"
               placeholder="search"
-              className="p-5 rounded-[24px] border border-[#000] outline-0 w-[350px] text-gray-400 text-[16px] font-inter"
+              className="p-5 rounded-[24px] border border-[#000] outline-0  text-gray-400 text-[16px] font-inter flex-2"
             />
-            <button className="p-5 rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer w-[150px] hover:bg-[#fff] hover:text-black hover:border-black hover:border duration-300">
+            <button className="p-5 rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer flex-1 hover:bg-[#fff] hover:text-black hover:border-black hover:border duration-300">
               Search
             </button>
+
+            {/* Search Results UI */}
+            <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full absolute top-[72px]">
+              <h3 className="text-lg font-semibold mb-4">Search Results</h3>
+
+              <ul className="space-y-4">
+                {/* Result item */}
+                <li className="flex justify-between items-center border-b pb-3">
+                  <div>
+                    <p className="font-medium text-black">Elegant Linen Sofa</p>
+                    <p className="text-sm text-gray-500">
+                      Category: Living Room
+                    </p>
+                  </div>
+                  <span className="text-sm font-semibold text-[#000]">
+                    $699
+                  </span>
+                </li>
+
+                <li className="flex justify-between items-center border-b pb-3">
+                  <div>
+                    <p className="font-medium text-black">
+                      Modern Wood Coffee Table
+                    </p>
+                    <p className="text-sm text-gray-500">Category: Furniture</p>
+                  </div>
+                  <span className="text-sm font-semibold text-[#000]">
+                    $249
+                  </span>
+                </li>
+
+                <li className="flex justify-between items-center">
+                  <div>
+                    <p className="font-medium text-black">
+                      Minimalist Bed Frame
+                    </p>
+                    <p className="text-sm text-gray-500">Category: Bedroom</p>
+                  </div>
+                  <span className="text-sm font-semibold text-[#000]">
+                    $899
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div className="xl:hidden block">
@@ -160,17 +204,6 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-
-          <div className="mt-10 px-6 flex flex-col gap-4">
-            <input
-              type="search"
-              placeholder="Search"
-              className="p-3 rounded-lg border border-white bg-white text-black text-[16px] font-inter"
-            />
-            <button className="w-full py-2 border border-black bg-black text-white rounded-lg font-inter text-[16px] font-semibold hover:bg-white hover:text-black transition-all duration-300">
-              Search
-            </button>
-          </div>
         </div>
       </Container>
     </nav>
