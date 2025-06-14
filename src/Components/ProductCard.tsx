@@ -6,6 +6,12 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({ product, index }: ProductCardProps) => {
+  function getUrlUpToCom(url: string) {
+    const index = url.indexOf(".com");
+
+    if (index === -1) return null;
+    return url.slice(0, index + 4);
+  }
   return (
     <a
       href={product.url}
@@ -34,7 +40,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       </div>
 
       <p className="font-inter text-[12px] md:text-[14px] w-full text-[#0E55B2] underline cursor-pointer">
-        {product.url}
+        {getUrlUpToCom(product.url)}
       </p>
     </a>
   );

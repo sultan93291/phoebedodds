@@ -27,8 +27,6 @@ const Products = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(searchParams);
-
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(
     null
@@ -94,8 +92,6 @@ const Products = () => {
       return params;
     });
   };
-
-  console.log(products);
 
   return (
     <Container className="pb-15 2xl:pb-25 mt-20 min-h-screen">
