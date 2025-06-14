@@ -5,6 +5,7 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProductsFetching } from "@/features/products/productsSlice";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Feature = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,9 +52,12 @@ const Feature = () => {
           data-aos-delay="500"
         >
           <div className="flex-1 h-[1px] bg-[#828282]" />
-          <button className="px-6 py-3 rounded-[24px] bg-[#000] text-white hover:bg-[#FFF] hover:text-black hover:border hover:border-[#000] text-[16px] font-inter cursor-pointer duration-300">
+          <Link
+            to={"/product"}
+            className="px-6 py-3 rounded-[24px] bg-[#000] text-white hover:bg-[#FFF] hover:text-black hover:border hover:border-[#000] text-[16px] font-inter cursor-pointer duration-300"
+          >
             See All Products
-          </button>
+          </Link>
           <div className="flex-1 h-[1px] bg-[#828282]" />
         </div>
       </Container>
