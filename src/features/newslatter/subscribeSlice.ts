@@ -18,27 +18,38 @@ export const subscribeToNewsletter = createAsyncThunk<
   { rejectValue: string }
 >("newsletter/subscribe", async (email, thunkAPI) => {
   try {
-    const promise = fetch(
-      `${
-        import.meta.env.VITE_SITE_URL
-      }/newsletter/subscribe?email=${encodeURIComponent(email)}`,
+    const data = await toast.promise(
+      async () => {
+        const res = await fetch(
+          `${
+            import.meta.env.VITE_SITE_URL
+          }/newsletter/subscribe?email=${encodeURIComponent(email)}`,
+          {
+            method: "POST",
+          }
+        );
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData?.message || "Subscription failed");
+        }
+
+        const data: NewsLetterSubscribeResponse = await res.json();
+        return data;
+      },
       {
-        method: "POST",
+        pending: "Subscribing...",
+        success: "Subscribed successfully!",
+        error: {
+          render({ data }) {
+            if (data instanceof Error) {
+              return data?.message;
+            }
+          },
+        },
       }
     );
 
-    const res = await toast.promise(promise, {
-      pending: "Subscribing...",
-      success: "Subscribed successfully!",
-      error: "Subscription failed.",
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json();
-      throw new Error(errorData?.message || "Subscription failed");
-    }
-
-    const data: NewsLetterSubscribeResponse = await res.json();
     return data;
   } catch (error: any) {
     return thunkAPI.rejectWithValue(error?.message || "Network error");

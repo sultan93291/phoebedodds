@@ -28,6 +28,15 @@ export type FilteredProductType = {
 };
 
 // filter product
+
+export type FilterParams = {
+  main_category_id?: number;
+  category_id?: number;
+  max_price?: number;
+  min_price?: number;
+  sort?: "price_high_to_low" | "price_low_to_high";
+};
+
 export type ProductType = {
   id: number;
   title: string;
@@ -47,7 +56,7 @@ export type PaginationLink = {
 
 export type ProductsData = {
   current_page: number;
-  data: ProductType[];
+  data?: ProductType[];
   first_page_url: string;
   from: number;
   last_page: number;
@@ -59,6 +68,7 @@ export type ProductsData = {
   prev_page_url: string | null;
   to: number;
   total: number;
+  status: string;
 };
 
 export type ProductCount = {
