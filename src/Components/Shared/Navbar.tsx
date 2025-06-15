@@ -111,11 +111,11 @@ const Navbar = () => {
             </button>
 
             {/* Search Results UI */}
-            <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full absolute top-[72px]">
+            {/* <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full absolute top-[72px]">
               <h3 className="text-lg font-semibold mb-4">Search Results</h3>
 
               <ul className="space-y-4">
-                {/* Result item */}
+                
                 <li className="flex justify-between items-center border-b pb-3">
                   <div>
                     <p className="font-medium text-black">Elegant Linen Sofa</p>
@@ -152,7 +152,7 @@ const Navbar = () => {
                   </span>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
 
           <div className="xl:hidden block">
