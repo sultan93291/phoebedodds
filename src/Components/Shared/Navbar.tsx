@@ -6,6 +6,10 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
 import { siteFetching } from "@/features/site-setting/SiteSettingSlice";
+import {
+  clearSearchResults,
+  fetchSearchResults,
+} from "@/features/products/searchSlice";
 
 interface NavItem {
   label: string;
@@ -17,10 +21,25 @@ const Navbar = () => {
   const { items: siteData } = useSelector(
     (state: RootState) => state.siteSetting
   );
+  const { results, status } = useSelector((state: RootState) => state.search);
+
+  console.log(results?.data);
+
+  const [searchInput, setSearchInput] = useState<string>("");
 
   useEffect(() => {
     dispatch(siteFetching());
   }, [dispatch]);
+
+  // Scroll effect
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems: NavItem[] = [
     { label: "Home", path: "/" },
@@ -29,24 +48,18 @@ const Navbar = () => {
     { label: "Products", path: "/product" },
   ];
 
-  // const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  // Handle search input with debounce
   useEffect(() => {
-    const handlescroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handlescroll);
-    return () => window.removeEventListener("scroll", handlescroll);
-  }, []);
+    const delayDebounce = setTimeout(() => {
+      if (searchInput.trim().length > 0) {
+        dispatch(fetchSearchResults(searchInput));
+      } else {
+        dispatch(clearSearchResults());
+      }
+    }, 300);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => clearTimeout(delayDebounce);
+  }, [searchInput, dispatch]);
 
   return (
     <nav
@@ -56,6 +69,7 @@ const Navbar = () => {
     >
       <Container>
         <div className="flex justify-between items-center xl:pt-8 pt-4 pb-4">
+          {/* Logo */}
           <div className="xl:w-1/5 w-full">
             <Link to="/">
               <figure>
@@ -65,15 +79,16 @@ const Navbar = () => {
                       siteData?.data?.logo
                     }`}
                     alt="Logo"
-                    className="md:h-8  h-8"
+                    className="md:h-8 h-8"
                   />
                 ) : (
-                  <img src={Logo} alt="Logo" className="md:h-8  h-8" />
+                  <img src={Logo} alt="Logo" className="md:h-8 h-8" />
                 )}
               </figure>
             </Link>
           </div>
 
+          {/* Navigation Links */}
           <ul className="w-1/3 xl:flex hidden gap-x-12 items-center">
             {navItems.map(({ label, path }) => (
               <li
@@ -100,61 +115,88 @@ const Navbar = () => {
             ))}
           </ul>
 
+          {/* Search Box */}
           <div className="w-1/3 xl:flex hidden relative gap-x-6">
             <input
               type="search"
-              placeholder="search"
-              className="p-5 rounded-[24px] border border-[#000] outline-0  text-gray-400 text-[16px] font-inter flex-2"
+              placeholder="Search"
+              className="p-5 rounded-[24px] border border-[#000] outline-0 text-gray-400 text-[16px] font-inter flex-2"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
-            <button className="p-5 rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer flex-1 hover:bg-[#fff] hover:text-black hover:border-black hover:border duration-300">
+            <button
+              className="p-5 rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer flex-1 hover:bg-[#fff] hover:text-black hover:border-black hover:border duration-300"
+              onClick={() =>
+                searchInput.trim()
+                  ? dispatch(fetchSearchResults(searchInput))
+                  : dispatch(clearSearchResults())
+              }
+            >
               Search
             </button>
 
-            {/* Search Results UI */}
-            {/* <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full absolute top-[72px]">
-              <h3 className="text-lg font-semibold mb-4">Search Results</h3>
+            {/* Search Results Dropdown */}
+            {searchInput.trim() && (
+              <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full absolute top-[72px] z-50">
+                <h3 className="text-lg font-semibold mb-4">Search Results</h3>
 
-              <ul className="space-y-4">
-                
-                <li className="flex justify-between items-center border-b pb-3">
-                  <div>
-                    <p className="font-medium text-black">Elegant Linen Sofa</p>
-                    <p className="text-sm text-gray-500">
-                      Category: Living Room
-                    </p>
+                {/* Loader */}
+                {status === "loading" && (
+                  <div className="flex justify-center py-6">
+                    <svg
+                      className="animate-spin h-6 w-6 text-black"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                      ></path>
+                    </svg>
                   </div>
-                  <span className="text-sm font-semibold text-[#000]">
-                    $699
-                  </span>
-                </li>
+                )}
 
-                <li className="flex justify-between items-center border-b pb-3">
-                  <div>
-                    <p className="font-medium text-black">
-                      Modern Wood Coffee Table
-                    </p>
-                    <p className="text-sm text-gray-500">Category: Furniture</p>
-                  </div>
-                  <span className="text-sm font-semibold text-[#000]">
-                    $249
-                  </span>
-                </li>
+                {/* No results */}
+                {status === "succeeded" && results?.data?.length === 0 && (
+                  <p className="text-center text-gray-500">No results found.</p>
+                )}
 
-                <li className="flex justify-between items-center">
-                  <div>
-                    <p className="font-medium text-black">
-                      Minimalist Bed Frame
-                    </p>
-                    <p className="text-sm text-gray-500">Category: Bedroom</p>
-                  </div>
-                  <span className="text-sm font-semibold text-[#000]">
-                    $899
-                  </span>
-                </li>
-              </ul>
-            </div> */}
+                {/* Results List */}
+                {status === "succeeded" && results?.data?.data?.length > 0 && (
+                  <ul className="space-y-4">
+                    {results.data.data.map((item: any, idx: number) => (
+                      <li
+                        key={idx}
+                        className="flex justify-between items-center border-b pb-3"
+                      >
+                        <div>
+                          <p className="font-medium text-black">{item.title}</p>
+                          <p className="text-sm text-gray-500">
+                            Category: {item.category?.name || "N/A"}
+                          </p>
+                        </div>
+                        <span className="text-sm font-semibold text-[#000]">
+                          ${item.price}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
 
+          {/* Mobile menu toggle */}
           <div className="xl:hidden block">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -165,6 +207,7 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* Mobile overlay */}
         {menuOpen && (
           <div
             className="fixed inset-0 bg-black/50 z-40 xl:hidden"
@@ -172,11 +215,12 @@ const Navbar = () => {
           />
         )}
 
+        {/* Mobile sidebar */}
         <div
           className={`xl:hidden fixed top-0 left-0 h-full w-[250px] bg-gray-400 z-50 transform transition-transform duration-700 ease-in-out ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
-          onClick={(e) => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
+          onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between items-center px-5 pt-6 cursor-pointer">
             <img src={Logo} alt="Logo" className="h-10" />
@@ -184,7 +228,10 @@ const Navbar = () => {
 
           <ul className="flex flex-col gap-6 mt-10 px-6">
             {navItems.map(({ label, path }) => (
-              <li className="text-[18px] font-inter text-white hover:text-black cursor-pointer">
+              <li
+                key={label}
+                className="text-[18px] font-inter text-white hover:text-black cursor-pointer"
+              >
                 {path.startsWith("#") ? (
                   <button
                     onClick={() => {
