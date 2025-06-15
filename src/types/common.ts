@@ -5,5 +5,7 @@ export type CommonType<T> = {
   success: boolean;
   message: string;
   code: number;
-  data: T;
+  data?: T;
+  index: number;
+  status: boolean;
 };
