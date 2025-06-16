@@ -1,7 +1,6 @@
 import type { AppDispatch, RootState } from "@/app/store";
 import PageHeading from "@/Components/Reusable/PageHeading";
 import Container from "@/Components/Shared/Container";
-import Loader from "@/Components/Shared/Loader";
 import { mainCategoriesFetching } from "@/features/categories/mainCategoriesSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,11 +28,25 @@ const AllCategories = () => {
 
       {/* Loader */}
       {status === "loading" && (
-        <div className="flex justify-center items-center min-h-[200px]">
-          <Loader />
+        <div className="space-y-14">
+          {[...Array(2)].map((_, sectionIndex) => (
+            <div key={sectionIndex}>
+              {/* Skeleton Category Section Title */}
+              <div className="h-8 w-1/2 bg-gray-200 rounded mb-6 animate-pulse"></div>
+
+              {/* Skeleton Cards Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(3)].map((_, cardIndex) => (
+                  <div
+                    key={cardIndex}
+                    className="h-50 md:h-[300px] lg:h-[500px] rounded-xl overflow-hidden bg-gray-200 animate-pulse"
+                  ></div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       )}
-
       {/* Content */}
       {status === "succeeded" &&
         items?.data?.map((section) => (

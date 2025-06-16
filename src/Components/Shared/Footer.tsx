@@ -60,30 +60,12 @@ const Footer = () => {
               <li className="text-white text-[16px] hover:underline cursor-pointer">
                 About Us
               </li>
-              <li className="text-white text-[16px] hover:underline cursor-pointer">
-                Affiliate Partnerships
-              </li>
-              <li className="text-white text-[16px] hover:underline cursor-pointer">
+              <Link
+                to={"/product"}
+                className="text-white text-[16px] hover:underline cursor-pointer"
+              >
                 All Products
-              </li>
-            </ul>
-          </div>
-
-          {/* Explore */}
-          <div className="w-full sm:w-1/2 lg:w-1/4 pr-4">
-            <h3 className="font-inter font-semibold text-white text-[24px] md:text-[28px] mb-6">
-              Explore
-            </h3>
-            <ul className="flex flex-col gap-4">
-              <li className="text-white text-[16px] hover:underline cursor-pointer">
-                Browse By Category
-              </li>
-              <li className="text-white text-[16px] hover:underline cursor-pointer">
-                Browse By Rooms
-              </li>
-              <li className="text-white text-[16px] hover:underline cursor-pointer">
-                Featured Products
-              </li>
+              </Link>
             </ul>
           </div>
 

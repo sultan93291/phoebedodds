@@ -6,7 +6,6 @@ import type { AppDispatch, RootState } from "@/app/store";
 import { useEffect } from "react";
 import { bannerFetching } from "@/features/cms/banner/bannerSlice";
 import { Link } from "react-router-dom";
-import Loader from "../Shared/Loader";
 
 const Banner = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,9 +24,9 @@ const Banner = () => {
 
   if (status === "loading") {
     return (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <Loader />
-      </div>
+      <Container>
+        <BannerSkeleton />
+      </Container>
     );
   }
 
@@ -99,26 +98,34 @@ const Banner = () => {
                   className="xl:h-full lg:h-[450px] md:h-[350px] mx-auto"
                 />
               </figure>
-
-              {/* <div
-                className="rounded-[32px] border border-[#828282] bg-white/20 shadow-[0_2px_16px_rgba(0,0,0,0.08)] backdrop-blur-[25px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 xl:top-auto xl:left-auto xl:translate-x-0 xl:translate-y-0 xl:bottom-18 xl:-right-20 py-5 px-7 lg:w-[385px] w-[250px]"
-                data-aos="flip-up"
-                data-aos-delay="300"
-              >
-                <h3 className="font-inter text-[28px] lg:text-[48px] font-semibold text-white text-left">
-                  Top Item
-                </h3>
-                <p className="font-inter text-[16px] lg:text-[24px] font-normal text-[#FFFFFF] my-3">
-                  This Week
-                </p>
-                <button className="rounded-[20px] bg-[#FFF] text-black outline-0 text-[14px] lg:text-[16px] font-inter cursor-pointer py-3 px-6 lg:py-4 lg:px-10">
-                  See Details
-                </button>
-              </div> */}
             </div>
           </div>
         </div>
       </Container>
+    </section>
+  );
+};
+
+const BannerSkeleton = () => {
+  return (
+    <section className="pb-8 pt-[120px] 2xl:px-0 px-4">
+      <div className="w-full min-h-screen bg-gray-200 animate-pulse rounded-[36px] overflow-hidden relative">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 animate-pulse" />
+
+        <div className="relative z-10 p-5 xl:p-[120px] flex flex-col xl:flex-row gap-6">
+          <div className="w-full xl:w-3/5 space-y-6">
+            <div className="h-12 xl:h-20 w-3/4 bg-gray-300 rounded"></div>
+            <div className="h-6 xl:h-8 w-5/6 bg-gray-300 rounded"></div>
+            <div className="h-10 w-1/3 bg-gray-300 rounded"></div>
+            <div className="h-24 w-1/2 bg-gray-300 rounded mt-6"></div>
+          </div>
+          <div className="xl:w-2/5 w-full mt-10 relative">
+            <figure className="flex justify-center">
+              <div className="bg-gray-300 animate-pulse rounded-3xl xl:h-[550px] lg:h-[450px] md:h-[350px] h-[250px] w-[250px] xl:w-[400px] mx-auto"></div>
+            </figure>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
