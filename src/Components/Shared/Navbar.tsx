@@ -221,16 +221,25 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Search Modal */}
         {searchModalOpen && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-20 px-4">
-            <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+          <div
+            className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-20 px-4"
+            onClick={() => {
+              setSearchInput("");
+              setSearchModalOpen(false);
+            }}
+          >
+            <div
+              className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => setSearchModalOpen(false)}
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer"
               >
                 <FiX size={24} />
               </button>
+
               <input
                 type="text"
                 placeholder="Search..."

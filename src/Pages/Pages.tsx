@@ -1,7 +1,6 @@
 import type { AppDispatch, RootState } from "@/app/store";
 import PageHeading from "@/Components/Reusable/PageHeading";
 import Container from "@/Components/Shared/Container";
-import Loader from "@/Components/Shared/Loader";
 import { singleDynamicPageFatching } from "@/features/dynamicPage/singleDynamicPageSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
