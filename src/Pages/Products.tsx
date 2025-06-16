@@ -12,7 +12,8 @@ import { useSearchParams } from "react-router-dom";
 
 // Import react-range
 import { Range, getTrackBackground } from "react-range";
-import Loader from "@/Components/Shared/Loader";
+
+import { brandFetching } from "@/features/products/brandSlice";
 
 const MIN = 0;
 const MAX = 10000;
@@ -20,10 +21,17 @@ const MAX = 10000;
 const Products = () => {
   const productGridRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch<AppDispatch>();
-  const { items } = useSelector((state: RootState) => state.allCategories);
+  const { items, status: categoryStatus } = useSelector(
+    (state: RootState) => state.allCategories
+  );
+  const { brands, status: brandStatus } = useSelector(
+    (state: RootState) => state.brands
+  );
   const { products, status } = useSelector(
     (state: RootState) => state?.products
   );
+
+  console.log(products);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -33,12 +41,18 @@ const Products = () => {
   );
   const [sortOption, setSortOption] = useState<string | null>(null);
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const toggleFilter = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
 
   // Use array state for react-range
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
 
   useEffect(() => {
     dispatch(mainCategoriesFetching());
+    dispatch(brandFetching());
   }, [dispatch]);
 
   useEffect(() => {
@@ -49,7 +63,7 @@ const Products = () => {
     const min = searchParams.get("minPrice");
     const max = searchParams.get("maxPrice");
     const page = searchParams.get("page") || "1"; // default page 1
-
+    const brand = searchParams.get("brand");
     const filters: any = {};
     if (category) {
       filters.main_category_id = Number(category);
@@ -78,7 +92,14 @@ const Products = () => {
       setSortOption(null);
     }
 
-    filters.page = Number(page); // Add page to filters
+    if (brand) {
+      filters.brand = brand;
+      setSelectedBrand(brand);
+    } else {
+      setSelectedBrand(null);
+    }
+
+    filters.page = Number(page);
 
     dispatch(filterProductsFetching(filters));
   }, [searchParams, dispatch]);
@@ -93,6 +114,20 @@ const Products = () => {
     });
   };
 
+  const handleBrandClick = (brand: string) => {
+    setSelectedBrand(brand === selectedBrand ? null : brand);
+    setSearchParams((prev) => {
+      const params = new URLSearchParams(prev);
+      if (brand === selectedBrand) {
+        params.delete("brand");
+        params.delete("page");
+      } else {
+        params.set("brand", brand);
+        params.delete("page");
+      }
+      return params;
+    });
+  };
   return (
     <Container className="pb-15 2xl:pb-25 mt-20 min-h-screen">
       <div ref={productGridRef} className="px-5 2xl:px-0 ">
@@ -102,7 +137,10 @@ const Products = () => {
             subtitle="Everything You Need, All in One Place"
           />
           <div className="lg:hidden block">
-            <button className="flex gap-2 items-center cursor-pointer">
+            <button
+              onClick={toggleFilter}
+              className="flex gap-2 items-center cursor-pointer"
+            >
               Filter
               <span>
                 <IoFilter />
@@ -270,74 +308,169 @@ const Products = () => {
               </div>
 
               {/* Categories */}
-              <div>
-                <h3 className="text-black not-italic font-semibold text-[32px] mb-8">
-                  Categories
-                </h3>
+              {categoryStatus === "loading" ? (
+                <div>
+                  <h3 className="text-black not-italic font-semibold text-[32px] mb-8">
+                    Categories
+                  </h3>
 
-                {items?.data
-                  ?.filter((item) => item?.categories?.length !== 0)
-                  .map((cat) => (
-                    <div key={cat.id} className="mb-4">
-                      <h4 className="text-black font-medium cursor-pointer text-[24px] mb-6">
-                        {cat.name}
-                      </h4>
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="mb-8 animate-pulse">
+                      {/* Category name */}
+                      <div className="h-6 w-1/3 bg-gray-200 rounded mb-6"></div>
 
-                      {cat?.categories?.map((sub) => (
-                        <div
-                          key={sub.id}
-                          className="flex items-center cursor-pointer gap-2 mb-4"
-                        >
-                          <input
-                            type="radio"
-                            name="subcategory"
-                            className="w-6 h-6 cursor-pointer accent-black"
-                            checked={selectedSubCategory === sub.id}
-                            onChange={() =>
-                              setSearchParams((prev) => {
-                                const params = new URLSearchParams(prev);
-                                params.set("category", String(cat.id));
-                                params.set("subcategory", String(sub.id));
-                                return params;
-                              })
-                            }
-                          />
-                          <label className="text-black font-light text-base md:text-lg leading-normal">
-                            {sub.name}
-                          </label>
+                      {/* Subcategories */}
+                      {[...Array(3)].map((_, j) => (
+                        <div key={j} className="flex items-center gap-2 mb-4">
+                          <div className="w-6 h-6 rounded-full bg-gray-300"></div>
+                          <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
                         </div>
                       ))}
                     </div>
                   ))}
+                </div>
+              ) : (
+                <>
+                  <h3 className="text-black not-italic font-semibold text-[32px] mb-8">
+                    Categories
+                  </h3>
 
-                {(selectedCategory || selectedSubCategory) && (
-                  <button
-                    onClick={() => {
-                      setSearchParams((prev) => {
-                        const params = new URLSearchParams(prev);
-                        params.delete("category");
-                        params.delete("subcategory");
-                        return params;
-                      });
-                    }}
-                    className="mt-4 text-sm underline cursor-pointer text-blue-600"
-                  >
-                    Clear Category Filter
-                  </button>
-                )}
-              </div>
+                  {items?.data
+                    ?.filter((item) => item?.categories?.length !== 0)
+                    .map((cat) => (
+                      <div key={cat.id} className="mb-4">
+                        <h4 className="text-black font-medium cursor-pointer text-[24px] mb-6">
+                          {cat.name}
+                        </h4>
+
+                        {cat?.categories?.map((sub) => (
+                          <div
+                            key={sub.id}
+                            className="flex items-center cursor-pointer gap-2 mb-4"
+                          >
+                            <input
+                              type="radio"
+                              name="subcategory"
+                              className="w-6 h-6 cursor-pointer accent-black"
+                              checked={selectedSubCategory === sub.id}
+                              onChange={() =>
+                                setSearchParams((prev) => {
+                                  const params = new URLSearchParams(prev);
+                                  params.set("category", String(cat.id));
+                                  params.set("subcategory", String(sub.id));
+                                  params.delete("page");
+                                  return params;
+                                })
+                              }
+                            />
+                            <label className="text-black font-light text-base md:text-lg leading-normal">
+                              {sub.name}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+
+                  {(selectedCategory || selectedSubCategory) && (
+                    <button
+                      onClick={() => {
+                        setSearchParams((prev) => {
+                          const params = new URLSearchParams(prev);
+                          params.delete("category");
+                          params.delete("subcategory");
+                          return params;
+                        });
+                      }}
+                      className="mt-4 text-sm underline cursor-pointer text-blue-600"
+                    >
+                      Clear Category Filter
+                    </button>
+                  )}
+                </>
+              )}
             </div>
 
             {/* Main Product Grid */}
             <div className="col-span-full lg:col-span-9">
+              {/* Brands */}
+              <div>
+                <h3 className="text-black not-italic font-semibold text-[24px] mb-4">
+                  Brands
+                </h3>
+
+                {brandStatus === "loading" ? (
+                  <div className="flex flex-wrap gap-2">
+                    {[...Array(6)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-8 w-20 rounded-[24px] bg-gray-200 animate-pulse"
+                      ></div>
+                    ))}
+                  </div>
+                ) : brands?.data?.length > 0 ? (
+                  <div className="flex flex-wrap gap-2">
+                    {brands?.data?.map((brand: string) => (
+                      <button
+                        key={brand}
+                        onClick={() => handleBrandClick(brand)}
+                        className={`rounded-[24px]  px-2 py-1 lg:px-12 lg:py-3 cursor-pointer border text-sm font-medium ${
+                          selectedBrand === brand
+                            ? "bg-black text-white"
+                            : "border-black hover:bg-gray-100"
+                        }`}
+                        aria-label={`Filter by ${brand}`}
+                      >
+                        {brand}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-500">No brands available</p>
+                )}
+
+                {selectedBrand && (
+                  <button
+                    onClick={() => {
+                      setSearchParams((prev) => {
+                        const params = new URLSearchParams(prev);
+                        params.delete("brand");
+
+                        return params;
+                      });
+                      setSelectedBrand(null);
+                    }}
+                    className="mt-4 text-sm underline cursor-pointer text-blue-600"
+                    aria-label="Clear brand filter"
+                  >
+                    Clear Brand Filter
+                  </button>
+                )}
+              </div>
               {status === "loading" ? (
-                <div className="flex justify-center items-center min-h-[60vh]">
-                  <Loader />
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 min-h-screen mt-2">
+                  {[...Array(6)].map((_, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col w-full animate-pulse"
+                    >
+                      {/* Image skeleton */}
+                      <div className="w-full h-[300px] rounded overflow-hidden bg-gray-200"></div>
+
+                      {/* Title & Price */}
+                      <div className="flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between pt-6 pb-2 items-center">
+                        <div className="h-6 w-[250px] bg-gray-200 rounded"></div>
+                        <div className="h-6 w-[80px] bg-gray-200 rounded"></div>
+                      </div>
+
+                      {/* URL text */}
+                      <div className="h-4 w-1/2 bg-gray-200 rounded"></div>
+                    </div>
+                  ))}
                 </div>
               ) : (
                 <>
                   {products?.success && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 min-h-screen ">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 min-h-screen mt-2">
                       {products?.data?.products?.data?.map((product, index) => (
                         <ProductCard
                           key={product.id}
@@ -346,6 +479,10 @@ const Products = () => {
                         />
                       ))}
                     </div>
+                  )}
+
+                  {!products?.status && products?.data?.length === 0 && (
+                    <p className="text-center mt-20">{products?.message}</p>
                   )}
                 </>
               )}
@@ -379,7 +516,7 @@ const Products = () => {
                           }
                         }
                       }}
-                      className={`px-4 py-2 rounded border text-sm ${
+                      className={`px-4 py-2 rounded border text-sm cursor-pointer ${
                         link.active
                           ? "bg-black text-white"
                           : "bg-white text-black hover:bg-gray-100"
@@ -390,10 +527,234 @@ const Products = () => {
                 })}
               </div>
             </div>
-
-            {/*  */}
           </div>
         </main>
+        {/* Backdrop */}
+        {isFilterOpen && (
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={toggleFilter}
+          />
+        )}
+
+        {/* Sidebar */}
+        <div
+          className={`fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-lg transform transition-transform duration-300 ${
+            isFilterOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="p-4  flex justify-between items-center border-b">
+            <h2 className="text-lg font-semibold">Filters</h2>
+            <button className="cursor-pointer" onClick={toggleFilter}>
+              ✕
+            </button>
+          </div>
+          <div className="py-4 px-6 space-y-6">
+            {/* Price Range */}
+            <div>
+              <h3 className="text-black font-semibold text-lg mb-2">
+                Price Range
+              </h3>
+              <Range
+                values={priceRange}
+                step={10}
+                min={MIN}
+                max={MAX}
+                onChange={onPriceRangeChange}
+                renderTrack={({ props, children }) => (
+                  <div
+                    {...props}
+                    style={{
+                      ...props.style,
+                      height: "6px",
+                      width: "100%",
+                      background: getTrackBackground({
+                        values: priceRange,
+                        colors: ["#ddd", "#000", "#ddd"],
+                        min: MIN,
+                        max: MAX,
+                      }),
+                      borderRadius: "3px",
+                    }}
+                  >
+                    {children}
+                  </div>
+                )}
+                renderThumb={({ props, index }) => (
+                  <div
+                    {...props}
+                    style={{
+                      ...props.style,
+                      height: "20px",
+                      width: "20px",
+                      backgroundColor: "#000",
+                      borderRadius: "50%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      boxShadow: "0px 2px 6px #AAA",
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: "-28px",
+                        color: "#000",
+                        fontWeight: "bold",
+                        fontSize: "12px",
+                        fontFamily: "Arial,Helvetica,sans-serif",
+                        padding: "2px 5px",
+                        borderRadius: "4px",
+                        backgroundColor: "#fff",
+                        boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
+                      }}
+                    >
+                      ${priceRange[index]}
+                    </div>
+                  </div>
+                )}
+              />
+              <div className="flex justify-between mt-2">
+                <div className="bg-gray-100 text-black px-4 py-2 rounded-full text-sm font-semibold">
+                  ${priceRange[0]}
+                </div>
+                <div className="border border-black text-black px-4 py-2 rounded-full text-sm font-semibold">
+                  ${priceRange[1]}
+                </div>
+              </div>
+            </div>
+
+            {/* Sort By */}
+            <div>
+              <h3 className="text-black font-semibold text-lg mb-2">Sort By</h3>
+              <div className="relative">
+                <button
+                  onClick={() => setIsSortOpen(!isSortOpen)}
+                  className="w-full flex justify-between items-center cursor-pointer px-3 py-2 rounded-[24px] bg-white text-black text-sm font-semibold border border-black shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  <span>
+                    {sortOption === "price_low_to_high"
+                      ? "Price (Low to High)"
+                      : sortOption === "price_high_to_low"
+                      ? "Price (High to Low)"
+                      : "Sort By"}
+                  </span>
+                  <FaAngleDown className="text-sm" />
+                </button>
+                {isSortOpen && (
+                  <div className="absolute z-10 mt-2 w-full bg-white border border-black rounded-md shadow-lg text-sm">
+                    <div
+                      onClick={() => {
+                        setSearchParams((prev) => {
+                          setIsSortOpen(false);
+                          const params = new URLSearchParams(prev);
+                          params.set("sort", "price_low_to_high");
+                          return params;
+                        });
+                      }}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Price (Low to High)
+                    </div>
+                    <div
+                      onClick={() => {
+                        setSearchParams((prev) => {
+                          setIsSortOpen(false);
+                          const params = new URLSearchParams(prev);
+                          params.set("sort", "price_high_to_low");
+                          return params;
+                        });
+                      }}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Price (High to Low)
+                    </div>
+                    <div
+                      onClick={() => {
+                        setSearchParams((prev) => {
+                          setIsSortOpen(false);
+                          const params = new URLSearchParams(prev);
+                          params.delete("sort");
+                          return params;
+                        });
+                      }}
+                      className="px-4 py-2 text-red-500 hover:bg-gray-100 cursor-pointer"
+                    >
+                      Clear Sort
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div>
+              <h3 className="text-black font-semibold text-lg mb-2">
+                Categories
+              </h3>
+              {items?.data
+                ?.filter((item) => item?.categories?.length !== 0)
+                .map((cat) => (
+                  <div key={cat.id} className="mb-4">
+                    <h4 className="text-black font-medium text-base mb-2">
+                      {cat.name}
+                    </h4>
+                    {cat?.categories?.map((sub) => (
+                      <div
+                        key={sub.id}
+                        className="flex items-center gap-2 mb-2"
+                      >
+                        <input
+                          type="radio"
+                          id={`mobile-subcategory-${sub.id}`}
+                          name="mobile-subcategory"
+                          className="w-4 h-4 cursor-pointer accent-black"
+                          checked={selectedSubCategory === sub.id}
+                          onChange={() => {
+                            setSearchParams((prev) => {
+                              const params = new URLSearchParams(prev);
+                              params.set("category", String(cat.id));
+                              params.set("subcategory", String(sub.id));
+                              params.delete("page");
+                              return params;
+                            });
+                          }}
+                          aria-label={`Select ${sub.name}`}
+                        />
+                        <label
+                          htmlFor={`mobile-subcategory-${sub.id}`}
+                          className="text-black font-light text-sm"
+                        >
+                          {sub.name}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+            </div>
+
+            {/* Clear All Filters */}
+            {(searchParams.get("minPrice") ||
+              searchParams.get("maxPrice") ||
+              searchParams.get("category") ||
+              searchParams.get("subcategory") ||
+              searchParams.get("sort")) && (
+              <button
+                onClick={() => {
+                  setSearchParams({});
+                  setPriceRange([MIN, MAX]);
+                  setSortOption(null);
+                  setSelectedCategory(null);
+                  setSelectedSubCategory(null);
+                  setIsFilterOpen(false);
+                }}
+                className="w-full text-center text-sm underline cursor-pointer text-blue-600"
+              >
+                Clear All Filters
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </Container>
   );

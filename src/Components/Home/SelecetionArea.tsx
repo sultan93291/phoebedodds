@@ -10,7 +10,9 @@ const SelectionArea = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { items } = useSelector((state: RootState) => state.allCategories);
+  const { items, status } = useSelector(
+    (state: RootState) => state.allCategories
+  );
 
   useEffect(() => {
     dispatch(mainCategoriesFetching());
@@ -56,6 +58,14 @@ const SelectionArea = () => {
     setCategoryId(null);
     setSubcategoryId(null);
   };
+
+  if (status === "loading") {
+    return (
+      <Container>
+        <SelectionSkeleton />
+      </Container>
+    );
+  }
 
   return (
     <section className="xl:mb-8 2xl:px-0 px-5">
@@ -108,6 +118,22 @@ const SelectionArea = () => {
           )}
         </div>
       </Container>
+    </section>
+  );
+};
+
+const SelectionSkeleton = () => {
+  return (
+    <section className="xl:mb-8 2xl:px-0 px-5">
+      <div className="flex flex-wrap gap-4 xl:justify-between justify-center items-center">
+        {[1, 2, 3, 4].map((_, i) => (
+          <div
+            key={i}
+            className="flex-grow min-w-[200px] h-[56px] bg-gray-200 animate-pulse rounded-[12px]"
+          ></div>
+        ))}
+        <div className="flex-grow min-w-[200px] h-[56px] bg-gray-300 animate-pulse rounded-[24px]"></div>
+      </div>
     </section>
   );
 };

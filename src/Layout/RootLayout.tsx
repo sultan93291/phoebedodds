@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import Navbar from "../Components/Shared/Navbar";
 import Footer from "../Components/Shared/Footer";
 import { useEffect } from "react";
@@ -21,6 +21,7 @@ const RootLayout = () => {
 
   return (
     <>
+      <ScrollRestoration />
       <Navbar />
       <Outlet />
       <Footer />

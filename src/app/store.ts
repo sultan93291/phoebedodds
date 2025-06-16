@@ -9,6 +9,8 @@ import singleDynamicPageReducer from "@/features/dynamicPage/singleDynamicPageSl
 import newsletterReducer from "@/features/newslatter/subscribeSlice";
 import filteredProductReducer from "@/features/products/productsSlice";
 import mainCategoriesReducer from "@/features/categories/mainCategoriesSlice";
+import searchReducer from "@/features/products/searchSlice";
+import brandReducer from "@/features/products/brandSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +24,8 @@ export const store = configureStore({
     subscribeNewsletter: newsletterReducer,
     products: filteredProductReducer,
     allCategories: mainCategoriesReducer,
+    search: searchReducer,
+    brands: brandReducer,
   },
 });
 

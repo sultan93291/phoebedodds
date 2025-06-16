@@ -74,6 +74,7 @@ export type ProductsData = {
 export type ProductCount = {
   total_products: number;
   products: ProductsData;
+  length: number;
 };
 
 export type MainCategoryResponse = CommonType<MainCategoryType[]>;
