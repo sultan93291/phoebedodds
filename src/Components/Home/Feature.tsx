@@ -54,7 +54,7 @@ const Feature = () => {
           <div className="flex-1 h-[1px] bg-[#828282]" />
           <Link
             to={"/product"}
-            className="px-6 py-3 rounded-[24px] bg-[#000] text-white hover:bg-[#FFF] hover:text-black hover:border hover:border-[#000] text-[16px] font-inter cursor-pointer duration-300"
+            className="px-6 py-3 rounded-[24px] bg-[#000] text-white hover:bg-[#FFF] hover:text-black hover:outline hover:outline-[#000] text-[16px] font-inter cursor-pointer duration-300"
           >
             See All Products
           </Link>

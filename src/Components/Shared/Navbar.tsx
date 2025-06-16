@@ -10,6 +10,7 @@ import {
   clearSearchResults,
   fetchSearchResults,
 } from "@/features/products/searchSlice";
+import { CiSearch } from "react-icons/ci";
 
 interface NavItem {
   label: string;
@@ -23,32 +24,28 @@ const Navbar = () => {
   );
   const { results, status } = useSelector((state: RootState) => state.search);
 
-  console.log(results?.data);
-
   const [searchInput, setSearchInput] = useState<string>("");
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [searchModalOpen, setSearchModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(siteFetching());
   }, [dispatch]);
 
   // Scroll effect
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navItems: NavItem[] = [
-    { label: "Home", path: "/" },
-    { label: "Contact Us", path: "#contact" },
-    { label: "Categories", path: "/category" },
-    { label: "Products", path: "/product" },
-  ];
+  // Lock scroll when search modal open
+  useEffect(() => {
+    document.body.style.overflow = searchModalOpen ? "hidden" : "auto";
+  }, [searchModalOpen]);
 
-  // Handle search input with debounce
+  // Debounced search
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (searchInput.trim().length > 0) {
@@ -60,6 +57,13 @@ const Navbar = () => {
 
     return () => clearTimeout(delayDebounce);
   }, [searchInput, dispatch]);
+
+  const navItems: NavItem[] = [
+    { label: "Home", path: "/" },
+    { label: "Contact Us", path: "#contact" },
+    { label: "Categories", path: "/category" },
+    { label: "Products", path: "/product" },
+  ];
 
   return (
     <nav
@@ -115,32 +119,25 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* Search Box */}
-          <div className="w-1/3 xl:flex hidden relative gap-x-6">
-            <input
-              type="search"
-              placeholder="Search"
-              className="p-5 rounded-[24px] border border-[#000] outline-0 text-gray-400 text-[16px] font-inter flex-2"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-            />
-            <button
-              className="p-5 rounded-[24px] bg-[#000] text-white outline-0 text-[16px] font-inter cursor-pointer flex-1 hover:bg-[#fff] hover:text-black hover:border-black hover:border duration-300"
-              onClick={() =>
-                searchInput.trim()
-                  ? dispatch(fetchSearchResults(searchInput))
-                  : dispatch(clearSearchResults())
-              }
-            >
-              Search
-            </button>
+          {/* Desktop Search */}
+          <div className="w-1/4 xl:flex hidden relative gap-x-6">
+            <div className="w-full relative">
+              <input
+                type="search"
+                placeholder="Search"
+                className="p-5 pl-[50px] rounded-[24px] border border-[#000] outline-0 text-gray-400 text-[16px] font-inter w-full"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+              <span className="absolute left-5 top-1/2 -translate-y-1/2">
+                <CiSearch className="text-2xl" />
+              </span>
+            </div>
 
-            {/* Search Results Dropdown */}
             {searchInput.trim() && (
               <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full absolute top-[72px] z-50">
                 <h3 className="text-lg font-semibold mb-4">Search Results</h3>
 
-                {/* Loader */}
                 {status === "loading" && (
                   <div className="flex justify-center py-6">
                     <svg
@@ -166,29 +163,40 @@ const Navbar = () => {
                   </div>
                 )}
 
-                {/* No results */}
                 {status === "succeeded" && results?.data?.length === 0 && (
                   <p className="text-center text-gray-500">No results found.</p>
                 )}
 
-                {/* Results List */}
                 {status === "succeeded" && results?.data?.data?.length > 0 && (
                   <ul className="space-y-4">
                     {results.data.data.map((item: any, idx: number) => (
-                      <li
+                      <a
+                        href={item?.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         key={idx}
-                        className="flex justify-between items-center border-b pb-3"
+                        className="flex justify-between items-center border-b pb-3 cursor-pointer"
                       >
-                        <div>
-                          <p className="font-medium text-black">{item.title}</p>
-                          <p className="text-sm text-gray-500">
-                            Category: {item.category?.name || "N/A"}
-                          </p>
+                        <div className="flex">
+                          <div className="image-container w-20 h-20">
+                            <img src={item?.image} alt={item?.title} />
+                          </div>
+                          <div>
+                            <p className="font-medium text-black text-xs">
+                              {item?.brand}
+                            </p>
+                            <p className="font-medium text-black">
+                              {item?.title}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              Category: {item?.category || "N/A"}
+                            </p>
+                          </div>
                         </div>
                         <span className="text-sm font-semibold text-[#000]">
                           ${item.price}
                         </span>
-                      </li>
+                      </a>
                     ))}
                   </ul>
                 )}
@@ -196,8 +204,14 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile menu toggle */}
-          <div className="xl:hidden block">
+          {/* Mobile Menu & Search */}
+          <div className="xl:hidden flex items-center gap-5">
+            <span
+              className="cursor-pointer"
+              onClick={() => setSearchModalOpen(true)}
+            >
+              <CiSearch size={28} />
+            </span>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="cursor-pointer"
@@ -207,7 +221,102 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile overlay */}
+        {/* Mobile Search Modal */}
+        {searchModalOpen && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center pt-20 px-4">
+            <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg relative">
+              <button
+                onClick={() => setSearchModalOpen(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer"
+              >
+                <FiX size={24} />
+              </button>
+              <input
+                type="text"
+                placeholder="Search..."
+                className="w-full border border-gray-300 rounded px-4 py-2 mt-2 focus:outline-none focus:ring-2 focus:ring-primary"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+              />
+
+              {searchInput.trim() && (
+                <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full mt-4">
+                  {status === "loading" && (
+                    <div className="flex justify-center py-6">
+                      <svg
+                        className="animate-spin h-6 w-6 text-black"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                        />
+                      </svg>
+                    </div>
+                  )}
+
+                  {status === "succeeded" && results?.data?.length === 0 && (
+                    <p className="text-center text-gray-500">
+                      No results found.
+                    </p>
+                  )}
+
+                  {status === "succeeded" &&
+                    results?.data?.data?.length > 0 && (
+                      <ul className="space-y-4">
+                        {results.data.data.map((item: any, idx: number) => (
+                          <a
+                            href={item?.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            key={idx}
+                            className="flex justify-between items-center border-b pb-3 cursor-pointer"
+                          >
+                            <div className="flex">
+                              <div className="image-container w-16 h-16 mr-3">
+                                <img
+                                  src={item?.image}
+                                  alt={item?.title}
+                                  className="w-full h-full object-cover rounded"
+                                />
+                              </div>
+                              <div>
+                                <p className="font-medium text-black text-xs">
+                                  {item?.brand}
+                                </p>
+                                <p className="font-medium text-black text-sm">
+                                  {item?.title}
+                                </p>
+                                <p className="text-sm text-gray-500">
+                                  Category: {item?.category || "N/A"}
+                                </p>
+                              </div>
+                            </div>
+                            <span className="text-sm font-semibold text-[#000]">
+                              ${item.price}
+                            </span>
+                          </a>
+                        ))}
+                      </ul>
+                    )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Mobile Overlay */}
         {menuOpen && (
           <div
             className="fixed inset-0 bg-black/50 z-40 xl:hidden"
@@ -215,14 +324,14 @@ const Navbar = () => {
           />
         )}
 
-        {/* Mobile sidebar */}
+        {/* Mobile Sidebar */}
         <div
           className={`xl:hidden fixed top-0 left-0 h-full w-[250px] bg-gray-400 z-50 transform transition-transform duration-700 ease-in-out ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center px-5 pt-6 cursor-pointer">
+          <div className="flex justify-between items-center px-5 pt-6">
             <img src={Logo} alt="Logo" className="h-10" />
           </div>
 
