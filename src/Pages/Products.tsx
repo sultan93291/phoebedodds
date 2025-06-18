@@ -31,8 +31,6 @@ const Products = () => {
     (state: RootState) => state?.products
   );
 
-  console.log(products);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
