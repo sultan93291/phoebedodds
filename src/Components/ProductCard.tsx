@@ -17,7 +17,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
       href={product.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex flex-col w-full"
+      className="flex flex-col w-full border border-gray-300 p-2 rounded-md"
       key={product.id}
       data-aos="fade-up"
       data-aos-delay={index * 100}

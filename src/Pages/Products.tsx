@@ -31,6 +31,8 @@ const Products = () => {
     (state: RootState) => state?.products
   );
 
+  console.log(products);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -131,7 +133,19 @@ const Products = () => {
       <div ref={productGridRef} className="px-5 2xl:px-0 ">
         <div className="w-full flex justify-between items-baseline">
           <PageHeading
-            title="All Products"
+            title={
+              status === "loading" ? (
+                <div className="h-32 w-96 bg-gray-300 animate-pulse rounded" />
+              ) : products?.data?.length === 0 &&
+                products?.data?.length === 0 ? (
+                "No Products Found"
+              ) : products?.data?.total_products &&
+                products?.data?.total_products > 0 ? (
+                `${products.data.total_products} Products Found`
+              ) : (
+                "All Products"
+              )
+            }
             subtitle="Everything You Need, All in One Place"
           />
           <div className="lg:hidden block">
