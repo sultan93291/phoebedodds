@@ -23,7 +23,7 @@ const Navbar = () => {
     (state: RootState) => state.siteSetting
   );
   const { results, status } = useSelector((state: RootState) => state.search);
-
+  const [page, setPage] = useState<number>(1);
   const [searchInput, setSearchInput] = useState<string>("");
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -49,14 +49,14 @@ const Navbar = () => {
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (searchInput.trim().length > 0) {
-        dispatch(fetchSearchResults(searchInput));
+        dispatch(fetchSearchResults({ query: searchInput, page }));
       } else {
         dispatch(clearSearchResults());
       }
     }, 300);
 
     return () => clearTimeout(delayDebounce);
-  }, [searchInput, dispatch]);
+  }, [searchInput, page, dispatch]);
 
   const navItems: NavItem[] = [
     { label: "Home", path: "/" },
@@ -139,7 +139,7 @@ const Navbar = () => {
                 <h3 className="text-lg font-semibold mb-4">Search Results</h3>
 
                 {status === "loading" && (
-                  <div className="flex justify-center py-6">
+                  <div className="flex justify-center py-6 ">
                     <svg
                       className="animate-spin h-6 w-6 text-black"
                       xmlns="http://www.w3.org/2000/svg"
@@ -177,16 +177,22 @@ const Navbar = () => {
                         key={idx}
                         className="flex justify-between items-center border-b pb-3 cursor-pointer"
                       >
-                        <div className="flex">
-                          <div className="image-container w-20 h-20">
-                            <img src={item?.image} alt={item?.title} />
+                        <div className="flex justify-center gap-2 items-center">
+                          <div className="image-container w-20 h-12 overflow-hidden">
+                            <img
+                              className="w-full h-full object-cover"
+                              src={item?.image}
+                              alt={item?.title}
+                            />
                           </div>
                           <div>
                             <p className="font-medium text-black text-xs">
                               {item?.brand}
                             </p>
                             <p className="font-medium text-black">
-                              {item?.title}
+                              {item?.title?.length > 40
+                                ? item.title.slice(0, 40) + "..."
+                                : item?.title}
                             </p>
                             <p className="text-sm text-gray-500">
                               Category: {item?.category || "N/A"}
@@ -198,6 +204,41 @@ const Navbar = () => {
                         </span>
                       </a>
                     ))}
+                    <div className="flex flex-wrap justify-center gap-2 mt-10">
+                      {results?.data?.links?.map((link: any, index: number) => {
+                        const label = link.label
+                          .replace("&laquo;", "«")
+                          .replace("&raquo;", "»")
+                          .replace("Previous", "Prev")
+                          .replace("Next", "Next");
+
+                        const getPageFromUrl = (url: string) => {
+                          const params = new URLSearchParams(
+                            url?.split("?")[1]
+                          );
+                          return Number(params.get("page")) || 1;
+                        };
+
+                        return (
+                          <button
+                            key={index}
+                            disabled={!link.url}
+                            className={`px-4 py-2 rounded border text-sm cursor-pointer ${
+                              link.active
+                                ? "bg-black text-white"
+                                : "bg-white text-black hover:bg-gray-100"
+                            } disabled:opacity-50`}
+                            onClick={() => {
+                              if (link.url) {
+                                const newPage = getPageFromUrl(link.url);
+                                setPage(newPage);
+                              }
+                            }}
+                            dangerouslySetInnerHTML={{ __html: label }}
+                          />
+                        );
+                      })}
+                    </div>
                   </ul>
                 )}
               </div>
@@ -234,7 +275,10 @@ const Navbar = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                onClick={() => setSearchModalOpen(false)}
+                onClick={() => {
+                  setSearchModalOpen(false);
+                  setSearchInput("");
+                }}
                 className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 cursor-pointer"
               >
                 <FiX size={24} />
@@ -292,20 +336,22 @@ const Navbar = () => {
                             key={idx}
                             className="flex justify-between items-center border-b pb-3 cursor-pointer"
                           >
-                            <div className="flex">
-                              <div className="image-container w-16 h-16 mr-3">
+                            <div className="flex justify-center gap-2 items-center">
+                              <div className="image-container w-20 h-12 overflow-hidden">
                                 <img
+                                  className="w-full h-full object-cover"
                                   src={item?.image}
                                   alt={item?.title}
-                                  className="w-full h-full object-cover rounded"
                                 />
                               </div>
                               <div>
                                 <p className="font-medium text-black text-xs">
                                   {item?.brand}
                                 </p>
-                                <p className="font-medium text-black text-sm">
-                                  {item?.title}
+                                <p className="font-medium text-black">
+                                  {item?.title?.length > 40
+                                    ? item.title.slice(0, 40) + "..."
+                                    : item?.title}
                                 </p>
                                 <p className="text-sm text-gray-500">
                                   Category: {item?.category || "N/A"}
@@ -317,6 +363,43 @@ const Navbar = () => {
                             </span>
                           </a>
                         ))}
+                        <div className="flex flex-wrap justify-center gap-2 mt-10">
+                          {results?.data?.links?.map(
+                            (link: any, index: number) => {
+                              const label = link.label
+                                .replace("&laquo;", "«")
+                                .replace("&raquo;", "»")
+                                .replace("Previous", "Prev")
+                                .replace("Next", "Next");
+
+                              const getPageFromUrl = (url: string) => {
+                                const params = new URLSearchParams(
+                                  url?.split("?")[1]
+                                );
+                                return Number(params.get("page")) || 1;
+                              };
+
+                              return (
+                                <button
+                                  key={index}
+                                  disabled={!link.url}
+                                  className={`px-4 py-2 rounded border text-sm cursor-pointer ${
+                                    link.active
+                                      ? "bg-black text-white"
+                                      : "bg-white text-black hover:bg-gray-100"
+                                  } disabled:opacity-50`}
+                                  onClick={() => {
+                                    if (link.url) {
+                                      const newPage = getPageFromUrl(link.url);
+                                      setPage(newPage);
+                                    }
+                                  }}
+                                  dangerouslySetInnerHTML={{ __html: label }}
+                                />
+                              );
+                            }
+                          )}
+                        </div>
                       </ul>
                     )}
                 </div>
