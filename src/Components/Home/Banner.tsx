@@ -41,7 +41,7 @@ const Banner = () => {
   }
 
   return (
-    <section className="pb-8 pt-[120px] 2xl:px-0 px-4">
+    <section className="pb-8 pt-[50px] 2xl:px-0 px-4">
       <Container className="relative overflow-hidden rounded-[36px]">
         <img
           src={`${baseUrl}/${items?.data?.background_image}`}
@@ -108,7 +108,7 @@ const Banner = () => {
 
 const BannerSkeleton = () => {
   return (
-    <section className="pb-8 pt-[120px] 2xl:px-0 px-4">
+    <section className="pb-8 pt-[50px] 2xl:px-0 px-4">
       <div className="w-full min-h-screen bg-gray-200 animate-pulse rounded-[36px] overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-300 via-gray-200 to-gray-300 animate-pulse" />
 
