@@ -13,15 +13,17 @@ const initialState: searchState = {
   error: null,
 };
 
-0;
 export const fetchSearchResults = createAsyncThunk(
   "search/fetchSearchResults",
-  async (query: string, { rejectWithValue }) => {
+  async (
+    { query, page = 1 }: { query: string; page?: number },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_SITE_URL}/search`,
         {
-          params: { query },
+          params: { query, page },
         }
       );
       console.log(response);

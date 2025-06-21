@@ -96,7 +96,14 @@ const Footer = () => {
             <ul className="flex flex-col gap-4">
               <li className="text-white text-[16px]">
                 Email:{" "}
-                <span className="text-blue-500">{siteData?.data?.email}</span>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500"
+                  href={`mailto:${siteData?.data?.email}`}
+                >
+                  {siteData?.data?.email}
+                </a>
               </li>
               <li className="text-white text-[16px]">
                 Phone:{" "}
