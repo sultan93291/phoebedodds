@@ -43,6 +43,7 @@ const Products = () => {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
   const toggleFilter = () => {
     setIsFilterOpen(!isFilterOpen);
   };
@@ -64,6 +65,7 @@ const Products = () => {
     const max = searchParams.get("maxPrice");
     const page = searchParams.get("page") || "1"; // default page 1
     const brand = searchParams.get("brand");
+    const name = searchParams.get("name");
     const filters: any = {};
     if (category) {
       filters.main_category_id = Number(category);
@@ -99,6 +101,11 @@ const Products = () => {
       setSelectedBrand(null);
     }
 
+    if (name) {
+      filters.name = name;
+      setName(name);
+    }
+
     filters.page = Number(page);
 
     dispatch(filterProductsFetching(filters));
@@ -132,22 +139,30 @@ const Products = () => {
     <Container className="pb-15 2xl:pb-25 mt-20 min-h-screen">
       <div ref={productGridRef} className="px-5 2xl:px-0 ">
         <div className="w-full flex justify-between items-baseline">
-          <PageHeading
-            title={
-              status === "loading" ? (
-                <div className="h-32 w-96 bg-gray-300 animate-pulse rounded" />
-              ) : products?.data?.length === 0 &&
-                products?.data?.length === 0 ? (
-                "No Products Found"
-              ) : products?.data?.total_products &&
-                products?.data?.total_products > 0 ? (
-                `${products.data.total_products} Products Found`
-              ) : (
-                "All Products"
-              )
-            }
-            subtitle="Everything You Need, All in One Place"
-          />
+          <div>
+            <PageHeading
+              title={
+                status === "loading" ? (
+                  <div className="h-32 w-96 bg-gray-300 animate-pulse rounded" />
+                ) : products?.data?.length === 0 &&
+                  products?.data?.length === 0 ? (
+                  name ? (
+                    `You've search '${name}'- No Products Found`
+                  ) : (
+                    "No Products Found"
+                  )
+                ) : (products?.data?.total_products &&
+                    products?.data?.total_products > 0) ||
+                  name ? (
+                  `You've search '${name}' - ${products?.data?.total_products} Products Found`
+                ) : (
+                  "All Products"
+                )
+              }
+              subtitle="Everything You Need, All in One Place"
+            />{" "}
+          </div>
+
           <div className="lg:hidden block">
             <button
               onClick={toggleFilter}
@@ -318,7 +333,27 @@ const Products = () => {
                   </div>
                 )}
               </div>
-
+              {/* Clear All Filters */}
+              {(searchParams.get("minPrice") ||
+                searchParams.get("maxPrice") ||
+                searchParams.get("category") ||
+                searchParams.get("subcategory") ||
+                searchParams.get("sort") ||
+                searchParams.get("name")) && (
+                <button
+                  onClick={() => {
+                    setSearchParams({});
+                    setPriceRange([MIN, MAX]);
+                    setSortOption(null);
+                    setSelectedCategory(null);
+                    setSelectedSubCategory(null);
+                    setIsFilterOpen(false);
+                  }}
+                  className="w-full text-center text-sm underline cursor-pointer text-blue-600"
+                >
+                  Clear All Filters
+                </button>
+              )}
               {/* Categories */}
               {categoryStatus === "loading" ? (
                 <div>
@@ -698,7 +733,27 @@ const Products = () => {
                 )}
               </div>
             </div>
-
+            {/* Clear All Filters */}
+            {(searchParams.get("minPrice") ||
+              searchParams.get("maxPrice") ||
+              searchParams.get("category") ||
+              searchParams.get("subcategory") ||
+              searchParams.get("sort") ||
+              searchParams.get("name")) && (
+              <button
+                onClick={() => {
+                  setSearchParams({});
+                  setPriceRange([MIN, MAX]);
+                  setSortOption(null);
+                  setSelectedCategory(null);
+                  setSelectedSubCategory(null);
+                  setIsFilterOpen(false);
+                }}
+                className="w-full text-center text-sm underline cursor-pointer text-blue-600"
+              >
+                Clear All Filters
+              </button>
+            )}
             {/* Categories */}
             <div>
               <h3 className="text-black font-semibold text-lg mb-2">
@@ -744,27 +799,6 @@ const Products = () => {
                   </div>
                 ))}
             </div>
-
-            {/* Clear All Filters */}
-            {(searchParams.get("minPrice") ||
-              searchParams.get("maxPrice") ||
-              searchParams.get("category") ||
-              searchParams.get("subcategory") ||
-              searchParams.get("sort")) && (
-              <button
-                onClick={() => {
-                  setSearchParams({});
-                  setPriceRange([MIN, MAX]);
-                  setSortOption(null);
-                  setSelectedCategory(null);
-                  setSelectedSubCategory(null);
-                  setIsFilterOpen(false);
-                }}
-                className="w-full text-center text-sm underline cursor-pointer text-blue-600"
-              >
-                Clear All Filters
-              </button>
-            )}
           </div>
         </div>
       </div>

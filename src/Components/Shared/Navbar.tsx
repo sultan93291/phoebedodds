@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Container from "./Container";
 import Logo from "../../assets/Images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "@/app/store";
@@ -18,6 +18,7 @@ interface NavItem {
 }
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const { items: siteData } = useSelector(
     (state: RootState) => state.siteSetting
@@ -65,6 +66,11 @@ const Navbar = () => {
     { label: "Products", path: "/product" },
   ];
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/product?name=${searchInput}`);
+    setSearchInput("");
+  };
   return (
     <nav
       className={`sticky top-0 left-0 w-full z-50 transition-all duration-300 px-5 ${
@@ -121,7 +127,7 @@ const Navbar = () => {
 
           {/* Desktop Search */}
           <div className="w-1/4 xl:flex hidden relative gap-x-6">
-            <div className="w-full relative">
+            <form onSubmit={handleSubmit} className="w-full relative">
               <input
                 type="search"
                 placeholder="Search"
@@ -132,7 +138,7 @@ const Navbar = () => {
               <span className="absolute left-5 top-1/2 -translate-y-1/2">
                 <CiSearch className="text-2xl" />
               </span>
-            </div>
+            </form>
 
             {searchInput.trim() && (
               <div className="bg-white border border-gray-200 shadow-sm rounded-[16px] p-4 max-h-[400px] overflow-y-auto w-full absolute top-[72px] z-50">
