@@ -31,8 +31,6 @@ const Products = () => {
     (state: RootState) => state?.products
   );
 
-  console.log(products);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -146,15 +144,10 @@ const Products = () => {
                   <div className="h-32 w-96 bg-gray-300 animate-pulse rounded" />
                 ) : products?.data?.length === 0 &&
                   products?.data?.length === 0 ? (
-                  name ? (
-                    `You've search '${name}'- No Products Found`
-                  ) : (
-                    "No Products Found"
-                  )
-                ) : (products?.data?.total_products &&
-                    products?.data?.total_products > 0) ||
-                  name ? (
-                  `You've search '${name}' - ${products?.data?.total_products} Products Found`
+                  ` No Products Found`
+                ) : products?.data?.total_products &&
+                  products?.data?.total_products > 0 ? (
+                  `${products?.data?.total_products} Products Found`
                 ) : (
                   "All Products"
                 )
@@ -583,7 +576,7 @@ const Products = () => {
             onClick={toggleFilter}
           />
         )}
-
+        <div className="hidden">{name}</div>
         {/* Sidebar */}
         <div
           className={`fixed top-0 right-0 h-full w-72 bg-white z-50 shadow-lg transform transition-transform duration-300 ${
@@ -748,6 +741,7 @@ const Products = () => {
                   setSelectedCategory(null);
                   setSelectedSubCategory(null);
                   setIsFilterOpen(false);
+                  setName(null);
                 }}
                 className="w-full text-center text-sm underline cursor-pointer text-blue-600"
               >
